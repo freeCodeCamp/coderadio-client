@@ -1,0 +1,64 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+html {
+  background-color: #323251;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+body {
+  font-family: "Lato", Arial;
+  color: #d4d4da;
+  font-size: 20px;
+  margin: 2em auto;
+  max-width: 800px;
+  padding: 1em;
+  line-height: 1.4;
+  text-align: justify;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-middle {
+  display: block;
+  vertical-align: middle;
+  width: 60vw;
+}
+
+a {
+  background-color: burlywood;
+  color: #1e2040;
+  padding: 0 0.2em 0.2em 0.4em;
+  margin-right: 0.2em;
+  position: relative;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #d4d4da;
+  background-color: #1e2040;
+  cursor: pointer;
+}
+
+a:active {
+  box-shadow: none;
+  top: 5px;
+}
+
+.cloudflare-block {
+  border: 2px solid #d4d4da;
+  border-radius: 3px;
+  padding: 1em;
+}
+
+.cloudflare-block h1 {
+  font-size: 16px;
+}
+.cloudflare-block p,
+.cloudflare-block ul,
+.cloudflare-block li {
+  font-size: 12px;
+}
