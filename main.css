@@ -309,33 +309,8 @@ The knock-on effect of this is ugly browser-scroll bars at the bottom, so 80px o
 }
 
 @media (max-width: 500px) {
-  .site-header {
-    padding-right: 0;
-    padding-left: 0;
-  }
-  .site-nav-middle {
-    margin-right: 0;
-  }
-  .nav {
+  .site-nav {
     display: none;
-    position: absolute;
-    background-color: #0a0a23;
-    top: 38px;
-    left: 15px;
-  }
-
-  .toggle-button-nav {
-    display: flex;
-  }
-  .show-main-nav-items {
-    display: flex;
-  }
-  .expand-nav {
-    min-height: calc(40px + 38px);
-  }
-  .reverse-toggle-color {
-    background-color: white;
-    color: #0a0a23;
   }
 }
 
