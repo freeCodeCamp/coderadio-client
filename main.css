@@ -309,8 +309,20 @@ The knock-on effect of this is ugly browser-scroll bars at the bottom, so 80px o
 }
 
 @media (max-width: 500px) {
-  .site-nav {
+  .site-nav-middle {
+    flex: 1 0 30%;
+    margin-right: 0px;
+  }
+  .site-nav-left {
     display: none;
+  }
+
+  .site-nav-right {
+    display: none;
+  }
+
+  .site-nav {
+    justify-content: center;
   }
 }
 
