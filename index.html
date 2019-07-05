@@ -1,24 +1,75 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta charset="utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <title>freeCodeCamp.org Code Radio</title>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta charset="utf-8">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <link rel="stylesheet" type="text/css" href="main.css" />
-  <title>freeCodeCamp.org Code Radio</title>
-</head>
+  <body>
+    <nav class="site-nav nav-padding">
+      <div class="site-nav-left"></div>
+      <div class="site-nav-middle">
+        <a class="site-nav-logo" href="https://coderadio.freecodecamp.org/"
+          ><img
+            src="https://cdn-media-1.freecodecamp.org/code-radio/FCC-logo.png"
+            alt="Code Radio"
+        /></a>
+      </div>
+      <div class="site-nav-right main-nav">
+        <div class="main-nav-group">
+          <ul class="nav" role="menu">
+            <li class="nav-learn" role="menuitem">
+              <a href="https://learn.freecodecamp.org/">Learn</a>
+            </li>
+            <li class="nav-forum" role="menuitem">
+              <a href="https://www.freecodecamp.org/forum/">Forum</a>
+            </li>
+            <li class="nav-news nav-current" role="menuitem">
+              <a href="https://www.freecodecamp.org/news/">News</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- <button class="site-nav-right toggle-button-nav" id="toggle-button-nav">
+        Menu
+      </button> -->
+    </nav>
+    <div class="under-header-content jumbotron">
+      <h1 class="site-title">Welcome to Code Radio.</h1>
+      <h2 class="site-description">
+        24/7 music designed for coding.
+      </h2>
+    </div>
 
-<body>
-  <div class="error-middle">
-    <h2>
-      freeCodeCamp.org Code Radio
-    </h2>
-    <iframe src="https://coderadio-admin.freecodecamp.org/public/coderadio/embed" frameborder="0"
-      allowtransparency="true" style="width: 100%; min-height: 150px; border: 0;"></iframe>
-  </div>
-</body>
-
+    <div class="container">
+      <div class="middle">
+        <!-- <h2>
+              freeCodeCamp.org Code Radio
+            </h2> -->
+        <iframe
+          src="https://coderadio-admin.freecodecamp.org/public/coderadio/embed"
+          frameborder="0"
+          allowtransparency="true"
+          style="width: 100%; min-height: 150px; border: 0;"
+        ></iframe>
+      </div>
+    </div>
+  </body>
 </html>
+
+<!-- <script type="text/javascript">
+  function showMenu() {
+    console.log("hello");
+  }
+
+  if (window && window.addEventListener) {
+    window.addEventListener("load", function() {
+      document.getElementById("toggle-button-nav").onclick = showMenu;
+    });
+  }
+</script> -->

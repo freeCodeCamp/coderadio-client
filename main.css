@@ -1,45 +1,58 @@
 @import url(https://fonts.googleapis.com/css?family=Lato);
 
 html {
-  background-color: #323251;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  background-color: #1b1b32;
+  background-image: url("https://cdn-media-1.freecodecamp.org/code-radio/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 100%;
+  height: 100%;
 }
 
 body {
   font-family: "Lato", Arial;
-  color: #d4d4da;
+  color: #1b1b32;
+  background: rgba(27, 27, 50, 0.5);
+  width: 100%;
+  height: 100%;
   font-size: 20px;
-  margin: 2em auto;
-  max-width: 800px;
-  padding: 1em;
   line-height: 1.4;
+  margin: 0px;
+}
+
+.container {
   text-align: justify;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 30%;
 }
-
-.error-middle {
-  display: block;
+.middle {
+  display: flex;
   vertical-align: middle;
-  width: 60vw;
+  width: 90%;
+  max-width: 500px;
+  background: #f5f6f7;
+  padding: 20px 20px 0px 20px;
 }
 
 a {
-  background-color: burlywood;
-  color: #1e2040;
   padding: 0 0.2em 0.2em 0.4em;
   margin-right: 0.2em;
   position: relative;
   text-decoration: none;
 }
 
+h1 {
+  font-size: 38px;
+}
+
+h2 {
+  margin-top: 5px;
+}
+
 a:hover {
-  color: #d4d4da;
-  background-color: #1e2040;
   cursor: pointer;
 }
 
@@ -61,4 +74,277 @@ a:active {
 .cloudflare-block ul,
 .cloudflare-block li {
   font-size: 12px;
+}
+
+.under-header-content {
+  background-color: #0a0a23;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 10px 30px 10px;
+  min-height: 100px;
+  max-height: 450px;
+  text-align: center;
+  color: white;
+}
+
+.jumbotron {
+  background: #0a0a23;
+}
+
+.jumbotron a {
+  color: white;
+  text-decoration: underline;
+}
+
+.jumbotron h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+@media (max-width: 500px) {
+  .site-title {
+    font-size: 30px;
+  }
+}
+/* -----------------------site navigation ------------*/
+
+.site-nav {
+  z-index: 300;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  overflow-y: hidden;
+  height: 40px;
+  font-size: 18px;
+  font-family: "Lato", sans-serif;
+  height: 38px;
+  background: #0a0a23;
+  position: fixed;
+  z-index: 1000;
+  color: #fff;
+  width: 100%;
+  /* padding-right: 15px; */
+  /* padding-left: 15px; */
+}
+
+.site-nav-middle {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  margin-right: 10px;
+  padding-bottom: 80px;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+
+  -ms-overflow-scrolling: touch;
+}
+
+.site-nav-left {
+  display: none;
+}
+
+/* Site Nav Hack Explanation (above):
+
+What's happening above it .site-nav-middle is set to overflow-x and allow sideways scrolling, so that when there isn't enough space for all nav items (either due to lots of nav items, or a small viewport), you can still scroll side-to-side to reach them.
+
+The knock-on effect of this is ugly browser-scroll bars at the bottom, so 80px of padding-bottom and a 40px fixed height parent (.site-nav) hides that entirely. Slightly hacky code. But nice clean end-result.
+
+*/
+
+.site-nav-logo {
+  flex-shrink: 0;
+  display: block;
+  margin: 0 5px;
+  color: #fff;
+  font-size: 1.7rem;
+  line-height: 1em;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+}
+
+.site-nav-logo:hover {
+  text-decoration: none;
+}
+
+.site-nav-logo img {
+  display: block;
+  width: auto;
+  height: 25px;
+  margin-top: 7px;
+}
+
+.nav {
+  display: flex;
+  margin: 0 0 0 -12px;
+  padding: 0;
+  list-style: none;
+}
+
+.nav {
+  height: 38px;
+}
+
+.nav li {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li a {
+  display: block;
+  margin: 0;
+  padding: 5px 15px;
+  color: #fff;
+  opacity: 1;
+  white-space: nowrap;
+}
+
+.nav li:hover {
+  background: white;
+}
+
+.nav li a:hover {
+  color: #0a0a23;
+  text-decoration: none;
+}
+
+.site-nav-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: 38px;
+}
+
+.toggle-button-nav {
+  display: none;
+  padding: 2px 14px 3px;
+  border: 1px solid #fff;
+  font-family: "lato", sans-serif;
+  font-size: 18px;
+  color: #fff;
+  outline: none;
+  background-color: #0a0a23;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-top: 4px;
+  height: auto;
+}
+
+.social-links {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.social-links a:last-of-type {
+  padding-right: 20px;
+}
+
+.social-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 10px;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.social-link:hover {
+  opacity: 1;
+}
+
+.social-link svg {
+  height: 1.8rem;
+  fill: #fff;
+}
+
+.social-link-fb svg {
+  height: 1.5rem;
+}
+
+.social-link-wb svg {
+  height: 1.6rem;
+}
+
+.social-link-wb svg path {
+  stroke: #fff;
+}
+
+.social-link-rss svg {
+  height: 1.9rem;
+}
+
+.subscribe-button {
+  display: block;
+  padding: 4px 10px;
+  border: #fff 1px solid;
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1em;
+  opacity: 0.8;
+}
+
+.subscribe-button:hover {
+  text-decoration: none;
+  opacity: 1;
+}
+
+.rss-button {
+  opacity: 0.8;
+}
+
+.rss-button:hover {
+  opacity: 1;
+}
+
+.rss-button svg {
+  margin-bottom: 1px;
+  height: 2.1rem;
+  fill: #fff;
+}
+
+@media (max-width: 500px) {
+  .site-nav-middle {
+    flex: 1 0 30%;
+    margin-right: 0px;
+  }
+  .site-nav-left {
+    display: none;
+  }
+
+  .site-nav-right {
+    display: none;
+  }
+
+  .site-nav {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 750px) {
+  .site-nav-middle {
+    flex: 1 0 30%;
+    margin-right: 0px;
+  }
+  .site-nav-left {
+    display: flex;
+    flex: 1 0 30%;
+    margin-left: 0px;
+  }
+  .site-nav-logo {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .site-nav-right {
+    flex: 1 0 30%;
+    margin-left: auto;
+  }
+  .main-nav-group {
+    margin-left: auto;
+  }
 }
