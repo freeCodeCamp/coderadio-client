@@ -105,14 +105,6 @@ a:active {
     font-size: 30px;
   }
 }
-
-.site-wrapper {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  min-height: 100vh;
-}
 /* -----------------------site navigation ------------*/
 
 .site-nav {
@@ -238,33 +230,33 @@ The knock-on effect of this is ugly browser-scroll bars at the bottom, so 80px o
 }
 
 @media (max-width: 500px) {
+  .site-header {
+    padding-right: 0;
+    padding-left: 0;
+  }
   .site-nav-middle {
-    flex: 1 0 30%;
-    margin-right: 0px;
+    margin-right: 0;
   }
-  .site-nav-left {
+  .nav {
     display: none;
+    position: absolute;
+    background-color: #0a0a23;
+    top: 38px;
+    left: 15px;
   }
 
-  .site-nav-right {
-    display: none;
-  }
-
-  .site-nav {
-    justify-content: center;
-  }
   .toggle-button-nav {
     display: flex;
   }
   .show-main-nav-items {
     display: flex;
   }
-  .reverse-toggle-color {
-    background-color: #fff;
-    color: #0a0a23;
-  }
   .expand-nav {
     min-height: calc(40px + 38px);
+  }
+  .reverse-toggle-color {
+    background-color: white;
+    color: #0a0a23;
   }
 }
 
