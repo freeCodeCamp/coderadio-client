@@ -63,8 +63,10 @@
           src="https://coderadio-admin.freecodecamp.org/public/coderadio/embed"
           frameborder="0"
           allowtransparency="true"
-          style="width: 100%; min-height: 150px; border: 0;"
+          style="width: 100%; height: 106px; border: 0;"
         ></iframe>
+        <hr />
+        <p id="listeners-num"></p>
       </div>
     </div>
   </body>
@@ -78,12 +80,8 @@
   }
 
   function toggleClass(id, className) {
-    let d = document.getElementById(id);
-    if (d.classList.contains(className)) {
-      d.classList.remove(className);
-    } else {
-      d.classList.add(className);
-    }
+    var d = document.getElementById(id);
+    d.classList.toggle(className);
   }
 
   if (window && window.addEventListener) {
@@ -91,4 +89,26 @@
       document.getElementById("toggle-button-nav").onclick = showMenu;
     });
   }
+
+  //making the call to azuracast api for listeners nums
+  var xhr = new XMLHttpRequest();
+
+  function reqListener() {
+    var listenerNum = JSON.parse(this.response)[0].listeners.total;
+    listenerMounter(listenerNum);
+    setTimeout(callMaker, 20000);
+  }
+
+  function listenerMounter(number) {
+    var d = document.getElementById("listeners-num");
+    d.textContent = number + " coders listening right now";
+  }
+
+  function callMaker() {
+    xhr.addEventListener("load", reqListener);
+    xhr.open("GET", "https://coderadio-admin.freecodecamp.org/api/nowplaying");
+    xhr.send();
+  }
+
+  callMaker();
 </script>
