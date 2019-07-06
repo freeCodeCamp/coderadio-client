@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700&display=swap");
 
 html {
   background-color: #1b1b32;
@@ -30,11 +30,23 @@ body {
 }
 .middle {
   display: flex;
-  vertical-align: middle;
+  flex-direction: column;
   width: 90%;
   max-width: 500px;
   background: #f5f6f7;
-  padding: 20px 20px 0px 20px;
+  padding: 20px 20px 20px 20px;
+}
+
+.middle hr {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 5px 0 5px 0;
+}
+
+.middle p {
+  font-size: 15px;
+  margin: 0px;
+  font-weight: bold;
 }
 
 a {
