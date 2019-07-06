@@ -96,7 +96,7 @@
   function reqListener() {
     var listenerNum = JSON.parse(this.response)[0].listeners.total;
     listenerMounter(listenerNum);
-    setTimeout(callMaker, 5000);
+    setTimeout(callMaker, 20000);
   }
 
   function listenerMounter(number) {
