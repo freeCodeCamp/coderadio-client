@@ -120,6 +120,16 @@
         ></iframe>
         <hr />
         <p id="listeners-num"></p>
+        <div class="song-history">
+          <p>Song history:</p>
+          <ul id="song-history">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
       </div>
     </div>
   </body>
@@ -147,14 +157,22 @@
   var xhr = new XMLHttpRequest();
 
   function reqListener() {
-    var listenerNum = JSON.parse(this.response)[0].listeners.total;
-    listenerMounter(listenerNum);
+    var res = JSON.parse(this.response)[0];
+    listenerMounter(res.listeners.total);
+    historyMounter(res.song_history);
     setTimeout(callMaker, 20000);
   }
 
   function listenerMounter(number) {
     var d = document.getElementById("listeners-num");
     d.textContent = number + " coders listening right now";
+  }
+
+  function historyMounter(song_history) {
+    var d = document.getElementById("song-history");
+    song_history.forEach((song, i ) => {
+      d.children[i].innerText = song.song.text
+    })
   }
 
   function callMaker() {

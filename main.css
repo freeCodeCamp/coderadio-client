@@ -50,6 +50,22 @@ body {
   font-weight: bold;
 }
 
+.song-history {
+  margin-top: 1rem;
+}
+
+.song-history ul {
+  list-style: "\1F3A7";
+  font-size: 1rem;
+  padding: 0;
+  margin: 0 0 0 20px;
+}
+
+.song-history li {
+  margin: 10px 0;
+  padding-left: 10px;
+}
+
 a {
   text-decoration: none;
 }
