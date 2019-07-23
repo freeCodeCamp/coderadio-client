@@ -58,7 +58,7 @@
     <link href="https://s3.amazonaws.com/freecodecamp/favicons/mstile-310x150.png" rel="mstile" sizes="310x150">
     <link href="https://s3.amazonaws.com/freecodecamp/favicons/mstile-70x70.png" rel="mstile" sizes="70x70">
     <link href="https://s3.amazonaws.com/freecodecamp/favicons/favicon.ico" rel="favicon">
-    <link href="//s3.amazonaws.com/freecodecamp/favicons/favicon.ico" rel="shortcut icon">    
+    <link href="//s3.amazonaws.com/freecodecamp/favicons/favicon.ico" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="main.css" />
     <title>freeCodeCamp.org Code Radio</title>
     <script
@@ -159,7 +159,7 @@
 
   function callMaker() {
     xhr.addEventListener("load", reqListener);
-    xhr.open("GET", "https://coderadio-admin.freecodecamp.org/api/nowplaying");
+    xhr.open("GET", "/app/api/nowplaying");
     xhr.send();
   }
 
