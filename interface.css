@@ -1,0 +1,499 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700&display=swap");
+* {
+  box-sizing: border-box;
+  font-family: "Lato", Arial;
+}
+
+body {
+  background-color: #1b1b32;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Open Sans", sans-serif;
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+}
+
+footer {
+  background-color: #0a0a23;
+  height: 70px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  color: #fff;
+  border-top: 3px solid #fff;
+  box-shadow: 0px 0px 4px #000;
+  z-index: 10;
+}
+
+[data-meta="title"] {
+  font-size: 18px;
+}
+[data-meta="artist"] {
+  font-size: 14px;
+}
+[data-meta="album"] {
+  font-size: 10px;
+}
+
+[data-meta="picture"] {
+  height: 70px;
+  width: 70px;
+  position: absolute;
+  background-size: cover;
+  background-position: center center;
+}
+
+[data-meta="listeners"] {
+  position: absolute;
+  right: 15px;
+  top: 18px;
+  font-size: 20px;
+}
+
+#metaDisplay {
+  width: calc(100% - 210px);
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+#metaDisplay.shown {
+  opacity: 1;
+}
+
+#playContainer {
+  height: 70px;
+  width: 70px;
+  padding: 15px;
+  cursor: pointer;
+  position: relative;
+}
+
+#playContainer::before {
+  content:"Push Play or Space Bar to Start Music";
+  font-size: 21px;
+  padding: 10px 100px 10px 20px;
+  font-weight: bold;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100px;
+  width: 250px;
+  top: -110px;
+  left: -170px;
+  background-color: #1b1b32;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  background-image: url(./img/cta.png);
+  background-position: 150px center;
+  background-repeat: no-repeat;
+}
+
+#playContainer.cta::before {
+  opacity: 1;
+}
+
+#playContainer:hover {
+  background: #2a2a40;
+}
+
+#playButton {
+  fill: white;
+  height: 40px;
+  width: 40px;
+}
+.slider-container {
+  height: 70px;
+  width: 140px;
+  padding: 30px 20px 30px 15px;
+}
+
+#slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #d3d3d3;
+  outline: none;
+}
+
+#slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: white;
+  cursor: pointer;
+}
+
+#slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: white;
+  cursor: pointer;
+}
+
+#nowPlaying {
+  height: 100%;
+  left: 70px;
+  width: calc(100% - 70px);
+  position: relative;
+  padding-left: 4px;
+}
+
+#visualizer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 88px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#visualizer canvas {
+  height: 100%;
+  width: 100%;
+}
+
+#nowPlaying progress {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  height: 4px;
+  width: calc(100% - 8px);
+  background-color: silver;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+#nowPlaying progress::-webkit-progress-bar {
+  background-color: rgb(10, 10, 35);
+  border-radius: 2px;
+}
+
+#nowPlaying progress::-webkit-progress-value {
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.1s linear;
+}
+
+.animation {
+  background-image: url("https://cdn-media-1.freecodecamp.org/code-radio/bg.png");
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  position: relative;
+  width: 100%;
+  height: calc(100% - 158px);
+}
+
+.animation.saron::before {
+  content: "";
+  background-image: url("https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif");
+  left: 388px;
+  bottom: 0px;
+  width: 509px;
+  height: 767px;
+  position: absolute;
+}
+
+details {
+  position: absolute;
+  bottom: 100px;
+  right: 50px;
+  background-color: rgba(10, 10, 35, 0.6);
+  color: #fff;
+  padding: 15px;
+  opacity: 0.1;
+  transition: opacity 0.25s ease-out;
+}
+
+details:hover,
+details[open] {
+  opacity: 1;
+}
+
+dt {
+  margin-top: 10px;
+  margin-inline-start: 0px;
+}
+
+dd {
+  margin-inline-start: 10px;
+  font-style: italic;
+}
+
+/* -----------------------site navigation ------------*/
+
+.site-nav {
+  z-index: 300;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  overflow-y: hidden;
+  height: 40px;
+  font-size: 18px;
+  font-family: "Lato", sans-serif;
+  height: 38px;
+  background: #0a0a23;
+  position: absolute;
+  z-index: 1000;
+  color: #fff;
+  width: 100%;
+  padding: 0 15px;
+  top: 0;
+}
+
+.site-nav-middle {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  margin-right: 10px;
+  padding-bottom: 80px;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+
+  -ms-overflow-scrolling: touch;
+}
+
+.site-nav-left {
+  display: none;
+}
+
+.site-nav-logo {
+  flex-shrink: 0;
+  display: block;
+  margin: 0 5px;
+  color: #fff;
+  font-size: 1.7rem;
+  line-height: 1em;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+}
+
+.site-nav-logo:hover {
+  text-decoration: none;
+}
+
+.site-nav-logo img {
+  display: block;
+  width: auto;
+  height: 25px;
+  margin-top: 7px;
+}
+
+.nav {
+  display: flex;
+  margin: 0 0 0 -12px;
+  padding: 0;
+  list-style: none;
+}
+
+.nav {
+  height: 38px;
+}
+
+.nav li {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li a {
+  display: block;
+  margin: 0;
+  padding: 5px 15px;
+  color: #fff;
+  opacity: 1;
+  white-space: nowrap;
+}
+
+.nav li:hover {
+  background: white;
+}
+
+.nav li a:hover {
+  color: #0a0a23;
+  text-decoration: none;
+}
+
+.site-nav-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: 38px;
+}
+
+.toggle-button-nav {
+  display: none;
+  padding: 2px 14px 3px;
+  border: 1px solid #fff;
+  font-family: "lato", sans-serif;
+  font-size: 18px;
+  color: #fff;
+  outline: none;
+  background-color: #0a0a23;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-top: 4px;
+  height: auto;
+}
+
+nav select {
+  position: relative;
+  top: 15px;
+}
+
+@media (max-width: 500px) {
+  .site-header {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .site-nav-middle {
+    margin-right: 0;
+  }
+  .nav {
+    display: none;
+    position: absolute;
+    background-color: #0a0a23;
+    top: 38px;
+    left: 15px;
+  }
+
+  .toggle-button-nav {
+    display: flex;
+  }
+  .show-main-nav-items {
+    display: flex;
+  }
+  .expand-nav {
+    min-height: calc(40px + 38px);
+  }
+  .reverse-toggle-color {
+    background-color: white;
+    color: #0a0a23;
+  }
+}
+
+@media (min-width: 750px) {
+  .site-nav-middle {
+    flex: 1 0 30%;
+    margin-right: 0px;
+  }
+  .site-nav-left {
+    display: flex;
+    flex: 1 0 30%;
+    margin-left: 0px;
+  }
+  .site-nav-logo {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .site-nav-right {
+    flex: 1 0 30%;
+    margin-left: auto;
+  }
+  .main-nav-group {
+    margin-left: auto;
+  }
+}
+
+/*       jumbotron           */
+
+.jumbotron {
+  background: #0a0a23;
+}
+
+.jumbotron a {
+  color: white;
+  text-decoration: underline;
+}
+
+.jumbotron h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+@media (max-width: 500px) {
+  .site-title {
+    font-size: 30px;
+  }
+}
+
+/*     container and grid     */
+a {
+  text-decoration: none;
+}
+
+h1,
+h2 {
+  font-size: 18px;
+  margin: 0;
+  color: white;
+  display: inline-block;
+}
+
+p {
+  margin: 0;
+}
+
+.middle p {
+  font-size: 15px;
+  margin: 0px;
+  font-weight: bold;
+}
+
+.middle hr {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 5px 0 5px 0;
+}
+
+.under-header-content {
+  background-color: #0a0a23;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  top: 38px;
+  text-align: center;
+  color: white;
+}
+
+#container {
+  text-align: justify;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(50px + 38px);
+}
+.middle {
+  display: flex;
+  flex-direction: column;
+  margin-top: 200;
+  width: 90%;
+  max-width: 500px;
+  background: #f5f6f7;
+  padding: 20px 20px 20px 20px;
+}
+
+body {
+  background-color: #1b1b32;
+}
+
+@media (max-width: 500px) {
+  .under-header-content {
+    flex-direction: column;
+    height: 200px;
+  }
+
+  footer.footer {
+    display: none;
+  }
+}

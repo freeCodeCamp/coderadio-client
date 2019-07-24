@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -59,7 +58,7 @@
     <link href="https://s3.amazonaws.com/freecodecamp/favicons/mstile-70x70.png" rel="mstile" sizes="70x70">
     <link href="https://s3.amazonaws.com/freecodecamp/favicons/favicon.ico" rel="favicon">
     <link href="//s3.amazonaws.com/freecodecamp/favicons/favicon.ico" rel="shortcut icon">
-    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link href="./interface.css" rel="stylesheet" type="text/css" />
     <title>freeCodeCamp.org Code Radio</title>
     <script
       async
@@ -74,7 +73,6 @@
       gtag("config", "UA-55446531-21");
     </script>
   </head>
-
   <body>
     <nav class="site-nav nav-padding" id="site-nav">
       <div class="site-nav-left"></div>
@@ -104,64 +102,16 @@
         Menu
       </button>
     </nav>
-    <div class="under-header-content jumbotron">
-      <h1 class="site-title">Welcome to Code Radio.</h1>
-      <h2 class="site-description">
-        24/7 music designed for coding.
-      </h2>
-    </div>
-    <div class="container">
-      <div class="middle">
-        <iframe
-          src="https://coderadio-admin.freecodecamp.org/public/coderadio/embed"
-          frameborder="0"
-          allowtransparency="true"
-          style="width: 100%; min-height: 120px; border: 0;"
-        ></iframe>
-        <hr />
-        <p id="listeners-num"></p>
+    <main>
+      <div class="under-header-content jumbotron">
+        <h1 class="site-title">Welcome to Code Radio.</h1>
+        &nbsp; &nbsp;
+        <h2 class="site-description">24/7 music designed for coding.</h2>
       </div>
-    </div>
+      <div id="container"></div>
+    </main>
   </body>
 </html>
-
-<script type="text/javascript">
-  function showMenu() {
-    toggleClass("toggle-button-nav", "reverse-toggle-color");
-    toggleClass("nav", "show-main-nav-items");
-    toggleClass("site-nav", "expand-nav");
-  }
-
-  function toggleClass(id, className) {
-    var d = document.getElementById(id);
-    d.classList.toggle(className);
-  }
-
-  if (window && window.addEventListener) {
-    window.addEventListener("load", function() {
-      document.getElementById("toggle-button-nav").onclick = showMenu;
-    });
-  }
-
-  //making the call to azuracast api for listeners nums
-  var xhr = new XMLHttpRequest();
-
-  function reqListener() {
-    var listenerNum = JSON.parse(this.response)[0].listeners.total;
-    listenerMounter(listenerNum);
-    setTimeout(callMaker, 20000);
-  }
-
-  function listenerMounter(number) {
-    var d = document.getElementById("listeners-num");
-    d.textContent = number + " coders listening right now";
-  }
-
-  function callMaker() {
-    xhr.addEventListener("load", reqListener);
-    xhr.open("GET", "/app/api/nowplaying");
-    xhr.send();
-  }
-
-  callMaker();
-</script>
+<script src="./codeRadio.js"></script>
+<script src="./codeRadio-mobile.js" type="module"></script>
+<script src="./codeRadio-desktop.js" type="module"></script>
