@@ -97,7 +97,7 @@ if (!window.mobilecheck()) {
             meta.container.classList.add("thumb");
         } else {
             meta.container.classList.remove("thumb");
-            meta.picture.style.backgroundImage = "url(./img/cover_placeholder.gif)";
+            meta.picture.style.backgroundImage = "url(https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif)";
         }
         meta.title.textContent = songData.title;
         meta.artist.textContent = songData.artist;
