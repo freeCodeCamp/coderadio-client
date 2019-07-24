@@ -84,7 +84,7 @@ footer {
   border-radius: 5px;
   opacity: 0;
   transition: opacity 0.5s ease-out;
-  background-image: url(./img/cta.png);
+  background-image: url(https://cdn-media-1.freecodecamp.org/code-radio/cta.png);
   background-position: 150px center;
   background-repeat: no-repeat;
   pointer-events: none;
@@ -180,7 +180,7 @@ footer {
 }
 
 .animation {
-  background-image: url("https://cdn-media-1.freecodecamp.org/code-radio/bg.png");
+  background-image: url("https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg");
   background-position: left bottom;
   background-repeat: no-repeat;
   position: relative;
