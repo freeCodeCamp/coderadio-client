@@ -79,9 +79,11 @@ export class CodeRadio {
    */
   set url(url = false) {
     if (url) {
+      let playing = this.playing;
+      if (playing) this.pause();
       this[_url] = url;
       this[_player].src = url;
-      this[_player].play();
+      if (playing) this.play();
     }
   }
 
@@ -151,7 +153,11 @@ export class CodeRadio {
   }
 
   get playing() {
-    return this[_player].playing;
+    return !this[_player].paused;
+  }
+
+  get paused() {
+    return this[_player].paused;
   }
 
   setMountToConnection() {
@@ -250,6 +256,7 @@ export class CodeRadio {
   setTargetVolume(v) {
     this[_audioConfig].maxVolume = parseFloat(Math.max(0, Math.min(1, v).toFixed(1)));
     this[_player].volume = this[_audioConfig].maxVolume;
+    this.emit('volumeChange', this[_player].volume);
   }
 
   // Simple fade command to initiate the playing and pausing in a more fluid method

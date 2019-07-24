@@ -24,7 +24,7 @@ if (!window.mobilecheck()) {
           <div data-meta="listeners"></div>
         </div>
       </div>
-      <div id="playContainer">
+      <div id="playContainer" class="cta">
         <img
           id="playButton"
           src="https://cdn-media-1.freecodecamp.org/code-radio/play.svg"
@@ -55,7 +55,7 @@ if (!window.mobilecheck()) {
         playContainer = document.getElementById("playContainer"),
         progressInterval = false,
         meta = {
-            container: document.getElementById("nowPlaying"),
+            container: document.getElementById("metaDisplay"),
             picture: document.querySelector('[data-meta="picture"]'),
             title: document.querySelector('[data-meta="title"]'),
             artist: document.querySelector('[data-meta="artist"]'),
@@ -67,8 +67,15 @@ if (!window.mobilecheck()) {
     slider.addEventListener('input', () => fCC_Player.setTargetVolume(slider.value / 10));
     playContainer.addEventListener('click', () => fCC_Player.togglePlay());
 
-    fCC_Player.on('play', () => playButton.src = "https://cdn-media-1.freecodecamp.org/code-radio/pause.svg");
-    fCC_Player.on('pause', () => playButton.src = "https://cdn-media-1.freecodecamp.org/code-radio/play.svg");
+    fCC_Player.on('play', () => {
+      playContainer.classList.remove('cta');
+      meta.container.classList.add('shown');
+      playButton.src = "https://cdn-media-1.freecodecamp.org/code-radio/pause.svg";
+    });
+    fCC_Player.on('pause', () => {
+      playButton.src = "https://cdn-media-1.freecodecamp.org/code-radio/play.svg";
+      meta.container.classList.remove('shown');
+    });
     fCC_Player.on('volumeChange', (volume) => slider.value = Math.round(volume * 10));
     fCC_Player.on('listeners', (count) => document.querySelector('[data-meta="listeners"]').textContent = `Listeners: ${count}`);
     fCC_Player.on('newSong', (songData) => {
