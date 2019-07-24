@@ -8,6 +8,7 @@ if (!window.mobilecheck()) {
         details = document.createElement('details'),
         connectionSpeed = document.createElement('select'),
         speedOptions = [];
+    
     connectionSpeed.addEventListener('change', evt => {
       fCC_Player.mount = connectionSpeed.value;
     });
@@ -84,12 +85,12 @@ if (!window.mobilecheck()) {
         }
         meta.duration.value = 0;
         meta.duration.max = fCC_Player.duration;
-        if (!!songData.art) {
+        if (!!songData.art && (!!navigator.connection && navigator.connection.downlink > 1.5)) {
             meta.picture.style.backgroundImage = `url(${songData.art})`;
             meta.container.classList.add("thumb");
         } else {
             meta.container.classList.remove("thumb");
-            meta.picture.style.backgroundImage = "";
+            meta.picture.style.backgroundImage = "url(./img/cover_placeholder.gif)";
         }
         meta.title.textContent = songData.title;
         meta.artist.textContent = songData.artist;
@@ -100,4 +101,7 @@ if (!window.mobilecheck()) {
     });
 
     container.classList.add("animation");
+    if (!!navigator.connection && navigator.connection.downlink > 1.5) {
+      container.classList.add('saron');
+    }
 }

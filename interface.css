@@ -156,7 +156,7 @@ footer {
   height: calc(100% - 158px);
 }
 
-.animation::before {
+.animation.saron::before {
   content: "";
   background-image: url("https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif");
   left: 388px;
