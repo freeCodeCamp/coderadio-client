@@ -87,6 +87,7 @@ footer {
   background-image: url(./img/cta.png);
   background-position: 150px center;
   background-repeat: no-repeat;
+  pointer-events: none;
 }
 
 #playContainer.cta::before {
