@@ -178,7 +178,7 @@ export class CodeRadio {
 
         // We look through the available mounts to find the default mount (or just the listen_url)
         if (this.url === "") {
-          this[_alternateMounts] = np.station.mounts;
+          this[_alternateMounts] = [].concat(np.station.mounts, np.station.remotes);
           this.setMountToConnection();
         }
 
