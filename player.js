@@ -17,7 +17,7 @@ export class CodeRadio {
      * General configuration options
      */
     this.config = {
-      metadataTimer: 2000
+      metadataTimer: 5000
     };
 
     this[_fastConnection] = (!!navigator.connection) ? (navigator.connection.downlink > 1.5) : false;
@@ -171,7 +171,7 @@ export class CodeRadio {
 
   getNowPlaying() {
     // To prevent browser based caching, we add the date to the request, it won't impact the response
-    fetch(`/app/api/nowplaying?t=${new Date().valueOf()}`)
+    fetch(`https://github.com/slact/nchan.js/blob/master/NchanSubscriber.js`)
       .then(req => req.json())
       .then(np => {
         np = np[0]; // There is only ever 1 song "Now Playing" so let's simplify the response
