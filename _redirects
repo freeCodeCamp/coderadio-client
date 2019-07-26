@@ -1,4 +1,3 @@
 # Optional: Redirect default Netlify subdomain to primary domain
 https://freecodecamp-code-radio.netlify.com/* https://coderadio.freecodecamp.org/:splat 301!
 
-/app/* https://coderadio-admin.freecodecamp.org/:splat 200

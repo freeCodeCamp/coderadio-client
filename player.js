@@ -1,26 +1,27 @@
-const _events = Symbol('events'),
-  _url = Symbol('url'),
-  _player = Symbol('player'),
-  _alternateMounts = Symbol('alternateMounts'),
-  _currentSong = Symbol('currentSong'),
-  _songStartedAt = Symbol('songStartedAt'),
-  _songDuration = Symbol('songDuration'),
-  _progressInterval = Symbol('progressInterval'),
-  _listeners = Symbol('listeners'),
-  _audioConfig = Symbol('audioConfig'),
-  _fastConnection = Symbol('fastConnection');
+const _events = Symbol("events"),
+  _url = Symbol("url"),
+  _player = Symbol("player"),
+  _alternateMounts = Symbol("alternateMounts"),
+  _currentSong = Symbol("currentSong"),
+  _songStartedAt = Symbol("songStartedAt"),
+  _songDuration = Symbol("songDuration"),
+  _progressInterval = Symbol("progressInterval"),
+  _listeners = Symbol("listeners"),
+  _audioConfig = Symbol("audioConfig"),
+  _fastConnection = Symbol("fastConnection");
 
 export class CodeRadio {
-
   constructor() {
     /***
      * General configuration options
      */
     this.config = {
-      metadataTimer: 2000
+      metadataTimer: 5000
     };
 
-    this[_fastConnection] = (!!navigator.connection) ? (navigator.connection.downlink > 1.5) : false;
+    this[_fastConnection] = !!navigator.connection
+      ? navigator.connection.downlink > 1.5
+      : false;
 
     /***
      * The equalizer data is held as a seperate data set
@@ -96,11 +97,11 @@ export class CodeRadio {
   }
 
   set player(v) {
-    throw new Error('You cannot set the value of a readonly attribute');
+    throw new Error("You cannot set the value of a readonly attribute");
   }
 
   set mounts(mounts) {
-    throw new Error('You cannot set the value of a readonly attribute');
+    throw new Error("You cannot set the value of a readonly attribute");
   }
 
   set mount(mount) {
@@ -117,7 +118,7 @@ export class CodeRadio {
    * the metadata is updated.
    */
   set currentSong(songData = {}) {
-    throw new Error('You cannot set the value of a readonly attribute');
+    throw new Error("You cannot set the value of a readonly attribute");
   }
 
   get currentSong() {
@@ -129,7 +130,7 @@ export class CodeRadio {
    * duration for the max of the meter and set the played at to 0
    */
   set playedAt(t = 0) {
-    throw new Error('You cannot set the value of a readonly attribute');
+    throw new Error("You cannot set the value of a readonly attribute");
   }
 
   get playedAt() {
@@ -137,7 +138,7 @@ export class CodeRadio {
   }
 
   set duration(d = 0) {
-    throw new Error('You cannot set the value of a readonly attribute');
+    throw new Error("You cannot set the value of a readonly attribute");
   }
 
   get duration() {
@@ -145,7 +146,7 @@ export class CodeRadio {
   }
 
   set listeners(v = 0) {
-    throw new Error('You cannot set the value of a readonly attribute');
+    throw new Error("You cannot set the value of a readonly attribute");
   }
 
   get listeners() {
@@ -161,24 +162,34 @@ export class CodeRadio {
   }
 
   setMountToConnection() {
-    this[_fastConnection] = (!!navigator.connection) ? (navigator.connection.downlink > 1.5) : false;
+    this[_fastConnection] = !!navigator.connection
+      ? navigator.connection.downlink > 1.5
+      : false;
     if (this[_fastConnection]) {
       this.url = this.mounts.find(mount => !!mount.is_default).url;
     } else {
-      this.url = this.mounts.find(mount => mount.bitrate < this.mounts.find(m => !!m.is_default).bitrate).url || this.mounts.find(mount => !!mount.is_default).url;
+      this.url =
+        this.mounts.find(
+          mount => mount.bitrate < this.mounts.find(m => !!m.is_default).bitrate
+        ).url || this.mounts.find(mount => !!mount.is_default).url;
     }
   }
 
   getNowPlaying() {
     // To prevent browser based caching, we add the date to the request, it won't impact the response
-    fetch(`/app/api/nowplaying?t=${new Date().valueOf()}`)
-      .then(req => req.json())
+    fetch(
+      `https://coderadio-admin.freecodecamp.org/api/nowplaying_static/coderadio.json`
+    )
+      .then(response => {
+        return response.json();
+      })
       .then(np => {
-        np = np[0]; // There is only ever 1 song "Now Playing" so let's simplify the response
-
         // We look through the available mounts to find the default mount (or just the listen_url)
         if (this.url === "") {
-          this[_alternateMounts] = [].concat(np.station.mounts, np.station.remotes);
+          this[_alternateMounts] = [].concat(
+            np.station.mounts,
+            np.station.remotes
+          );
           this.setMountToConnection();
         }
 
@@ -189,9 +200,9 @@ export class CodeRadio {
           this[_songDuration] = np.now_playing.duration;
           if (this[_listeners] !== np.listeners.current) {
             this[_listeners] = np.listeners.current;
-            this.emit('listeners', this[_listeners]);
+            this.emit("listeners", this[_listeners]);
           }
-          this.emit('newSong', this[_currentSong]);
+          this.emit("newSong", this[_currentSong]);
         }
 
         // Since the server doesn't have a socket connection (yet), we need to long poll it for the current song
@@ -212,10 +223,20 @@ export class CodeRadio {
         this.togglePlay();
         break;
       case "ArrowUp":
-        this.setTargetVolume(Math.min(this[_audioConfig].maxVolume + this[_audioConfig].volumeSteps, 1));
+        this.setTargetVolume(
+          Math.min(
+            this[_audioConfig].maxVolume + this[_audioConfig].volumeSteps,
+            1
+          )
+        );
         break;
       case "ArrowDown":
-        this.setTargetVolume(Math.max(this[_audioConfig].maxVolume - this[_audioConfig].volumeSteps, 0));
+        this.setTargetVolume(
+          Math.max(
+            this[_audioConfig].maxVolume - this[_audioConfig].volumeSteps,
+            0
+          )
+        );
         break;
     }
   }
@@ -224,7 +245,7 @@ export class CodeRadio {
     if (this[_player].paused) {
       this[_player].volume = 0;
       this[_player].play();
-      this.emit('play');
+      this.emit("play");
       this.fadeUp();
       return this;
     }
@@ -232,7 +253,7 @@ export class CodeRadio {
 
   pause() {
     this[_player].pause();
-    this.emit('pause');
+    this.emit("pause");
     return this;
   }
 
@@ -246,7 +267,7 @@ export class CodeRadio {
     if (!!this[_player].src) {
       // If the player is paused, set the volume to 0 and fade up
       if (this[_player].paused) this.play();
-        // if it is already playing, fade the music out (resulting in a pause)
+      // if it is already playing, fade the music out (resulting in a pause)
       else this.fade();
     }
 
@@ -254,14 +275,17 @@ export class CodeRadio {
   }
 
   setTargetVolume(v) {
-    this[_audioConfig].maxVolume = parseFloat(Math.max(0, Math.min(1, v).toFixed(1)));
+    this[_audioConfig].maxVolume = parseFloat(
+      Math.max(0, Math.min(1, v).toFixed(1))
+    );
     this[_player].volume = this[_audioConfig].maxVolume;
-    this.emit('volumeChange', this[_player].volume);
+    this.emit("volumeChange", this[_player].volume);
   }
 
   // Simple fade command to initiate the playing and pausing in a more fluid method
   fade(direction = "down") {
-    this[_audioConfig].targetVolume = direction.toLowerCase() === "up" ? this[_audioConfig].maxVolume : 0;
+    this[_audioConfig].targetVolume =
+      direction.toLowerCase() === "up" ? this[_audioConfig].maxVolume : 0;
     this.updateVolume();
     return this;
   }
@@ -287,23 +311,30 @@ export class CodeRadio {
       // Unmet audio volume settings require it to be changed
     } else {
       // We capture the value of the next increment by either the configuration or the difference between the current and target if it's smaller than the increment
-      let volumeNextIncrement = Math.min(this[_audioConfig].volumeSteps, Math.abs(this[_audioConfig].targetVolume - this[_player].volume));
+      let volumeNextIncrement = Math.min(
+        this[_audioConfig].volumeSteps,
+        Math.abs(this[_audioConfig].targetVolume - this[_player].volume)
+      );
 
       // Adjust the audio based on if the target is higher or lower than the current
       this[_player].volume +=
         this[_audioConfig].targetVolume > this[_player].volume
           ? volumeNextIncrement
           : -volumeNextIncrement;
-      
-      this.emit('volumeChange', this[_player].volume);
+
+      this.emit("volumeChange", this[_player].volume);
 
       // The speed at which the audio lowers is also controlled.
-      setTimeout(() => this.updateVolume(), this[_audioConfig].volumeTransitionSpeed);
+      setTimeout(
+        () => this.updateVolume(),
+        this[_audioConfig].volumeTransitionSpeed
+      );
     }
   }
-    
+
   on(trigger, fn, once = false) {
-    if (typeof fn != 'function') throw new Error(`Invalid Listener: ${trigger}. Must be a function`);
+    if (typeof fn != "function")
+      throw new Error(`Invalid Listener: ${trigger}. Must be a function`);
     if (!this[_events]) this[_events] = {};
     if (!this[_events][trigger]) this[_events][trigger] = new Array();
     this[_events][trigger].push({
@@ -312,23 +343,23 @@ export class CodeRadio {
     });
   }
 
-  once(trigger, fn) { 
+  once(trigger, fn) {
     this.on(trigger, fn, true);
   }
 
   off(trigger, fn) {
     if (!this[_events] || !this[_events][trigger]) return;
-    this[_events][trigger] = this[_events][trigger].map(evt => (evt !== fn));
+    this[_events][trigger] = this[_events][trigger].map(evt => evt !== fn);
   }
 
   emit(trigger, data) {
-      return new Promise((resolve, reject) => {
-        if (!this[_events] || !this[_events][trigger]) return;
-        this[_events][trigger].forEach((evt, i) => {
-          evt.listener(data);
-          if (evt.once) this[_events][trigger].splice(i, 1);
-        });
-        resolve();
+    return new Promise((resolve, reject) => {
+      if (!this[_events] || !this[_events][trigger]) return;
+      this[_events][trigger].forEach((evt, i) => {
+        evt.listener(data);
+        if (evt.once) this[_events][trigger].splice(i, 1);
       });
+      resolve();
+    });
   }
 }
