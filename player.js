@@ -174,16 +174,25 @@ export class CodeRadio {
         ).url || this.mounts.find(mount => !!mount.is_default).url;
     }
   }
+  // fetch('https://coderadio-admin.freecodecamp.org/api/nowplaying_static/coderadio.json')
+  // .then(response => {
+  //   return response.json()
+  // })
+  // .then(data => {
+  //   // Work with JSON data here
+  //   console.log(data)
+  // })
+  // .catch(err => {
+  //   // Do something for an error here
+  // })
 
   getNowPlaying() {
     // To prevent browser based caching, we add the date to the request, it won't impact the response
     fetch(
       `https://coderadio-admin.freecodecamp.org/api/nowplaying_static/coderadio.json`
     )
-      .then(req => {
-        console.log(req);
-
-        req.json();
+      .then(response => {
+        return response.json();
       })
       .then(np => {
         console.log(np);
