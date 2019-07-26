@@ -16,7 +16,7 @@ export class CodeRadio {
      * General configuration options
      */
     this.config = {
-      metadataTimer: 2000
+      metadataTimer: 5000
     };
 
     this[_fastConnection] = !!navigator.connection
@@ -174,17 +174,6 @@ export class CodeRadio {
         ).url || this.mounts.find(mount => !!mount.is_default).url;
     }
   }
-  // fetch('https://coderadio-admin.freecodecamp.org/api/nowplaying_static/coderadio.json')
-  // .then(response => {
-  //   return response.json()
-  // })
-  // .then(data => {
-  //   // Work with JSON data here
-  //   console.log(data)
-  // })
-  // .catch(err => {
-  //   // Do something for an error here
-  // })
 
   getNowPlaying() {
     // To prevent browser based caching, we add the date to the request, it won't impact the response
@@ -195,9 +184,6 @@ export class CodeRadio {
         return response.json();
       })
       .then(np => {
-        console.log(np);
-        // There is only ever 1 song "Now Playing" so let's simplify the response
-
         // We look through the available mounts to find the default mount (or just the listen_url)
         if (this.url === "") {
           this[_alternateMounts] = [].concat(
