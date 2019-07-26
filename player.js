@@ -16,7 +16,7 @@ export class CodeRadio {
      * General configuration options
      */
     this.config = {
-      metadataTimer: 5000
+      metadataTimer: 2000
     };
 
     this[_fastConnection] = !!navigator.connection
@@ -186,6 +186,7 @@ export class CodeRadio {
         req.json();
       })
       .then(np => {
+        console.log(np);
         // There is only ever 1 song "Now Playing" so let's simplify the response
 
         // We look through the available mounts to find the default mount (or just the listen_url)
