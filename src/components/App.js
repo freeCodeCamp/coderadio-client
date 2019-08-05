@@ -331,6 +331,7 @@ export default class App extends React.Component {
         <Main
           fastConnection={this.state.fastConnection}
           player={this._player}
+          playing={this.state.playing}
         />
         <audio crossOrigin="anonymous" ref={a => (this._player = a)} />
         <Footer

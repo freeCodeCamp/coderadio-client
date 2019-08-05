@@ -2,31 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { isBrowser } from "react-device-detect";
 
-import visualizer from "../scripts/visualizer";
+import Visualizer from "./Visualizer";
 
 export default class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visualizerRunning: false
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      !this.state.visualizerRunning &&
-      nextProps.player &&
-      this._visualizerContainer
-    ) {
-      this.setState({
-        visualizerRunning: true
-      });
-
-      // eslint-disable-next-line no-new
-      new visualizer(nextProps.player);
-    }
-  }
-
   toggleSidenav() {
     this.setState(prevState => ({
       navOpen: !prevState.navOpen
@@ -41,7 +19,7 @@ export default class Main extends React.Component {
       );
 
     let visualizer = isBrowser ? (
-      <div id="visualizer" ref={a => (this._visualizerContainer = a)} />
+      <Visualizer player={this.props.player} playing={this.props.playing} />
     ) : (
       ""
     );
@@ -76,5 +54,6 @@ export default class Main extends React.Component {
 
 Main.propTypes = {
   fastConnection: PropTypes.bool,
-  player: PropTypes.object
+  player: PropTypes.object,
+  playing: PropTypes.bool
 };

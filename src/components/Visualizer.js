@@ -1,46 +1,50 @@
-const _player = Symbol("player");
+import React from "react";
+import PropTypes from "prop-types";
 
-export default class Visualizer {
-  constructor(player, container = false) {
-    this[_player] = player;
-    this.eq = {};
-    this.config = {
-      baseColour: "rgb(10, 10, 35)",
-      translucent: "rgba(10, 10, 35, 0.6)",
-      multiplier: 0.7529
-    };
-    this.container = container || document.getElementById("visualizer");
-
-    // In order to get around some mobile browser limitations,
-    // we can only generate a lot
-    // of the audio context stuff AFTER the audio has been triggered.
-    // We can't see it until
-    // then anyway so it makes no difference to desktop.
-
-    player.addEventListener("play", () => {
-      if (!this.eq.context) {
-        this.initiateEQ();
-        this.createVisualizer();
+export default class Visualizer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      eq: {},
+      config: {
+        baseColour: "rgb(10, 10, 35)",
+        translucent: "rgba(10, 10, 35, 0.6)",
+        multiplier: 0.7529
       }
-    });
+    };
+  }
+
+  // In order to get around some mobile browser limitations,
+  // we can only generate a lot
+  // of the audio context stuff AFTER the audio has been triggered.
+  // We can't see it until
+  // then anyway so it makes no difference to desktop.
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.playing && !this.state.eq.context) {
+      this.initiateEQ();
+      this.createVisualizer();
+    }
   }
 
   initiateEQ() {
+    let eq = this.state.eq;
     // Create a new Audio Context element to read the samples from
-    this.eq.context = new AudioContext();
+    eq.context = new AudioContext();
     // Apply the audio element as the source where to pull all the data from
-    this.eq.src = this.eq.context.createMediaElementSource(this[_player]);
+    eq.src = eq.context.createMediaElementSource(this.props.player);
 
     // Use some amazing trickery that allows javascript to
     // analyse the current state
-    this.eq.analyser = this.eq.context.createAnalyser();
-    this.eq.src.connect(this.eq.analyser);
-    this.eq.analyser.connect(this.eq.context.destination);
-    this.eq.analyser.fftSize = 256;
+    eq.analyser = eq.context.createAnalyser();
+    eq.src.connect(eq.analyser);
+    eq.analyser.connect(eq.context.destination);
+    eq.analyser.fftSize = 256;
 
     // Create a buffer array for the number of frequencies available
     // (minus the high pitch useless ones that never really do anything anyway)
-    this.eq.bands = new Uint8Array(this.eq.analyser.frequencyBinCount - 32);
+    eq.bands = new Uint8Array(eq.analyser.frequencyBinCount - 32);
+
+    this.setState({ eq });
     this.updateEQBands();
   }
 
@@ -51,7 +55,7 @@ export default class Visualizer {
    */
   updateEQBands() {
     // Populate the buffer with the audio source’s current data
-    this.eq.analyser.getByteFrequencyData(this.eq.bands);
+    this.state.eq.analyser.getByteFrequencyData(this.state.eq.bands);
 
     // Can’t stop, won’t stop
     requestAnimationFrame(() => this.updateEQBands());
@@ -62,16 +66,14 @@ export default class Visualizer {
    * created.
    */
   createVisualizer() {
-    let container = document.createElement("canvas");
-    this.container.appendChild(container);
-    container.width = container.parentNode.offsetWidth;
-    container.height = container.parentNode.offsetHeight;
+    this._canvas.width = this._canvas.parentNode.offsetWidth;
+    this._canvas.height = this._canvas.parentNode.offsetHeight;
 
     this.visualizer = {
-      ctx: container.getContext("2d"),
-      height: container.height,
-      width: container.width,
-      barWidth: container.width / this.eq.bands.length
+      ctx: this._canvas.getContext("2d"),
+      height: this._canvas.height,
+      width: this._canvas.width,
+      barWidth: this._canvas.width / this.state.eq.bands.length
     };
 
     this.drawVisualizer();
@@ -82,7 +84,7 @@ export default class Visualizer {
    * canvas in the window directly above the song into.
    */
   drawVisualizer() {
-    if (this.eq.bands.reduce((a, b) => a + b, 0) !== 0)
+    if (this.state.eq.bands.reduce((a, b) => a + b, 0) !== 0)
       requestAnimationFrame(() => this.drawVisualizer());
     // Because timeupdate events are not triggered at browser speed,
     // we use requestanimationframe for higher framerates
@@ -106,11 +108,11 @@ export default class Visualizer {
     this.visualizer.ctx.beginPath();
     // Start at the bottom left
     this.visualizer.ctx.moveTo(x, 0);
-    this.visualizer.ctx.fillStyle = this.config.translucent;
-    this.eq.bands.forEach(band => {
+    this.visualizer.ctx.fillStyle = this.state.config.translucent;
+    this.state.eq.bands.forEach(band => {
       // Get the overall hight associated to the current band and
       // convert that into a Y position on the canvas
-      y = this.config.multiplier * band;
+      y = this.state.config.multiplier * band;
       // Draw a line from the current position to the wherever the Y position is
       this.visualizer.ctx.lineTo(x, y);
       // Continue that line to meet the width of the bars
@@ -124,4 +126,17 @@ export default class Visualizer {
     // Fill it
     this.visualizer.ctx.fill();
   }
+
+  render() {
+    return (
+      <div id="visualizer">
+        <canvas ref={a => (this._canvas = a)} />
+      </div>
+    );
+  }
 }
+
+Visualizer.propTypes = {
+  player: PropTypes.object,
+  playing: PropTypes.bool
+};
