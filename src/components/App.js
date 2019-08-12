@@ -269,6 +269,12 @@ export default class App extends React.Component {
           this.setMountToConnection(np.station.mounts, np.station.remotes);
         }
 
+        if (this.state.listeners !== np.listeners.current) {
+          this.setState({
+            listeners: np.listeners.current
+          });
+        }
+
         // We only need to update th metadata if the song has been changed
         if (np.now_playing.song.id !== this.state.currentSong.id) {
           this.setState({
@@ -276,11 +282,6 @@ export default class App extends React.Component {
             songStartedAt: np.now_playing.played_at * 1000,
             songDuration: np.now_playing.duration
           });
-          if (this.state.listeners !== np.listeners.current) {
-            this.setState({
-              listeners: np.listeners.current
-            });
-          }
         }
         // Since the server doesn't have a socket connection (yet),
         // we need to long poll it for the current song
