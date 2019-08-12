@@ -96,6 +96,7 @@ footer {
   padding: 15px;
   cursor: pointer;
   position: relative;
+  color: white;
 }
 
 #playContainer::before {
@@ -127,11 +128,6 @@ footer {
   background: #2a2a40;
 }
 
-#playButton {
-  fill: white;
-  height: 40px;
-  width: 40px;
-}
 .slider-container {
   height: 70px;
   width: 140px;
