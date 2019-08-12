@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 
 import { isBrowser } from "react-device-detect";
 
-const DEAFAULT_ART =
-  "https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif";
+const DEFAULT_ART = "https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif";
 const PAUSE_IMAGE = "https://cdn-media-1.freecodecamp.org/code-radio/pause.svg";
 const PLAY_IMAGE = "https://cdn-media-1.freecodecamp.org/code-radio/play.svg";
 
@@ -98,7 +97,7 @@ export default class Footer extends React.Component {
             src={
               this.props.fastConnection
                 ? this.props.currentSong.art
-                : DEAFAULT_ART
+                : DEFAULT_ART
             }
           />
           <div id="nowPlaying">
