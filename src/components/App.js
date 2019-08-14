@@ -55,6 +55,11 @@ export default class App extends React.Component {
       remotes: [],
       playing: false,
 
+      /** *
+       * This is needed to clear the timer used in getNowPlaying()
+       * */
+      timerId: null,
+
       // Note: the crossOrigin is needed to fix a CORS JavaScript requirement
 
       /** *
@@ -69,6 +74,7 @@ export default class App extends React.Component {
     this.togglePlay = this.togglePlay.bind(this);
     this.setUrl = this.setUrl.bind(this);
     this.setTargetVolume = this.setTargetVolume.bind(this);
+    this.getNowPlaying = this.getNowPlaying.bind(this);
   }
 
   // set the players initial vol and crossOrigin
@@ -79,6 +85,11 @@ export default class App extends React.Component {
   componentDidMount() {
     this.setPlayerInitial();
     this.getNowPlaying();
+  }
+
+  componentWillUnmount() {
+    // Clear the timer before the component unmounts
+    clearInterval(this.state.timerId);
   }
 
   /** *
@@ -98,6 +109,14 @@ export default class App extends React.Component {
   }
 
   play() {
+    // Since the server doesn't have a socket connection (yet),
+    // we need to long poll it for the current song
+    const timerId = setInterval(
+      this.getNowPlaying,
+      this.state.config.metadataTimer
+    );
+    this.setState({ timerId });
+
     if (this._player.paused) {
       this._player.volume = 0;
       this._player.play();
@@ -116,6 +135,9 @@ export default class App extends React.Component {
     this.setState({
       playing: false
     });
+
+    // Clear the timer when user pauses the player
+    clearInterval(this.state.timerId);
   }
 
   /** *
@@ -282,9 +304,6 @@ export default class App extends React.Component {
             });
           }
         }
-        // Since the server doesn't have a socket connection (yet),
-        // we need to long poll it for the current song
-        setTimeout(() => this.getNowPlaying(), this.state.config.metadataTimer);
       })
       .catch(() => {
         setTimeout(
