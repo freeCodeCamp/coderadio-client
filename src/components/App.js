@@ -21,7 +21,7 @@ export default class App extends React.Component {
         : false,
 
       /** *
-       * The equalizer data is held as a seperate data set
+       * The equalizer data is held as a separate data set
        * to allow for easy implementation of visualizers.
        * With the ultimate goal of this allowing plug and
        * play visualizers.
@@ -291,18 +291,19 @@ export default class App extends React.Component {
           this.setMountToConnection(np.station.mounts, np.station.remotes);
         }
 
-        // We only need to update th metadata if the song has been changed
+        if (this.state.listeners !== np.listeners.current) {
+          this.setState({
+            listeners: np.listeners.current
+          });
+        }
+
+        // We only need to update the metadata if the song has been changed
         if (np.now_playing.song.id !== this.state.currentSong.id) {
           this.setState({
             currentSong: np.now_playing.song,
             songStartedAt: np.now_playing.played_at * 1000,
             songDuration: np.now_playing.duration
           });
-          if (this.state.listeners !== np.listeners.current) {
-            this.setState({
-              listeners: np.listeners.current
-            });
-          }
         }
       })
       .catch(() => {
