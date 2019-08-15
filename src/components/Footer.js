@@ -2,11 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { isBrowser } from "react-device-detect";
+import { ReactComponent as Pause } from '../assets/pause.svg';
+import { ReactComponent as Play } from '../assets/play.svg';
 
-const DEAFAULT_ART =
-  "https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif";
-const PAUSE_IMAGE = "https://cdn-media-1.freecodecamp.org/code-radio/pause.svg";
-const PLAY_IMAGE = "https://cdn-media-1.freecodecamp.org/code-radio/play.svg";
+const DEFAULT_ART = "https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif";
 
 export default class Footer extends React.Component {
   constructor(props) {
@@ -98,7 +97,7 @@ export default class Footer extends React.Component {
             src={
               this.props.fastConnection
                 ? this.props.currentSong.art
-                : DEAFAULT_ART
+                : DEFAULT_ART
             }
           />
           <div id="nowPlaying">
@@ -120,11 +119,7 @@ export default class Footer extends React.Component {
           onClick={isBrowser ? this.handlePlay.bind(this) : null}
           onTouchStart={!isBrowser ? this.handlePlay.bind(this) : null}
         >
-          <img
-            alt="Play Pause Button"
-            id="playButton"
-            src={this.props.playing ? PAUSE_IMAGE : PLAY_IMAGE}
-          />
+          {this.props.playing ? <Pause /> : <Play />}
         </div>
         <div className="slider-container">
           <input
