@@ -11,12 +11,12 @@ export default class Main extends React.Component {
     }));
   }
   render() {
-    let container =
-      isBrowser && this.props.fastConnection ? (
-        <div className="animation saron" id="container" />
-      ) : (
-        ""
-      );
+    // dispaly background and animation for all browsers
+    let container = isBrowser ? (
+      <div className="animation saron" id="container" />
+    ) : (
+      ""
+    );
 
     let visualizer = isBrowser ? (
       <Visualizer player={this.props.player} playing={this.props.playing} />
