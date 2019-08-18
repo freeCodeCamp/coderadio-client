@@ -1,10 +1,15 @@
 import React from "react";
+import NchanSubscriber from "nchan";
 
 import Nav from "./Nav";
 import Main from "./Main";
 import Footer from "./Footer";
 
 import "../css/App.css";
+
+var SUB = new NchanSubscriber(
+  "wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio"
+);
 
 export default class App extends React.Component {
   constructor(props) {
@@ -14,11 +19,11 @@ export default class App extends React.Component {
        * General configuration options
        */
       config: {
-        metadataTimer: 5000
+        metadataTimer: 1000
       },
       fastConnection: navigator.connection
         ? navigator.connection.downlink > 1.5
-        : false,
+        : null,
 
       /** *
        * The equalizer data is held as a separate data set
@@ -53,12 +58,7 @@ export default class App extends React.Component {
       url: "",
       mounts: [],
       remotes: [],
-      playing: false,
-
-      /** *
-       * This is needed to clear the timer used in getNowPlaying()
-       * */
-      timerId: null,
+      playing: null,
 
       // Note: the crossOrigin is needed to fix a CORS JavaScript requirement
 
@@ -87,11 +87,6 @@ export default class App extends React.Component {
     this.getNowPlaying();
   }
 
-  componentWillUnmount() {
-    // Clear the timer before the component unmounts
-    clearInterval(this.state.timerId);
-  }
-
   /** *
    * If we ever change the URL, we need to update the player
    * and begin playing it again. This can happen if the server
@@ -109,15 +104,10 @@ export default class App extends React.Component {
   }
 
   play() {
-    // Since the server doesn't have a socket connection (yet),
-    // we need to long poll it for the current song
-    const timerId = setInterval(
-      this.getNowPlaying,
-      this.state.config.metadataTimer
-    );
-    this.setState({ timerId });
-
     if (this._player.paused) {
+      if (!SUB.running) {
+        SUB.start();
+      }
       this._player.volume = 0;
       this._player.play();
       let audioConfig = this.state.audioConfig;
@@ -135,9 +125,7 @@ export default class App extends React.Component {
     this.setState({
       playing: false
     });
-
-    // Clear the timer when user pauses the player
-    clearInterval(this.state.timerId);
+    SUB.stop();
   }
 
   /** *
@@ -147,7 +135,6 @@ export default class App extends React.Component {
    */
   togglePlay() {
     // If there already is a source, confirm it’s playing or not
-
     if (this._player.src) {
       // If the player is paused, set the volume to 0 and fade up
       if (this._player.paused) {
@@ -250,20 +237,26 @@ export default class App extends React.Component {
     }
   }
 
-  // this needs to be updated when the api shows the bitrate of remotes
+  // choose either high or low bitrate
+  bitrateFinder(streames, low = false) {
+    let arr = streames.sort(
+      (a, b) => parseFloat(a.bitrate) - parseFloat(b.bitrate)
+    );
+    if (low) return arr[0].url;
+    return arr[arr.length - 1].url;
+  }
+
+  // choose the stream based on the connection and availablity of relay(remotes)
   setMountToConnection(mounts, remotes) {
     let url = null;
-    if (!this.state.fastConnection) {
-      url =
-        mounts.find(
-          mount => mount.bitrate < mounts.find(m => !!m.is_default).bitrate
-        ).url || mounts.find(mount => !!mount.is_default).url;
-
-      // if remote connection is present, randomly pick one.
+    if (!this.state.fastConnection && remotes.length > 0) {
+      url = this.bitrateFinder(remotes, true);
     } else if (this.state.fastConnection && remotes.length > 0) {
-      url = remotes[0].url;
+      url = this.bitrateFinder(remotes);
+    } else if (!this.state.fastConnection) {
+      url = this.bitrateFinder(mounts, true);
     } else {
-      url = mounts.find(mount => !!mount.is_default).url;
+      url = this.bitrateFinder(mounts);
     }
     this._player.src = url;
     this.setState({
@@ -272,46 +265,35 @@ export default class App extends React.Component {
   }
 
   getNowPlaying() {
-    // To prevent browser based caching, we add the date to the request,
-    // it won't impact the response
-    fetch(
-      `https://coderadio-admin.freecodecamp.org/api/nowplaying_static/coderadio.json`
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(np => {
-        // We look through the available mounts to find the default mount
-        // (or just the listen_url)
-        if (this.state.url === "") {
-          this.setState({
-            mounts: np.station.mounts,
-            remotes: np.station.remotes
-          });
-          this.setMountToConnection(np.station.mounts, np.station.remotes);
-        }
+    SUB.on("message", message => {
+      let np = JSON.parse(message);
 
-        if (this.state.listeners !== np.listeners.current) {
-          this.setState({
-            listeners: np.listeners.current
-          });
-        }
+      // We look through the available mounts to find the default mount
+      if (this.state.url === "") {
+        this.setState({
+          mounts: np.station.mounts,
+          remotes: np.station.remotes
+        });
+        this.setMountToConnection(np.station.mounts, np.station.remotes);
+      }
 
-        // We only need to update the metadata if the song has been changed
-        if (np.now_playing.song.id !== this.state.currentSong.id) {
-          this.setState({
-            currentSong: np.now_playing.song,
-            songStartedAt: np.now_playing.played_at * 1000,
-            songDuration: np.now_playing.duration
-          });
-        }
-      })
-      .catch(() => {
-        setTimeout(
-          () => this.getNowPlaying(),
-          this.state.config.metadataTimer * 3
-        );
-      });
+      if (this.state.listeners !== np.listeners.current) {
+        this.setState({
+          listeners: np.listeners.current
+        });
+      }
+
+      // We only need to update the metadata if the song has been changed
+      if (np.now_playing.song.id !== this.state.currentSong.id) {
+        this.setState({
+          currentSong: np.now_playing.song,
+          songStartedAt: np.now_playing.played_at * 1000,
+          songDuration: np.now_playing.duration
+        });
+      }
+    });
+    SUB.reconnectTimeout = this.state.config.metadataTimer;
+    SUB.start();
   }
 
   // keyboard shortcuts

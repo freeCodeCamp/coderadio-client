@@ -11,8 +11,12 @@ export default class Main extends React.Component {
     }));
   }
   render() {
+    // display animation and container
+    // if it is a browser with fast connection
+    // or a browser that does not support navigator.connection
     let container =
-      isBrowser && this.props.fastConnection ? (
+      (isBrowser && this.props.fastConnection === null) ||
+      (isBrowser && this.props.fastConnection === true) ? (
         <div className="animation saron" id="container" />
       ) : (
         ""
