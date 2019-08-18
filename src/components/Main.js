@@ -11,18 +11,21 @@ export default class Main extends React.Component {
     }));
   }
   render() {
-    let container =
-      isBrowser && this.props.fastConnection ? (
-        <div className="animation saron" id="container" />
-      ) : (
-        ""
-      );
+    /** *
+     * On mobile: Don't show either office background or visualizer
+     * On desktop:
+     * - If fastConnection: Show office background and visualizer
+     * - Otherwise: Show office background only
+     */
 
-    let visualizer = isBrowser ? (
-      <Visualizer player={this.props.player} playing={this.props.playing} />
-    ) : (
-      ""
+    let container = isBrowser && (
+      <div className="animation saron" id="container" />
     );
+
+    let visualizer = isBrowser && this.props.fastConnection && (
+      <Visualizer player={this.props.player} playing={this.props.playing} />
+    );
+
     let details = isBrowser ? (
       <details>
         <summary>Keyboard Controls</summary>
