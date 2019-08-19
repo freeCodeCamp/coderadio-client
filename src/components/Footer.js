@@ -2,10 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { isBrowser } from "react-device-detect";
-import { ReactComponent as Pause } from '../assets/pause.svg';
-import { ReactComponent as Play } from '../assets/play.svg';
-
-const DEFAULT_ART = "https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif";
+import { ReactComponent as Pause } from "../assets/pause.svg";
+import { ReactComponent as Play } from "../assets/play.svg";
+import CurrentSong from "./CurrentSong";
 
 export default class Footer extends React.Component {
   constructor(props) {
@@ -87,32 +86,15 @@ export default class Footer extends React.Component {
     }
     return (
       <footer>
-        <div
-          className={this.props.playing ? "thumb shown" : "thumb"}
-          id="metaDisplay"
-        >
-          <img
-            alt="album art"
-            data-meta="picture"
-            src={
-              this.props.fastConnection
-                ? this.props.currentSong.art
-                : DEFAULT_ART
-            }
-          />
-          <div id="nowPlaying">
-            <progress
-              data-meta="duration"
-              max={this.props.songDuration}
-              value={this.state.durationVal.toFixed(2)}
-            />
-            <div data-meta="title">{this.props.currentSong.title}</div>
-            <div data-meta="artist">{this.props.currentSong.artist}</div>
-            <div data-meta="album">{this.props.currentSong.album}</div>
-            <div data-meta="listeners">Listeners: {this.props.listeners}</div>
-            {mountOptions}
-          </div>
-        </div>
+        <CurrentSong
+          currentSong={this.props.currentSong}
+          durationVal={this.state.durationVal.toFixed(2)}
+          fastConnection={this.props.fastConnection}
+          listeners={this.props.listeners}
+          mountOptions={mountOptions}
+          playing={this.props.playing}
+          songDuration={this.props.songDuration}
+        />
         <div
           className={this.state.initialLoad ? "cta" : ""}
           id="playContainer"
