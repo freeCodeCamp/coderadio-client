@@ -310,9 +310,6 @@ dd {
 }
 
 @media (max-width: 500px) {
-  #nowplaying {
-    padding: 0;
-  }
   #visualizer {
     background-color: #002ead;
     top: 238px;
@@ -545,18 +542,6 @@ p {
   margin: 0;
 }
 
-.middle p {
-  font-size: 15px;
-  margin: 0px;
-  font-weight: bold;
-}
-
-.middle hr {
-  border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-  margin: 5px 0 5px 0;
-}
-
 .under-header-content {
   background-color: #0a0a23;
   display: flex;
@@ -578,15 +563,6 @@ p {
   align-items: center;
   justify-content: center;
   margin-top: calc(50px + 38px);
-}
-.middle {
-  display: flex;
-  flex-direction: column;
-  margin-top: 200;
-  width: 90%;
-  max-width: 500px;
-  background: #f5f6f7;
-  padding: 20px 20px 20px 20px;
 }
 
 @media (max-width: 500px) {
