@@ -28,6 +28,8 @@ export default class Visualizer extends React.Component {
 
   initiateEQ() {
     let eq = this.state.eq;
+    // Safari requires a webkit prefix to support AudioContext.
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
     // Create a new Audio Context element to read the samples from
     eq.context = new AudioContext();
     // Apply the audio element as the source where to pull all the data from
