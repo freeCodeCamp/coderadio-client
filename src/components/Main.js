@@ -5,11 +5,6 @@ import { isBrowser } from "react-device-detect";
 import Visualizer from "./Visualizer";
 
 export default class Main extends React.Component {
-  toggleSidenav() {
-    this.setState(prevState => ({
-      navOpen: !prevState.navOpen
-    }));
-  }
   render() {
     // dispaly background and animation for all browsers
     let container = isBrowser ? (
