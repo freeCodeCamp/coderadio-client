@@ -18,8 +18,8 @@ export default class Main extends React.Component {
     ) : (
       ""
     );
-    let details = isBrowser ? (
-      <details>
+    let keyboardControls = isBrowser ? (
+      <details className="keyboard-controls">
         <summary>Keyboard Controls</summary>
         <dl>
           <dt>Play/Pause:</dt>
@@ -41,7 +41,7 @@ export default class Main extends React.Component {
         </div>
         {container}
         {visualizer}
-        {details}
+        {keyboardControls}
       </main>
     );
   }

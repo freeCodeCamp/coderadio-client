@@ -216,7 +216,7 @@ footer {
   position: absolute;
 }
 
-details {
+.keyboard-controls {
   position: absolute;
   bottom: 100px;
   right: 50px;
@@ -227,9 +227,15 @@ details {
   transition: opacity 0.25s ease-out;
 }
 
-details:hover,
-details[open] {
+.keyboard-controls:hover,
+.keyboard-controls[open] {
   opacity: 1;
+}
+
+@media (max-width: 750px) {
+  .keyboard-controls {
+    display: none;
+  }
 }
 
 dt {
