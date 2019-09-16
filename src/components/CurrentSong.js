@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DefaultCover from "../assets/cover_placeholder.gif";
+
+const DEFAULT_ART =
+  "https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif";
 
 const CurrentSong = props => (
   <div className={props.playing ? "thumb shown" : "thumb"} id="metaDisplay">
     <img
       alt="album art"
       data-meta="picture"
-      src={props.fastConnection ? props.currentSong.art : DefaultCover}
+      src={props.fastConnection ? props.currentSong.art : DEFAULT_ART}
     />
     <div id="nowPlaying">
       <progress
