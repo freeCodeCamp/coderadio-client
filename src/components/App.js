@@ -252,26 +252,37 @@ export default class App extends React.Component {
     }
   }
 
-  // choose either high or low bitrate
-  bitrateFinder(streames, low = false) {
-    let arr = streames.sort(
-      (a, b) => parseFloat(a.bitrate) - parseFloat(b.bitrate)
-    );
-    if (low) return arr[0].url;
-    return arr[arr.length - 1].url;
+  streamFinder(streams, lowBitrate = false) {
+    let arr = streams.sort((a, b) => {
+      if (lowBitrate) {
+        // sort by bitrate from low to high
+        if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return -1;
+        if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return 1;
+      } else {
+        // sort by bitrate, from high to low
+        if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return 1;
+        if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return -1;
+      }
+
+      // if both items have the same bitrate, sort by listeners from low to high
+      if (a.listeners.current < b.listeners.current) return -1;
+      if (a.listeners.current > b.listeners.current) return 1;
+      return 0;
+    });
+    return arr[0].url;
   }
 
   // choose the stream based on the connection and availablity of relay(remotes)
   setMountToConnection(mounts = [], remotes = []) {
     let url = null;
     if (this.state.fastConnection === false && remotes.length > 0) {
-      url = this.bitrateFinder(remotes, true);
+      url = this.streamFinder(remotes, true);
     } else if (this.state.fastConnection && remotes.length > 0) {
-      url = this.bitrateFinder(remotes);
+      url = this.streamFinder(remotes);
     } else if (this.state.fastConnection === false) {
-      url = this.bitrateFinder(mounts, true);
+      url = this.streamFinder(mounts, true);
     } else {
-      url = this.bitrateFinder(mounts);
+      url = this.streamFinder(mounts);
     }
     this._player.src = url;
     this.setState({
