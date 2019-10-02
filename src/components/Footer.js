@@ -5,12 +5,12 @@ import { isBrowser } from "react-device-detect";
 import { ReactComponent as Pause } from "../assets/pause.svg";
 import { ReactComponent as Play } from "../assets/play.svg";
 import CurrentSong from "./CurrentSong";
+import Slider from "./Slider";
 
 export default class Footer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sliderVal: 5,
       initialLoad: true,
       durationVal: 0,
       currentSong: this.props.currentSong,
@@ -35,13 +35,6 @@ export default class Footer extends React.Component {
         alternativeMounts: [].concat(nextProps.remotes, nextProps.mounts)
       });
     }
-
-    // if the keyboards are changing the volume, adjust slider accordingly
-    if (nextProps.currentVolume * 10 !== this.state.sliderVal) {
-      this.setState({
-        sliderVal: nextProps.currentVolume * 10
-      });
-    }
   }
 
   updateProgress() {
@@ -57,12 +50,6 @@ export default class Footer extends React.Component {
   handleChange(e) {
     let { value } = e.target;
     this.props.setUrl(value);
-  }
-
-  handleSliderChange(e) {
-    let { value } = e.target;
-    this.props.setTargetVolume(value / 10);
-    this.setState({ sliderVal: e.target.value });
   }
 
   render() {
@@ -103,16 +90,10 @@ export default class Footer extends React.Component {
         >
           {this.props.playing ? <Pause /> : <Play />}
         </div>
-        <div className="slider-container">
-          <input
-            id="slider"
-            max="10"
-            min="0"
-            onChange={this.handleSliderChange.bind(this)}
-            type="range"
-            value={this.state.sliderVal}
-          />
-        </div>
+        <Slider
+          currentVolume={this.props.currentVolume}
+          setTargetVolume={this.props.setTargetVolume}
+        />
       </footer>
     );
   }
