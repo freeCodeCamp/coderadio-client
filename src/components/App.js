@@ -88,7 +88,7 @@ export default class App extends React.Component {
   }
 
   /** *
-   * If we ever change xxthe URL, we need to update the player
+   * If we ever change the URL, we need to update the player
    * and begin playing it again. This can happen if the server
    * resets the URL.
    */
