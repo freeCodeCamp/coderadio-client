@@ -247,13 +247,13 @@ export default class App extends React.Component {
   }
 
   // choose the stream based on the connection and availablity of relay(remotes)
-  setMountToConnection(mounts, remotes) {
+  setMountToConnection(mounts = [], remotes = []) {
     let url = null;
-    if (!this.state.fastConnection && remotes.length > 0) {
+    if (this.state.fastConnection === false && remotes.length > 0) {
       url = this.bitrateFinder(remotes, true);
     } else if (this.state.fastConnection && remotes.length > 0) {
       url = this.bitrateFinder(remotes);
-    } else if (!this.state.fastConnection) {
+    } else if (this.state.fastConnection === false) {
       url = this.bitrateFinder(mounts, true);
     } else {
       url = this.bitrateFinder(mounts);
@@ -274,7 +274,7 @@ export default class App extends React.Component {
           mounts: np.station.mounts,
           remotes: np.station.remotes
         });
-        this.setMountToConnection(np.station.mounts, np.station.remotes);
+        this.setMountToConnection(np.station.mounts);
       }
 
       if (this.state.listeners !== np.listeners.current) {

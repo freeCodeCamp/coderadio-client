@@ -88,7 +88,7 @@ export default class Footer extends React.Component {
       <footer>
         <CurrentSong
           currentSong={this.props.currentSong}
-          durationVal={this.state.durationVal.toFixed(2)}
+          durationVal={parseInt(this.state.durationVal.toFixed(2), 10)}
           fastConnection={this.props.fastConnection}
           listeners={this.props.listeners}
           mountOptions={mountOptions}
