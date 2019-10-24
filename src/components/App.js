@@ -14,6 +14,13 @@ var SUB = new NchanSubscriber(
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    /** *
+     * Loads user volume preference
+     */
+    let volume;
+    if (!localStorage.getItem("coderadio-volume")) volume = 0.5;
+    else volume = localStorage.getItem("coderadio-volume") / 10;
+
     this.state = {
       /** *
        * General configuration options
@@ -44,9 +51,9 @@ export default class App extends React.Component {
       // (Used in earlier projects and just maintained)
       audioConfig: {
         targetVolume: 0,
-        maxVolume: 0.5,
+        maxVolume: volume,
         volumeSteps: 0.1,
-        currentVolume: 0.5,
+        currentVolume: volume,
         volumeTransitionSpeed: 100
       },
 
@@ -351,6 +358,7 @@ export default class App extends React.Component {
           songStartedAt={this.state.songStartedAt}
           togglePlay={this.togglePlay}
           url={this.state.url}
+          volume={this.state.audioConfig.currentVolume}
         />
       </div>
     );

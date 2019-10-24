@@ -10,7 +10,7 @@ export default class Footer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sliderVal: 5,
+      sliderVal: this.props.volume,
       initialLoad: true,
       durationVal: 0,
       currentSong: this.props.currentSong,
@@ -63,6 +63,8 @@ export default class Footer extends React.Component {
     let { value } = e.target;
     this.props.setTargetVolume(value / 10);
     this.setState({ sliderVal: e.target.value });
+    // Saves user volume preference
+    localStorage.setItem('coderadio-volume', value);
   }
 
   render() {
