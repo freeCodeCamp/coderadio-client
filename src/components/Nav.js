@@ -40,13 +40,31 @@ export default class Nav extends React.Component {
               role="menu"
             >
               <li className="nav-learn" role="menuitem">
-                <a href="https://learn.freecodecamp.org/" target="_blank" rel="noopener noreferrer">Learn</a>
+                <a
+                  href="https://www.freecodecamp.org/learn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn
+                </a>
               </li>
               <li className="nav-forum" role="menuitem">
-                <a href="https://www.freecodecamp.org/forum/" target="_blank" rel="noopener noreferrer">Forum</a>
+                <a
+                  href="https://www.freecodecamp.org/forum/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Forum
+                </a>
               </li>
               <li className="nav-news nav-current" role="menuitem">
-                <a href="https://www.freecodecamp.org/news/" target="_blank" rel="noopener noreferrer">News</a>
+                <a
+                  href="https://www.freecodecamp.org/news/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  News
+                </a>
               </li>
             </ul>
           </div>
