@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import { isBrowser } from "react-device-detect";
 import { ReactComponent as Pause } from "../assets/pause.svg";
 import { ReactComponent as Play } from "../assets/play.svg";
@@ -13,7 +12,7 @@ export default class Footer extends React.Component {
       sliderVal: 5,
       initialLoad: true,
       durationVal: 0,
-      currentSong: this.props.currentSong,
+      currentSong: {},
       progressInterval: null,
       alternativeMounts: null
     };
@@ -25,12 +24,14 @@ export default class Footer extends React.Component {
       this.setState({ initialLoad: false });
     }
 
-    // if the song is new and we have all required props, reset setInterval
+    // if the song is new and we have all required props,
+    // reset setInterval and currentSong
     if (
       this.state.currentSong.id !== nextProps.currentSong.id &&
       nextProps.songStartedAt
     ) {
       this.setState({
+        currentSong: nextProps.currentSong,
         progressInterval: setInterval(this.updateProgress, 100),
         alternativeMounts: [].concat(nextProps.remotes, nextProps.mounts)
       });
@@ -84,11 +85,14 @@ export default class Footer extends React.Component {
         </select>
       );
     }
+
+    let durationVal = parseInt(this.state.durationVal.toFixed(2), 10);
+
     return (
       <footer>
         <CurrentSong
-          currentSong={this.props.currentSong}
-          durationVal={parseInt(this.state.durationVal.toFixed(2), 10)}
+          currentSong={this.state.currentSong}
+          durationVal={durationVal}
           fastConnection={this.props.fastConnection}
           listeners={this.props.listeners}
           mountOptions={mountOptions}
