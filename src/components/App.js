@@ -284,6 +284,7 @@ export default class App extends React.Component {
       }
 
       // We only need to update the metadata if the song has been changed
+      // console.log(np.now_playing);
       if (np.now_playing.song.id !== this.state.currentSong.id) {
         this.setState({
           currentSong: np.now_playing.song,
