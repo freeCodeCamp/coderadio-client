@@ -85,6 +85,7 @@ export default class App extends React.Component {
   componentDidMount() {
     this.setPlayerInitial();
     this.getNowPlaying();
+    window.addEventListener('keydown', this.keyboardControl, false);
   }
 
   /** *
@@ -329,7 +330,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="App" onKeyDown={this.keyboardControl} tabIndex="0">
+      <div className="App" tabIndex="0">
         <Nav />
         <Main
           fastConnection={this.state.fastConnection}
