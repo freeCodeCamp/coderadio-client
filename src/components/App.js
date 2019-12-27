@@ -1,5 +1,6 @@
 import React from "react";
 import NchanSubscriber from "nchan";
+import store from "store";
 
 import Nav from "./Nav";
 import Main from "./Main";
@@ -14,6 +15,13 @@ var SUB = new NchanSubscriber(
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    /** *
+     * Loads user volume preference
+     */
+    this.volume = store.get("coderadio-volume")
+      ? store.get("coderadio-volume") / 10
+      : 0.5;
+
     this.state = {
       /** *
        * General configuration options
@@ -44,9 +52,9 @@ export default class App extends React.Component {
       // (Used in earlier projects and just maintained)
       audioConfig: {
         targetVolume: 0,
-        maxVolume: 0.5,
+        maxVolume: this.volume,
         volumeSteps: 0.1,
-        currentVolume: 0.5,
+        currentVolume: this.volume,
         volumeTransitionSpeed: 100
       },
 
@@ -70,6 +78,7 @@ export default class App extends React.Component {
       songDuration: 0,
       listeners: 0
     };
+
     this.keyboardControl = this.keyboardControl.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
     this.setUrl = this.setUrl.bind(this);
@@ -352,6 +361,7 @@ export default class App extends React.Component {
           songStartedAt={this.state.songStartedAt}
           togglePlay={this.togglePlay}
           url={this.state.url}
+          volume={this.state.audioConfig.currentVolume}
         />
       </div>
     );

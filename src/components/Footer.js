@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { isBrowser } from "react-device-detect";
+import store from "store";
 import { ReactComponent as Pause } from "../assets/pause.svg";
 import { ReactComponent as Play } from "../assets/play.svg";
 import CurrentSong from "./CurrentSong";
@@ -9,7 +10,7 @@ export default class Footer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sliderVal: 5,
+      sliderVal: this.props.volume,
       initialLoad: true,
       durationVal: 0,
       currentSong: {},
@@ -64,6 +65,8 @@ export default class Footer extends React.Component {
     let { value } = e.target;
     this.props.setTargetVolume(value / 10);
     this.setState({ sliderVal: e.target.value });
+    // Saves user volume preference
+    store.set("coderadio-volume", value);
   }
 
   render() {
@@ -136,5 +139,6 @@ Footer.propTypes = {
   songDuration: PropTypes.number,
   songStartedAt: PropTypes.number,
   togglePlay: PropTypes.func,
-  url: PropTypes.string
+  url: PropTypes.string,
+  volume: PropTypes.number
 };
