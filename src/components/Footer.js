@@ -19,6 +19,9 @@ export default class Footer extends React.Component {
     this.updateProgress = this.updateProgress.bind(this);
   }
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.currentSong);
+    console.log(this.state.currentSong);
+    console.log(nextProps.songStartedAt);
     // set initial load to render the initial message accordingly
     if (this.state.initialLoad && nextProps.playing) {
       this.setState({ initialLoad: false });
@@ -30,6 +33,7 @@ export default class Footer extends React.Component {
       this.state.currentSong.id !== nextProps.currentSong.id &&
       nextProps.songStartedAt
     ) {
+      console.log("change");
       this.setState({
         currentSong: nextProps.currentSong,
         progressInterval: setInterval(this.updateProgress, 100),
