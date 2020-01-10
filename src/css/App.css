@@ -197,6 +197,57 @@ footer {
   background-color: white;
 }
 
+#song-history {
+  height: 100%;
+  width: 25%;
+  cursor: pointer;
+}
+
+#song-list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5%;
+  margin-left: 25px;
+  top: -315px;
+  width: 350px;
+  background-color: rgb(10, 10, 35);
+  cursor: default;
+}
+
+
+#recently-played-text {
+  margin-top: 5%;
+  margin-left: 3%;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.song-info {
+  margin-top: 4px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border-bottom: 1px solid white;
+}
+
+#song-list .song-info:nth-child(5) {
+  border-bottom: none;
+}
+
+.song-info img {
+  float: left;
+  height: 50px;
+  width: 50px;
+  margin-bottom: 3px;
+}
+
+.song-info p {
+  float: left;
+  margin-left: 10px;
+}
+
 .animation {
   background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
   background-position: left bottom;

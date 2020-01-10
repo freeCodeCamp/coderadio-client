@@ -85,7 +85,8 @@ export default class App extends React.Component {
       currentSong: {},
       songStartedAt: 0,
       songDuration: 0,
-      listeners: 0
+      listeners: 0,
+      songHistory: []
     };
 
     // Keyboard shortcuts
@@ -410,7 +411,8 @@ export default class App extends React.Component {
           currentSong: np.now_playing.song,
           songStartedAt: np.now_playing.played_at * 1000,
           songDuration: np.now_playing.duration,
-          pullMeta: false
+          pullMeta: false,
+          songHistory: np.song_history
         });
       }
     });
@@ -516,6 +518,7 @@ export default class App extends React.Component {
             setTargetVolume={this.setTargetVolume}
             setUrl={this.setUrl}
             songDuration={this.state.songDuration}
+            songHistory={this.state.songHistory}
             songStartedAt={this.state.songStartedAt}
             togglePlay={this.togglePlay}
             url={this.state.url}
