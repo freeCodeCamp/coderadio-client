@@ -18,12 +18,12 @@ class SongHistory extends Component {
     const {songHistory} = this.props;
     const songs = songHistory.map(song => song.song).reverse()
     return(
-      <div id='song-history' onClick={this.toggleDisplay}>
+      <div id='recent-song-history' onClick={this.toggleDisplay}>
         {
           this.state.displayList &&
-          <div id='song-list'>
+          <div id='recent-song-list'>
             {songs.map(song =>
-              <div key={song.id} class='song-info'>
+              <div key={song.id} class='recent-song-info'>
                 <img src={song.art} alt={`Album Title: ${song.album}`}/>
                 <p>
                   <b>Song Title: {song.title}</b><br />

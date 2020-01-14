@@ -197,20 +197,20 @@ footer {
   background-color: white;
 }
 
-#song-history {
+#recent-song-history {
   height: 100%;
   width: 25%;
   cursor: pointer;
 }
 
-#song-list {
+#recent-song-list {
   display: flex;
   flex-direction: column;
   position: absolute;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 5%;
-  margin-left: 25px;
+  margin-left: 15px;
   top: -315px;
   width: 350px;
   background-color: rgb(10, 10, 35);
@@ -219,33 +219,35 @@ footer {
 
 
 #recently-played-text {
-  margin-top: 5%;
-  margin-left: 3%;
-  font-size: 21px;
+  margin-top: 7%;
+  margin-left: 5%;
+  font-size: 20px;
   font-weight: bold;
 }
 
-.song-info {
+.recent-song-info {
   margin-top: 4px;
   margin-right: 10px;
   margin-left: 10px;
   border-bottom: 1px solid white;
 }
 
-#song-list .song-info:nth-child(5) {
+#recent-song-list .song-info:nth-child(5) {
   border-bottom: none;
 }
 
-.song-info img {
+.recent-song-info img {
   float: left;
   height: 50px;
   width: 50px;
   margin-bottom: 3px;
 }
 
-.song-info p {
+.recent-song-info p {
   float: left;
   margin-left: 10px;
+  margin-top: 5px;
+  font-size: 15px;
 }
 
 .animation {
@@ -362,6 +364,12 @@ dd {
   #visualizer {
     background-color: #002ead;
     top: 238px;
+  }
+  #recently-played-text {
+    margin-top: 13%;
+    margin-left: 15%;
+    font-size: 15px;
+    font-weight: bold;
   }
 }
 
