@@ -207,16 +207,15 @@ footer {
   display: flex;
   flex-direction: column;
   position: absolute;
-  padding-top: 10px;
+  padding-top: 5px;
   padding-bottom: 10px;
   border-radius: 5%;
   margin-left: 15px;
-  top: -315px;
+  top: -317px;
   width: 350px;
   background-color: rgb(10, 10, 35);
   cursor: default;
 }
-
 
 #recently-played-text {
   margin-top: 7%;
@@ -226,7 +225,7 @@ footer {
 }
 
 .recent-song-info {
-  margin-top: 4px;
+  margin-top: 5px;
   margin-right: 10px;
   margin-left: 10px;
   border-bottom: 1px solid white;
@@ -247,7 +246,7 @@ footer {
   float: left;
   margin-left: 10px;
   margin-top: 5px;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .animation {
@@ -370,6 +369,9 @@ dd {
     margin-left: 15%;
     font-size: 15px;
     font-weight: bold;
+  }
+  #recent-song-list {
+    z-index: 10;
   }
 }
 
