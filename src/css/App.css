@@ -199,7 +199,7 @@ footer {
 
 #recent-song-history {
   height: 100%;
-  width: 25%;
+  width: 14%;
   cursor: pointer;
 }
 
@@ -211,17 +211,19 @@ footer {
   padding-bottom: 10px;
   border-radius: 5%;
   margin-left: 15px;
-  top: -317px;
+  top: -370px;
   width: 350px;
   background-color: rgb(10, 10, 35);
   cursor: default;
 }
 
 #recently-played-text {
-  margin-top: 7%;
-  margin-left: 5%;
+  margin-top: 1vw;
+  margin-left: 0.5vw;
+  line-height: 25px;
   font-size: 20px;
   font-weight: bold;
+  justify-content: center;
 }
 
 .recent-song-info {
@@ -247,6 +249,7 @@ footer {
   margin-left: 10px;
   margin-top: 5px;
   font-size: 13px;
+  overflow: hidden;
 }
 
 .animation {
@@ -357,18 +360,18 @@ dd {
   #visualizer {
     background-color: #002ead;
   }
+  #recently-played-text {
+    margin-top: 13%;
+    margin-left: 15%;
+    font-size: 15px;
+    font-weight: bold;
+  }
 }
 
 @media (max-width: 500px) {
   #visualizer {
     background-color: #002ead;
     top: 238px;
-  }
-  #recently-played-text {
-    margin-top: 13%;
-    margin-left: 15%;
-    font-size: 15px;
-    font-weight: bold;
   }
   #recent-song-list {
     z-index: 10;
