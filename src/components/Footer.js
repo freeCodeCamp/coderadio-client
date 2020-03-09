@@ -1,16 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { isBrowser } from "react-device-detect";
-import { ReactComponent as Pause } from "../assets/pause.svg";
-import { ReactComponent as Play } from "../assets/play.svg";
+
 import CurrentSong from "./CurrentSong";
 import Slider from "./Slider";
+import PlayPauseButton from "./PlayPauseButton";
 
 export default class Footer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      initialLoad: true,
       durationVal: 0,
       currentSong: {},
       progressInterval: null,
@@ -18,12 +16,8 @@ export default class Footer extends React.Component {
     };
     this.updateProgress = this.updateProgress.bind(this);
   }
-  componentWillReceiveProps(nextProps) {
-    // set initial load to render the initial message accordingly
-    if (this.state.initialLoad && nextProps.playing) {
-      this.setState({ initialLoad: false });
-    }
 
+  componentWillReceiveProps(nextProps) {
     // if the song is new and we have all required props,
     // reset setInterval and currentSong
     if (
@@ -42,10 +36,6 @@ export default class Footer extends React.Component {
     this.setState({
       durationVal: (new Date().valueOf() - this.props.songStartedAt) / 1000
     });
-  }
-
-  handlePlay() {
-    this.props.togglePlay();
   }
 
   handleChange(e) {
@@ -86,14 +76,10 @@ export default class Footer extends React.Component {
           playing={this.props.playing}
           songDuration={this.props.songDuration}
         />
-        <div
-          className={this.state.initialLoad ? "cta" : ""}
-          id="playContainer"
-          onClick={isBrowser ? this.handlePlay.bind(this) : null}
-          onTouchStart={!isBrowser ? this.handlePlay.bind(this) : null}
-        >
-          {this.props.playing ? <Pause /> : <Play />}
-        </div>
+        <PlayPauseButton
+          playing={this.props.playing}
+          togglePlay={this.props.togglePlay}
+        />
         <Slider
           currentVolume={this.props.currentVolume}
           setTargetVolume={this.props.setTargetVolume}
