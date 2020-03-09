@@ -1,5 +1,6 @@
 import React from "react";
 import NchanSubscriber from "nchan";
+import { GlobalHotKeys } from "react-hotkeys";
 
 import Nav from "./Nav";
 import Main from "./Main";
@@ -7,7 +8,7 @@ import Footer from "./Footer";
 
 import "../css/App.css";
 
-var SUB = new NchanSubscriber(
+const SUB = new NchanSubscriber(
   "wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio"
 );
 
@@ -70,7 +71,21 @@ export default class App extends React.Component {
       songDuration: 0,
       listeners: 0
     };
-    this.keyboardControl = this.keyboardControl.bind(this);
+
+    // Keyboard shortcuts
+    this.keyMap = {
+      TOGGLE_PLAY: ["space", "k"],
+      INCREASE_VOLUME: "up",
+      DECREASE_VOLUME: "down"
+    };
+
+    // Keyboard shortcut handlers
+    this.handlers = {
+      TOGGLE_PLAY: () => this.togglePlay(),
+      INCREASE_VOLUME: () => this.increaseVolume(),
+      DECREASE_VOLUME: () => this.decreaseVolume()
+    };
+
     this.togglePlay = this.togglePlay.bind(this);
     this.setUrl = this.setUrl.bind(this);
     this.setTargetVolume = this.setTargetVolume.bind(this);
@@ -85,7 +100,6 @@ export default class App extends React.Component {
   componentDidMount() {
     this.setPlayerInitial();
     this.getNowPlaying();
-    window.addEventListener('keydown', this.keyboardControl, false);
   }
 
   /** *
@@ -298,63 +312,51 @@ export default class App extends React.Component {
     SUB.start();
   }
 
-  // keyboard shortcuts
-  keyboardControl = evt => {
-    switch (evt.key) {
-      case " ":
-      case "k":
-        this.togglePlay();
-        break;
-      case "ArrowUp":
-        this.setTargetVolume(
-          Math.min(
-            this.state.audioConfig.maxVolume +
-              this.state.audioConfig.volumeSteps,
-            1
-          )
-        );
+  increaseVolume = () =>
+    this.setTargetVolume(
+      Math.min(
+        this.state.audioConfig.maxVolume + this.state.audioConfig.volumeSteps,
+        1
+      )
+    );
 
-        break;
-      case "ArrowDown":
-        this.setTargetVolume(
-          Math.max(
-            this.state.audioConfig.maxVolume -
-              this.state.audioConfig.volumeSteps,
-            0
-          )
-        );
-        break;
-      default:
-    }
-  };
+  decreaseVolume = () =>
+    this.setTargetVolume(
+      Math.max(
+        this.state.audioConfig.maxVolume - this.state.audioConfig.volumeSteps,
+        0
+      )
+    );
 
   render() {
     return (
-      <div className="App" tabIndex="0">
-        <Nav />
-        <Main
-          fastConnection={this.state.fastConnection}
-          player={this._player}
-          playing={this.state.playing}
-        />
-        <audio crossOrigin="anonymous" ref={a => (this._player = a)} />
-        <Footer
-          currentSong={this.state.currentSong}
-          currentVolume={this.state.audioConfig.currentVolume}
-          fastConnection={this.state.fastConnection}
-          listeners={this.state.listeners}
-          mounts={this.state.mounts}
-          player={this._player}
-          playing={this.state.playing}
-          remotes={this.state.remotes}
-          setTargetVolume={this.setTargetVolume}
-          setUrl={this.setUrl}
-          songDuration={this.state.songDuration}
-          songStartedAt={this.state.songStartedAt}
-          togglePlay={this.togglePlay}
-          url={this.state.url}
-        />
-      </div>
+      <GlobalHotKeys handlers={this.handlers} keyMap={this.keyMap}>
+        <div className="App" tabIndex="0">
+          <Nav />
+          <Main
+            fastConnection={this.state.fastConnection}
+            player={this._player}
+            playing={this.state.playing}
+          />
+          <audio crossOrigin="anonymous" ref={a => (this._player = a)} />
+          <Footer
+            currentSong={this.state.currentSong}
+            currentVolume={this.state.audioConfig.currentVolume}
+            fastConnection={this.state.fastConnection}
+            listeners={this.state.listeners}
+            mounts={this.state.mounts}
+            player={this._player}
+            playing={this.state.playing}
+            remotes={this.state.remotes}
+            setTargetVolume={this.setTargetVolume}
+            setUrl={this.setUrl}
+            songDuration={this.state.songDuration}
+            songStartedAt={this.state.songStartedAt}
+            togglePlay={this.togglePlay}
+            url={this.state.url}
+          />
+        </div>
+      </GlobalHotKeys>
     );
   }
 }
