@@ -252,8 +252,8 @@ export default class App extends React.Component {
     }
   }
 
-  streamFinder(streams, lowBitrate = false) {
-    let arr = streams.sort((a, b) => {
+  sortStreams = (streams, lowBitrate = false) => {
+    return streams.sort((a, b) => {
       if (lowBitrate) {
         // sort by bitrate from low to high
         if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return -1;
@@ -269,20 +269,24 @@ export default class App extends React.Component {
       if (a.listeners.current > b.listeners.current) return 1;
       return 0;
     });
-    return arr[0].url;
-  }
+  };
+
+  getStreamUrl = (streams, lowBitrate) => {
+    const sorted = this.sortStreams(streams, lowBitrate);
+    return sorted[0].url;
+  };
 
   // choose the stream based on the connection and availablity of relay(remotes)
   setMountToConnection(mounts = [], remotes = []) {
     let url = null;
     if (this.state.fastConnection === false && remotes.length > 0) {
-      url = this.streamFinder(remotes, true);
+      url = this.getStreamUrl(remotes, true);
     } else if (this.state.fastConnection && remotes.length > 0) {
-      url = this.streamFinder(remotes);
+      url = this.getStreamUrl(remotes);
     } else if (this.state.fastConnection === false) {
-      url = this.streamFinder(mounts, true);
+      url = this.getStreamUrl(mounts, true);
     } else {
-      url = this.streamFinder(mounts);
+      url = this.getStreamUrl(mounts);
     }
     this._player.src = url;
     this.setState({
@@ -339,6 +343,21 @@ export default class App extends React.Component {
       )
     );
 
+  onPlayerError = () => {
+    const { mounts, remotes, url } = this.state;
+
+    // Get the stream list, sorted by bitrate, from high to low,
+    // find and move the current url to the beginning of the array.
+    const sortedStreams = this.sortStreams([...mounts, ...remotes]).filter(
+      stream => stream.url !== url
+    );
+    const currentStream = sortedStreams.find(stream => stream.url === url);
+    sortedStreams.unshift(currentStream);
+
+    // Then play the next item in the array
+    this.setUrl(sortedStreams[1].url);
+  };
+
   render() {
     return (
       <GlobalHotKeys handlers={this.handlers} keyMap={this.keyMap}>
@@ -349,7 +368,11 @@ export default class App extends React.Component {
             player={this._player}
             playing={this.state.playing}
           />
-          <audio crossOrigin="anonymous" ref={a => (this._player = a)} />
+          <audio
+            crossOrigin="anonymous"
+            onError={this.onPlayerError}
+            ref={a => (this._player = a)}
+          />
           <Footer
             currentSong={this.state.currentSong}
             currentVolume={this.state.audioConfig.currentVolume}
