@@ -60,6 +60,7 @@ export default class App extends React.Component {
       mounts: [],
       remotes: [],
       playing: null,
+      erroredStreams: [],
 
       // Note: the crossOrigin is needed to fix a CORS JavaScript requirement
 
@@ -186,12 +187,8 @@ export default class App extends React.Component {
       {
         audioConfig
       },
-      function() {
-        this.updateVolume();
-      }
+      this.updateVolume
     );
-
-    return this;
   }
 
   fadeUp() {
@@ -344,18 +341,37 @@ export default class App extends React.Component {
     );
 
   onPlayerError = () => {
-    const { mounts, remotes, url } = this.state;
+    /*
+     * This error handler works as follows:
+     * - When the player cannot play the url:
+     *   - If the url is already in the `erroredStreams` list: try another url
+     *   - If the url is not in `erroredStreams`: add the url to the list and try another url
+     * - If `erroredStreams` has as many items as the list of available streams:
+     *   - Pause the player because this means all of our urls are having issues
+     */
 
-    // Get the stream list, sorted by bitrate, from high to low,
-    // find and move the current url to the beginning of the array.
-    const sortedStreams = this.sortStreams([...mounts, ...remotes]).filter(
-      stream => stream.url !== url
-    );
+    const { mounts, remotes, erroredStreams, url } = this.state;
+    const sortedStreams = this.sortStreams([...mounts, ...remotes]);
+
+    // Pause if all streams are in the errored list
+    if (erroredStreams.length === sortedStreams.length) {
+      this.pause();
+      return;
+    }
+
+    const availableStreams = sortedStreams.filter(stream => stream.url !== url);
     const currentStream = sortedStreams.find(stream => stream.url === url);
-    sortedStreams.unshift(currentStream);
 
-    // Then play the next item in the array
-    this.setUrl(sortedStreams[1].url);
+    // If the url is already in the errored list, use another url
+    if (erroredStreams.some(stream => stream.url === url)) {
+      this.setUrl(availableStreams[0].url);
+    } else {
+      // Otherwise, add the url to the errored list, then use another url
+      this.setState(
+        { erroredStreams: [...erroredStreams, currentStream] },
+        () => this.setUrl(availableStreams[0].url)
+      );
+    }
   };
 
   render() {
