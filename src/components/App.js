@@ -377,7 +377,7 @@ export default class App extends React.Component {
   render() {
     return (
       <GlobalHotKeys handlers={this.handlers} keyMap={this.keyMap}>
-        <div className="App" tabIndex="0">
+        <div className="App">
           <Nav />
           <Main
             fastConnection={this.state.fastConnection}
