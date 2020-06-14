@@ -352,24 +352,36 @@ export default class App extends React.Component {
 
     const { mounts, remotes, erroredStreams, url } = this.state;
     const sortedStreams = this.sortStreams([...mounts, ...remotes]);
+    const currentStream = sortedStreams.find(stream => stream.url === url);
+    const isStreamInErroredList = erroredStreams.some(
+      stream => stream.url === url
+    );
+    const newErroredStreams = isStreamInErroredList
+      ? erroredStreams
+      : [...erroredStreams, currentStream];
 
     // Pause if all streams are in the errored list
-    if (erroredStreams.length === sortedStreams.length) {
+    if (newErroredStreams.length === sortedStreams.length) {
       this.pause();
       return;
     }
 
-    const availableStreams = sortedStreams.filter(stream => stream.url !== url);
-    const currentStream = sortedStreams.find(stream => stream.url === url);
+    // Available streams are those in `sortedStreams`
+    // that don't exist in the errored list
+    const availableStreams = sortedStreams.filter(
+      stream =>
+        !newErroredStreams.some(
+          erroredStream => erroredStream.url === stream.url
+        )
+    );
 
     // If the url is already in the errored list, use another url
-    if (erroredStreams.some(stream => stream.url === url)) {
+    if (isStreamInErroredList) {
       this.setUrl(availableStreams[0].url);
     } else {
       // Otherwise, add the url to the errored list, then use another url
-      this.setState(
-        { erroredStreams: [...erroredStreams, currentStream] },
-        () => this.setUrl(availableStreams[0].url)
+      this.setState({ erroredStreams: newErroredStreams }, () =>
+        this.setUrl(availableStreams[0].url)
       );
     }
   };
