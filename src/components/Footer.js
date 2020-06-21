@@ -95,7 +95,6 @@ Footer.propTypes = {
   fastConnection: PropTypes.bool,
   listeners: PropTypes.number,
   mounts: PropTypes.array,
-  player: PropTypes.object,
   playing: PropTypes.bool,
   remotes: PropTypes.array,
   setTargetVolume: PropTypes.func,

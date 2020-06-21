@@ -407,7 +407,6 @@ export default class App extends React.Component {
             fastConnection={this.state.fastConnection}
             listeners={this.state.listeners}
             mounts={this.state.mounts}
-            player={this._player}
             playing={this.state.playing}
             remotes={this.state.remotes}
             setTargetVolume={this.setTargetVolume}
