@@ -109,12 +109,20 @@ export default class App extends React.Component {
    * resets the URL.
    */
   setUrl(url = false) {
-    if (url) {
-      if (this.state.playing) this.pause();
-      this._player.src = url;
-      this.setState({
-        url
-      });
+    if (!url) return;
+
+    if (this.state.playing) this.pause();
+
+    this._player.src = url;
+    this.setState({
+      url
+    });
+
+    // Since the `playing` state is initially `null` when the app first loads
+    // and is set to boolean when there is an user interaction,
+    // we prevent the app from auto-playing the music
+    // by only calling `this.play()` if the `playing` state is not `null`
+    if (this.state.playing !== null) {
       this.play();
     }
   }
