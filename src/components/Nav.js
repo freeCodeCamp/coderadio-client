@@ -11,7 +11,7 @@ export default function Nav() {
   return (
     <nav
       className={
-        "site-nav nav-padding" + (isOpen ? " expand-nav" : "")
+        "site-nav" + (isOpen ? " expand-nav" : "")
       }
       id="site-nav"
     >
@@ -36,7 +36,7 @@ export default function Nav() {
             id="nav"
             role="menu"
           >
-            <li className="nav-news nav-current" role="menuitem">
+            <li role="menuitem">
               <a
                 href="https://www.freecodecamp.org/news/"
                 rel="noopener noreferrer"
@@ -45,7 +45,7 @@ export default function Nav() {
                 News
               </a>
             </li>
-            <li className="nav-forum" role="menuitem">
+            <li role="menuitem">
               <a
                 href="https://www.freecodecamp.org/forum/"
                 rel="noopener noreferrer"
@@ -54,7 +54,7 @@ export default function Nav() {
                 Forum
               </a>
             </li>
-            <li className="nav-learn" role="menuitem">
+            <li role="menuitem">
               <a
                 href="https://www.freecodecamp.org/learn/"
                 rel="noopener noreferrer"
