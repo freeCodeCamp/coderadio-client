@@ -8,6 +8,12 @@ export default function Nav() {
     setIsOpen(!isOpen);
   }
 
+  const links = [
+    { href: "https://www.freecodecamp.org/news/", text: "News" },
+    { href: "https://www.freecodecamp.org/forum/", text: "Forum" },
+    { href: "https://www.freecodecamp.org/learn/", text: "Learn" }
+  ];
+
   return (
     <nav
       className={
@@ -36,33 +42,17 @@ export default function Nav() {
             id="nav"
             role="menu"
           >
-            <li role="menuitem">
-              <a
-                href="https://www.freecodecamp.org/news/"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                News
-              </a>
-            </li>
-            <li role="menuitem">
-              <a
-                href="https://www.freecodecamp.org/forum/"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Forum
-              </a>
-            </li>
-            <li role="menuitem">
-              <a
-                href="https://www.freecodecamp.org/learn/"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Learn
-              </a>
-            </li>
+            {links.map((link, index) => (
+              <li key={index} role="menuitem">
+                <a
+                  href={link.href}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
