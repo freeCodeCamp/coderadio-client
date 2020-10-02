@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Slider({ currentVolume, setTargetVolume }) {
+const Slider = ({ currentVolume, setTargetVolume }) => {
   const sliderVal = currentVolume * 10;
   const handleChange = e => {
     let { value } = e.target;
