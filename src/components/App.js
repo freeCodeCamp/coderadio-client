@@ -353,7 +353,8 @@ export default class App extends React.Component {
      * This error handler works as follows:
      * - When the player cannot play the url:
      *   - If the url is already in the `erroredStreams` list: try another url
-     *   - If the url is not in `erroredStreams`: add the url to the list and try another url
+     *   - If the url is not in `erroredStreams`: add the url to the list and
+     *     try another url
      * - If `erroredStreams` has as many items as the list of available streams:
      *   - Pause the player because this means all of our urls are having issues
      */
