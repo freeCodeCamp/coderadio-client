@@ -1,39 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-class Slider extends React.Component {
-  state = {
-    sliderVal: 5
-  };
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    // if the keyboards are changing the volume, adjust slider accordingly
-    if (nextProps.currentVolume * 10 !== prevState.sliderVal) {
-      return { sliderVal: nextProps.currentVolume * 10 };
-    }
-    return null;
-  }
-
-  handleSliderChange(e) {
+const Slider = ({ currentVolume, setTargetVolume }) => {
+  const sliderVal = currentVolume * 10;
+  const handleChange = e => {
     let { value } = e.target;
-    this.props.setTargetVolume(value / 10);
-    this.setState({ sliderVal: e.target.value });
+    setTargetVolume(value / 10);
   }
 
-  render() {
-    return (
-      <div className="slider-container">
-        <input
-          id="slider"
-          max="10"
-          min="0"
-          onChange={this.handleSliderChange.bind(this)}
-          type="range"
-          value={this.state.sliderVal}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="slider-container">
+      <input
+        id="slider"
+        max="10"
+        min="0"
+        onChange={handleChange}
+        type="range"
+        value={sliderVal}
+      />
+    </div>
+  );
 }
 
 Slider.propTypes = {
