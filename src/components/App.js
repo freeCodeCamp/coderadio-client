@@ -60,6 +60,7 @@ export default class App extends React.Component {
       mounts: [],
       remotes: [],
       playing: null,
+      pullMeta: false,
       erroredStreams: [],
 
       // Note: the crossOrigin is needed to fix a CORS JavaScript requirement
@@ -128,24 +129,43 @@ export default class App extends React.Component {
   }
 
   play() {
+    const { mounts, remotes } = this.state;
     if (this._player.paused) {
       if (!SUB.running) {
         SUB.start();
       }
+
+      let streamUrls = Array.from(
+        [...mounts, ...remotes],
+        stream => stream.url
+      );
+
+      // check if the url has been reseted by pause
+      if (!streamUrls.includes(this._player.src)) {
+        this._player.src = this.state.url;
+        this._player.load();
+      }
       this._player.volume = 0;
       this._player.play();
+
       let audioConfig = this.state.audioConfig;
       audioConfig.currentVolume = 0;
       this.setState({
         audioConfig,
-        playing: true
+        playing: true,
+        pullMeta: true
       });
+
       this.fadeUp();
     }
   }
 
   pause() {
+    // completely stop the audio element
+    this._player.src = "";
     this._player.pause();
+    this._player.load();
+
     this.setState({
       playing: false
     });
@@ -319,12 +339,15 @@ export default class App extends React.Component {
       }
 
       // We only need to update the metadata if the song has been changed
-      // console.log(np.now_playing);
-      if (np.now_playing.song.id !== this.state.currentSong.id) {
+      if (
+        np.now_playing.song.id !== this.state.currentSong.id ||
+        this.state.pullMeta
+      ) {
         this.setState({
           currentSong: np.now_playing.song,
           songStartedAt: np.now_playing.played_at * 1000,
-          songDuration: np.now_playing.duration
+          songDuration: np.now_playing.duration,
+          pullMeta: false
         });
       }
     });
@@ -359,39 +382,41 @@ export default class App extends React.Component {
      *   - Pause the player because this means all of our urls are having issues
      */
 
-    const { mounts, remotes, erroredStreams, url } = this.state;
-    const sortedStreams = this.sortStreams([...mounts, ...remotes]);
-    const currentStream = sortedStreams.find(stream => stream.url === url);
-    const isStreamInErroredList = erroredStreams.some(
-      stream => stream.url === url
-    );
-    const newErroredStreams = isStreamInErroredList
-      ? erroredStreams
-      : [...erroredStreams, currentStream];
-
-    // Pause if all streams are in the errored list
-    if (newErroredStreams.length === sortedStreams.length) {
-      this.pause();
-      return;
-    }
-
-    // Available streams are those in `sortedStreams`
-    // that don't exist in the errored list
-    const availableStreams = sortedStreams.filter(
-      stream =>
-        !newErroredStreams.some(
-          erroredStream => erroredStream.url === stream.url
-        )
-    );
-
-    // If the url is already in the errored list, use another url
-    if (isStreamInErroredList) {
-      this.setUrl(availableStreams[0].url);
-    } else {
-      // Otherwise, add the url to the errored list, then use another url
-      this.setState({ erroredStreams: newErroredStreams }, () =>
-        this.setUrl(availableStreams[0].url)
+    if (this.state.playing) {
+      const { mounts, remotes, erroredStreams, url } = this.state;
+      const sortedStreams = this.sortStreams([...mounts, ...remotes]);
+      const currentStream = sortedStreams.find(stream => stream.url === url);
+      const isStreamInErroredList = erroredStreams.some(
+        stream => stream.url === url
       );
+      const newErroredStreams = isStreamInErroredList
+        ? erroredStreams
+        : [...erroredStreams, currentStream];
+
+      // Pause if all streams are in the errored list
+      if (newErroredStreams.length === sortedStreams.length) {
+        this.pause();
+        return;
+      }
+
+      // Available streams are those in `sortedStreams`
+      // that don't exist in the errored list
+      const availableStreams = sortedStreams.filter(
+        stream =>
+          !newErroredStreams.some(
+            erroredStream => erroredStream.url === stream.url
+          )
+      );
+
+      // If the url is already in the errored list, use another url
+      if (isStreamInErroredList) {
+        this.setUrl(availableStreams[0].url);
+      } else {
+        // Otherwise, add the url to the errored list, then use another url
+        this.setState({ erroredStreams: newErroredStreams }, () =>
+          this.setUrl(availableStreams[0].url)
+        );
+      }
     }
   };
 
