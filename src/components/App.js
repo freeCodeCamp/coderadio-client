@@ -401,20 +401,22 @@ export default class App extends React.Component {
 
       // Available streams are those in `sortedStreams`
       // that don't exist in the errored list
-      const availableStreams = sortedStreams.filter(
-        stream =>
-          !newErroredStreams.some(
-            erroredStream => erroredStream.url === stream.url
-          )
-      );
+      const availableUrls = sortedStreams
+        .filter(
+          stream =>
+            !newErroredStreams.some(
+              erroredStream => erroredStream.url === stream.url
+            )
+        )
+        .map(({ url }) => url);
 
       // If the url is already in the errored list, use another url
       if (isStreamInErroredList) {
-        this.setUrl(availableStreams[0].url);
+        this.setUrl(availableUrls[0]);
       } else {
         // Otherwise, add the url to the errored list, then use another url
         this.setState({ erroredStreams: newErroredStreams }, () =>
-          this.setUrl(availableStreams[0].url)
+          this.setUrl(availableUrls[0])
         );
       }
     }
