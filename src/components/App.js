@@ -380,7 +380,14 @@ export default class App extends React.Component {
      *     try another url
      * - If `erroredStreams` has as many items as the list of available streams:
      *   - Pause the player because this means all of our urls are having issues
+     *
+     * Note that this function does not handle internet connection issue (which would also cause player failure).
+     * When the connection dropped, we just return early here.
+     * The OfflineBanner component has some built-in logic that allows it to be displayed/hidden automatically,
+     * and the reconnection is supported by Nchan by default.
      */
+
+    if (!navigator.onLine) return;
 
     if (this.state.playing) {
       const { mounts, remotes, erroredStreams, url } = this.state;
@@ -427,11 +434,7 @@ export default class App extends React.Component {
       <GlobalHotKeys handlers={this.handlers} keyMap={this.keyMap}>
         <div className="App">
           <Nav />
-          <Main
-            fastConnection={this.state.fastConnection}
-            player={this._player}
-            playing={this.state.playing}
-          />
+          <Main player={this._player} playing={this.state.playing} />
           <audio
             crossOrigin="anonymous"
             onError={this.onPlayerError}
