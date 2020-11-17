@@ -190,6 +190,8 @@ export default class App extends React.Component {
   }
 
   pause() {
+    if (this._player.paused) return;
+
     // completely stop the audio element
     this._player.src = "";
     this._player.pause();
