@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@sentry/react": "^5.28.0",
+    "@sentry/tracing": "^5.28.0",
     "nchan": "^1.0.10",
     "react": "^16.8.6",
     "react-device-detect": "^1.7.5",
