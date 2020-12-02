@@ -1,6 +1,7 @@
 import React from "react";
 import NchanSubscriber from "nchan";
 import { GlobalHotKeys } from "react-hotkeys";
+import * as Sentry from "@sentry/react";
 
 import Nav from "./Nav";
 import Main from "./Main";
@@ -11,6 +12,15 @@ import "../css/App.css";
 const SUB = new NchanSubscriber(
   "wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio"
 );
+
+SUB.on("error", function(err, errDesc) {
+  Sentry.addBreadcrumb({
+    message: "NchanSubscriber error: " + errDesc
+  });
+  // I'm assuming captureException is appropriate here, I'm not sure what type
+  // the first argument has.
+  Sentry.captureException(err);
+});
 
 export default class App extends React.Component {
   constructor(props) {
@@ -371,7 +381,10 @@ export default class App extends React.Component {
       )
     );
 
-  onPlayerError = () => {
+  onPlayerError = err => {
+    // NOTE: this might be a bit noisy, so we should monitor it before promoting
+    // coderadio
+    Sentry.captureException(err);
     /*
      * This error handler works as follows:
      * - When the player cannot play the url:
