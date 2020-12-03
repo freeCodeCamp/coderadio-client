@@ -141,6 +141,11 @@ export default class App extends React.Component {
   play() {
     const { mounts, remotes } = this.state;
     if (this._player.paused) {
+      // Catch if volume was set to 0 by user
+      // If so, return early to avoid play/pause loop error
+      if (this.state.audioConfig.maxVolume === 0) {
+        return;
+      }
       if (!SUB.running) {
         SUB.start();
       }
@@ -150,7 +155,7 @@ export default class App extends React.Component {
         stream => stream.url
       );
 
-      // check if the url has been reseted by pause
+      // check if the url has been reset by pause
       if (!streamUrls.includes(this._player.src)) {
         this._player.src = this.state.url;
         this._player.load();
