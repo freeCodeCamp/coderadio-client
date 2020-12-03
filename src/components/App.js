@@ -381,10 +381,7 @@ export default class App extends React.Component {
       )
     );
 
-  onPlayerError = err => {
-    // NOTE: this might be a bit noisy, so we should monitor it before promoting
-    // coderadio
-    Sentry.captureException(err);
+  onPlayerError = () => {
     /*
      * This error handler works as follows:
      * - When the player cannot play the url:
