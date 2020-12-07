@@ -74,6 +74,7 @@ export default class App extends React.Component {
       playing: null,
       pullMeta: false,
       erroredStreams: [],
+      interacted: false,
 
       // Note: the crossOrigin is needed to fix a CORS JavaScript requirement
 
@@ -175,14 +176,21 @@ export default class App extends React.Component {
         this._player.load();
       }
       this._player.volume = 0;
-      this._player.play();
+      if (!this.state.interacted) {
+        setTimeout(() => {
+          this._player.play();
+        }, 200);
+      } else {
+        this._player.play();
+      }
 
       let audioConfig = this.state.audioConfig;
       audioConfig.currentVolume = 0;
       this.setState({
         audioConfig,
         playing: true,
-        pullMeta: true
+        pullMeta: true,
+        interacted: true
       });
 
       this.fadeUp();
