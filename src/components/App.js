@@ -2,7 +2,7 @@ import React from "react";
 import NchanSubscriber from "nchan";
 import { GlobalHotKeys } from "react-hotkeys";
 import * as Sentry from "@sentry/react";
-import store from 'store';
+import store from "store";
 
 import Nav from "./Nav";
 import Main from "./Main";
@@ -13,7 +13,7 @@ import "../css/App.css";
 const SUB = new NchanSubscriber(
   "wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio"
 );
-const CODERADIO_VOLUME = 'coderadio-volume';
+const CODERADIO_VOLUME = "coderadio-volume";
 
 SUB.on("error", function(err, errDesc) {
   Sentry.addBreadcrumb({
@@ -158,8 +158,8 @@ export default class App extends React.Component {
   }
 
   play() {
-    const { mounts, remotes } = this.state;
-    if (this._player.paused) {
+    const { mounts, remotes, playing } = this.state;
+    if (!playing) {
       if (!SUB.running) {
         SUB.start();
       }
@@ -175,32 +175,32 @@ export default class App extends React.Component {
         this._player.load();
       }
       this._player.volume = 0;
-      this._player.play();
+      this._player.play().then(() => {
+        this.setState(state => {
+          return {
+            audioConfig: { ...state.audioConfig, currentVolume: 0 },
+            playing: true,
+            pullMeta: true
+          };
+        });
 
-      let audioConfig = this.state.audioConfig;
-      audioConfig.currentVolume = 0;
-      this.setState({
-        audioConfig,
-        playing: true,
-        pullMeta: true
+        this.fadeUp();
       });
-
-      this.fadeUp();
     }
   }
 
   pause() {
-    if (this._player.paused) return;
-
     // completely stop the audio element
-    this._player.src = "";
-    this._player.pause();
-    this._player.load();
+    if (this.state.playing) {
+      this._player.src = "";
+      this._player.pause();
+      this._player.load();
 
-    this.setState({
-      playing: false
-    });
-    SUB.stop();
+      this.setState({
+        playing: false
+      });
+      SUB.stop();
+    }
   }
 
   /** *
@@ -212,7 +212,7 @@ export default class App extends React.Component {
     // If there already is a source, confirm it’s playing or not
     if (this._player.src) {
       // If the player is paused, set the volume to 0 and fade up
-      if (this._player.paused) {
+      if (!this.state.playing) {
         this.play();
       }
       // if it is already playing, fade the music out (resulting in a pause)
@@ -228,12 +228,15 @@ export default class App extends React.Component {
     audioConfig.maxVolume = maxVolume;
     audioConfig.currentVolume = maxVolume;
     this._player.volume = audioConfig.maxVolume;
-    this.setState({
-      audioConfig
-    }, () => {
-      // Save user volume to local storage
-      store.set(CODERADIO_VOLUME, maxVolume);
-    });
+    this.setState(
+      {
+        audioConfig
+      },
+      () => {
+        // Save user volume to local storage
+        store.set(CODERADIO_VOLUME, maxVolume);
+      }
+    );
   }
 
   /**
@@ -249,7 +252,7 @@ export default class App extends React.Component {
       {
         audioConfig
       },
-      this.updateVolume
+      () => this.updateVolume(direction)
     );
   }
 
@@ -263,7 +266,7 @@ export default class App extends React.Component {
 
   // In order to have nice fading,
   // this method adjusts the volume dynamically over time.
-  updateVolume() {
+  updateVolume(direction) {
     /*
      *  In order to fix floating math issues,
      *  we set the toFixed in order to avoid 0.999999999999 increments
@@ -272,7 +275,12 @@ export default class App extends React.Component {
     // If the volume is correctly set to the target, no need to change it
     if (currentVolume === this.state.audioConfig.targetVolume) {
       // If the audio is set to 0 and it’s been met, pause the audio
-      if (this.state.audioConfig.targetVolume === 0) this.pause();
+      if (
+        this.state.audioConfig.targetVolume === 0 &&
+        this.state.playing &&
+        direction === "down"
+      )
+        this.pause();
 
       // Unmet audio volume settings require it to be changed
     } else {
@@ -305,7 +313,7 @@ export default class App extends React.Component {
       });
       // The speed at which the audio lowers is also controlled.
       setTimeout(
-        () => this.updateVolume(),
+        () => this.updateVolume(direction),
         this.state.audioConfig.volumeTransitionSpeed
       );
     }
