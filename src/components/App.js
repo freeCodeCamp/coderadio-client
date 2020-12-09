@@ -339,7 +339,7 @@ export default class App extends React.Component {
           mounts: np.station.mounts,
           remotes: np.station.remotes
         });
-        this.setMountToConnection(np.station.mounts, np.station.remotes);
+        this.setMountToConnection(np.station.mounts);
       }
 
       if (this.state.listeners !== np.listeners.current) {
