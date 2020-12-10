@@ -29,7 +29,7 @@ export default function Nav() {
         >
           <img
             alt="Code Radio"
-            src="https://cdn-media-1.freecodecamp.org/code-radio/FCC-logo.png"
+            src="https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg"
           />
         </a>
       </div>
