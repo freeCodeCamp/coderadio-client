@@ -114,9 +114,14 @@ export default class App extends React.Component {
      */
     const maxVolume =
       store.get(CODERADIO_VOLUME) || this.state.audioConfig.maxVolume;
-
     this.setState(
-      { audioConfig: { ...this.state.audioConfig, maxVolume } },
+      {
+        audioConfig: {
+          ...this.state.audioConfig,
+          maxVolume,
+          currentVolume: maxVolume
+        }
+      },
       () => {
         this._player.volume = maxVolume;
       }
@@ -224,7 +229,7 @@ export default class App extends React.Component {
     this.setState({
       audioConfig
     }, () => {
-       // Save user volume to local storage
+      // Save user volume to local storage
       store.set(CODERADIO_VOLUME, maxVolume);
     });
   }
