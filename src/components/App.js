@@ -175,7 +175,7 @@ export default class App extends React.Component {
         this._player.load();
       }
       this._player.volume = 0;
-      this._player.play()
+      this._player.play();
 
       let audioConfig = this.state.audioConfig;
       audioConfig.currentVolume = 0;
