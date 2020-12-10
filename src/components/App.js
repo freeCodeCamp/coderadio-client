@@ -57,10 +57,10 @@ export default class App extends React.Component {
       // (Used in earlier projects and just maintained)
       audioConfig: {
         targetVolume: 0,
-        maxVolume: 0.5,
-        volumeSteps: 0.1,
-        currentVolume: 0.5,
-        volumeTransitionSpeed: 100
+        maxVolume: 0.50,
+        volumeSteps: 0.01,
+        currentVolume: 0.50,
+        volumeTransitionSpeed: 10
       },
 
       /** *
@@ -224,7 +224,7 @@ export default class App extends React.Component {
 
   setTargetVolume(v) {
     let audioConfig = { ...this.state.audioConfig };
-    let maxVolume = parseFloat(Math.max(0, Math.min(1, v).toFixed(1)));
+    let maxVolume = parseFloat(Math.max(0, Math.min(1, v).toFixed(2)));
     audioConfig.maxVolume = maxVolume;
     audioConfig.currentVolume = maxVolume;
     this._player.volume = audioConfig.maxVolume;
@@ -268,7 +268,7 @@ export default class App extends React.Component {
      *  In order to fix floating math issues,
      *  we set the toFixed in order to avoid 0.999999999999 increments
      */
-    let currentVolume = parseFloat(this._player.volume.toFixed(1));
+    let currentVolume = parseFloat(this._player.volume.toFixed(2));
     // If the volume is correctly set to the target, no need to change it
     if (currentVolume === this.state.audioConfig.targetVolume) {
       // If the audio is set to 0 and it’s been met, pause the audio

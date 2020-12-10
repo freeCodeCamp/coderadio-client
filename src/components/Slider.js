@@ -1,18 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+const MAX = 100
+
 const Slider = ({ currentVolume, setTargetVolume }) => {
-  const sliderVal = currentVolume * 10;
   const handleChange = e => {
     let { value } = e.target;
-    setTargetVolume(value / 10);
+    setTargetVolume(value / MAX);
   }
+
+  const sliderVal = currentVolume * MAX;
 
   return (
     <div className="slider-container">
       <input
         id="slider"
-        max="10"
+        max={MAX}
         min="0"
         onChange={handleChange}
         type="range"
