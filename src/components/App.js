@@ -2,6 +2,7 @@ import React from "react";
 import NchanSubscriber from "nchan";
 import { GlobalHotKeys } from "react-hotkeys";
 import * as Sentry from "@sentry/react";
+import store from 'store';
 
 import Nav from "./Nav";
 import Main from "./Main";
@@ -12,6 +13,7 @@ import "../css/App.css";
 const SUB = new NchanSubscriber(
   "wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio"
 );
+const CODERADIO_VOLUME = 'coderadio-volume';
 
 SUB.on("error", function(err, errDesc) {
   Sentry.addBreadcrumb({
@@ -106,7 +108,19 @@ export default class App extends React.Component {
 
   // set the players initial vol and crossOrigin
   setPlayerInitial() {
-    this._player.volume = this.state.audioConfig.maxVolume;
+    /*
+     * Get user volume level from local storage
+     * if not available set to default 0.5.
+     */
+    const maxVolume =
+      store.get(CODERADIO_VOLUME) || this.state.audioConfig.maxVolume;
+
+    this.setState(
+      { audioConfig: { ...this.state.audioConfig, maxVolume } },
+      () => {
+        this._player.volume = maxVolume;
+      }
+    );
   }
 
   componentDidMount() {
@@ -209,6 +223,9 @@ export default class App extends React.Component {
     this._player.volume = audioConfig.maxVolume;
     this.setState({
       audioConfig
+    }, () => {
+       // Save user volume to local storage
+      store.set(CODERADIO_VOLUME, maxVolume);
     });
   }
 
