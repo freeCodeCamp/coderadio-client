@@ -104,6 +104,7 @@ export default class App extends React.Component {
     this.setUrl = this.setUrl.bind(this);
     this.setTargetVolume = this.setTargetVolume.bind(this);
     this.getNowPlaying = this.getNowPlaying.bind(this);
+    this.updateVolume = this.updateVolume.bind(this);
   }
 
   // set the players initial vol and crossOrigin
@@ -197,7 +198,8 @@ export default class App extends React.Component {
       this._player.load();
 
       this.setState({
-        playing: false
+        playing: false,
+        pausing: false
       });
       SUB.stop();
     }
@@ -250,9 +252,10 @@ export default class App extends React.Component {
       direction.toLowerCase() === "up" ? this.state.audioConfig.maxVolume : 0;
     this.setState(
       {
-        audioConfig
+        audioConfig,
+        pausing: direction === "down"
       },
-      () => this.updateVolume(direction)
+      this.updateVolume
     );
   }
 
@@ -266,7 +269,7 @@ export default class App extends React.Component {
 
   // In order to have nice fading,
   // this method adjusts the volume dynamically over time.
-  updateVolume(direction) {
+  updateVolume() {
     /*
      *  In order to fix floating math issues,
      *  we set the toFixed in order to avoid 0.999999999999 increments
@@ -275,11 +278,7 @@ export default class App extends React.Component {
     // If the volume is correctly set to the target, no need to change it
     if (currentVolume === this.state.audioConfig.targetVolume) {
       // If the audio is set to 0 and it’s been met, pause the audio
-      if (
-        this.state.audioConfig.targetVolume === 0 &&
-        this.state.playing &&
-        direction === "down"
-      )
+      if (this.state.audioConfig.targetVolume === 0 && this.state.pausing)
         this.pause();
 
       // Unmet audio volume settings require it to be changed
@@ -313,7 +312,7 @@ export default class App extends React.Component {
       });
       // The speed at which the audio lowers is also controlled.
       setTimeout(
-        () => this.updateVolume(direction),
+        this.updateVolume,
         this.state.audioConfig.volumeTransitionSpeed
       );
     }
