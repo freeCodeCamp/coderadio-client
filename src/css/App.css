@@ -523,16 +523,26 @@ p {
 
 .under-header-content {
   background-color: #0a0a23;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   z-index: 1;
   position: absolute;
   width: 100%;
-  height: 50px;
   top: 38px;
   text-align: center;
+}
+
+.title-wrapper {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.offline-banner {
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: lightblue;
 }
 
 #container {
