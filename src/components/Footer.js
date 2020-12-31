@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import CurrentSong from "./CurrentSong";
-import Slider from "./Slider";
-import PlayPauseButton from "./PlayPauseButton";
+import CurrentSong from './CurrentSong';
+import Slider from './Slider';
+import PlayPauseButton from './PlayPauseButton';
 
 export default class Footer extends React.Component {
   constructor(props) {
@@ -45,13 +45,13 @@ export default class Footer extends React.Component {
 
   render() {
     let { alternativeMounts } = this.state;
-    let mountOptions = "";
+    let mountOptions = '';
 
     if (alternativeMounts && this.props.url) {
       mountOptions = (
         <select
-          data-meta="stream-select"
-          onChange={this.handleChange.bind(this)}
+          data-meta='stream-select'
+          onv={this.handleChange.bind(this)}
           value={this.props.url}
         >
           {alternativeMounts.map((mount, index) => (

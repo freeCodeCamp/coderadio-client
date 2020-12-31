@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { isBrowser } from "react-device-detect";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { isBrowser } from 'react-device-detect';
 
-import { ReactComponent as Pause } from "../assets/pause.svg";
-import { ReactComponent as Play } from "../assets/play.svg";
+import { ReactComponent as Pause } from '../assets/pause.svg';
+import { ReactComponent as Play } from '../assets/play.svg';
 
 class PlayPauseButton extends React.Component {
   state = {
@@ -33,13 +33,13 @@ class PlayPauseButton extends React.Component {
   render() {
     return (
       <div
-        aria-label={this.props.playing ? "Pause" : "Play"}
-        className={this.state.initialLoad ? "cta" : ""}
-        id="playContainer"
+        aria-label={this.props.playing ? 'Pause' : 'Play'}
+        className={this.state.initialLoad ? 'cta' : ''}
+        id='playContainer'
         onClick={this.handleOnClick}
         onKeyDown={this.handleKeyDown}
         onTouchEnd={this.handleOnTouchEnd}
-        role="button"
+        role='button'
         tabIndex={0}
       >
         {this.props.playing ? <Pause /> : <Play />}

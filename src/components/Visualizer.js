@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Visualizer extends React.Component {
   constructor(props) {
@@ -7,8 +7,8 @@ export default class Visualizer extends React.Component {
     this.state = {
       eq: {},
       config: {
-        baseColour: "rgb(10, 10, 35)",
-        translucent: "rgba(10, 10, 35, 0.6)",
+        baseColour: 'rgb(10, 10, 35)',
+        translucent: 'rgba(10, 10, 35, 0.6)',
         multiplier: 0.7529
       }
     };
@@ -72,7 +72,7 @@ export default class Visualizer extends React.Component {
     this._canvas.height = this._canvas.parentNode.offsetHeight;
 
     this.visualizer = {
-      ctx: this._canvas.getContext("2d"),
+      ctx: this._canvas.getContext('2d'),
       height: this._canvas.height,
       width: this._canvas.width,
       barWidth: this._canvas.width / this.state.eq.bands.length
@@ -131,8 +131,8 @@ export default class Visualizer extends React.Component {
 
   render() {
     return (
-      <div id="visualizer">
-        <canvas ref={a => (this._canvas = a)} />
+      <div id='visualizer'>
+        <canvas aria-label='visualizer' ref={a => (this._canvas = a)} />
       </div>
     );
   }

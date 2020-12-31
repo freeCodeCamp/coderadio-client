@@ -1,26 +1,26 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const DEFAULT_ART =
-  "https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif";
+  'https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif';
 
 const CurrentSong = props => (
-  <div className={props.playing ? "thumb shown" : "thumb"} id="metaDisplay">
+  <div className={props.playing ? 'thumb shown' : 'thumb'} id='metaDisplay'>
     <img
-      alt="album art"
-      data-meta="picture"
+      alt='album art'
+      data-meta='picture'
       src={props.fastConnection ? props.currentSong.art : DEFAULT_ART}
     />
-    <div id="nowPlaying">
+    <div id='nowPlaying'>
       <progress
-        data-meta="duration"
+        data-meta='duration'
         max={props.songDuration}
         value={props.durationVal}
       />
-      <div data-meta="title">{props.currentSong.title}</div>
-      <div data-meta="artist">{props.currentSong.artist}</div>
-      <div data-meta="album">{props.currentSong.album}</div>
-      <div data-meta="listeners">Listeners: {props.listeners}</div>
+      <div data-meta='title'>{props.currentSong.title}</div>
+      <div data-meta='artist'>{props.currentSong.artist}</div>
+      <div data-meta='album'>{props.currentSong.album}</div>
+      <div data-meta='listeners'>Listeners: {props.listeners}</div>
       {props.mountOptions}
     </div>
   </div>

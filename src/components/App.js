@@ -1,23 +1,23 @@
-import React from "react";
-import NchanSubscriber from "nchan";
-import { GlobalHotKeys } from "react-hotkeys";
-import * as Sentry from "@sentry/react";
-import store from "store";
+import React from 'react';
+import NchanSubscriber from 'nchan';
+import { GlobalHotKeys } from 'react-hotkeys';
+import * as Sentry from '@sentry/react';
+import store from 'store';
 
-import Nav from "./Nav";
-import Main from "./Main";
-import Footer from "./Footer";
+import Nav from './Nav';
+import Main from './Main';
+import Footer from './Footer';
 
-import "../css/App.css";
+import '../css/App.css';
 
 const SUB = new NchanSubscriber(
-  "wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio"
+  'wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio'
 );
-const CODERADIO_VOLUME = "coderadio-volume";
+const CODERADIO_VOLUME = 'coderadio-volume';
 
-SUB.on("error", function(err, errDesc) {
+SUB.on('error', function(err, errDesc) {
   Sentry.addBreadcrumb({
-    message: "NchanSubscriber error: " + errDesc
+    message: 'NchanSubscriber error: ' + errDesc
   });
   // I'm assuming captureException is appropriate here, I'm not sure what type
   // the first argument has.
@@ -57,9 +57,9 @@ export default class App extends React.Component {
       // (Used in earlier projects and just maintained)
       audioConfig: {
         targetVolume: 0,
-        maxVolume: 0.50,
+        maxVolume: 0.5,
         volumeSteps: 0.01,
-        currentVolume: 0.50,
+        currentVolume: 0.5,
         volumeTransitionSpeed: 10
       },
 
@@ -68,10 +68,12 @@ export default class App extends React.Component {
        * to it being a single audio element, there should be
        * no memory leaks of extra floating audio elements.
        */
-      url: "",
+      url: '',
       mounts: [],
       remotes: [],
       playing: null,
+      captions: null,
+      pausing: null,
       pullMeta: false,
       erroredStreams: [],
 
@@ -88,9 +90,9 @@ export default class App extends React.Component {
 
     // Keyboard shortcuts
     this.keyMap = {
-      TOGGLE_PLAY: ["space", "k"],
-      INCREASE_VOLUME: "up",
-      DECREASE_VOLUME: "down"
+      TOGGLE_PLAY: ['space', 'k'],
+      INCREASE_VOLUME: 'up',
+      DECREASE_VOLUME: 'down'
     };
 
     // Keyboard shortcut handlers
@@ -193,7 +195,7 @@ export default class App extends React.Component {
   pause() {
     // completely stop the audio element
     if (this.state.playing) {
-      this._player.src = "";
+      this._player.src = '';
       this._player.pause();
       this._player.load();
 
@@ -246,25 +248,25 @@ export default class App extends React.Component {
    * Simple fade command to initiate the playing and pausing
    *  in a more fluid method  */
 
-  fade(direction = "down") {
+  fade(direction = 'down') {
     let audioConfig = { ...this.state.audioConfig };
     audioConfig.targetVolume =
-      direction.toLowerCase() === "up" ? this.state.audioConfig.maxVolume : 0;
+      direction.toLowerCase() === 'up' ? this.state.audioConfig.maxVolume : 0;
     this.setState(
       {
         audioConfig,
-        pausing: direction === "down"
+        pausing: direction === 'down'
       },
       this.updateVolume
     );
   }
 
   fadeUp() {
-    this.fade("up");
+    this.fade('up');
   }
 
   fadeDown() {
-    this.fade("down");
+    this.fade('down');
   }
 
   // In order to have nice fading,
@@ -361,11 +363,11 @@ export default class App extends React.Component {
   }
 
   getNowPlaying() {
-    SUB.on("message", message => {
+    SUB.on('message', message => {
       let np = JSON.parse(message);
 
       // We look through the available mounts to find the default mount
-      if (this.state.url === "") {
+      if (this.state.url === '') {
         this.setState({
           mounts: np.station.mounts,
           remotes: np.station.remotes
@@ -466,7 +468,7 @@ export default class App extends React.Component {
   render() {
     return (
       <GlobalHotKeys handlers={this.handlers} keyMap={this.keyMap}>
-        <div className="App">
+        <div className='App'>
           <Nav />
           <Main
             fastConnection={this.state.fastConnection}
@@ -474,10 +476,13 @@ export default class App extends React.Component {
             playing={this.state.playing}
           />
           <audio
-            crossOrigin="anonymous"
+            aria-label='audio'
+            crossOrigin='anonymous'
             onError={this.onPlayerError}
             ref={a => (this._player = a)}
-          />
+          >
+            <track kind='captions' {...this.state.captions} />
+          </audio>
           <Footer
             currentSong={this.state.currentSong}
             currentVolume={this.state.audioConfig.currentVolume}

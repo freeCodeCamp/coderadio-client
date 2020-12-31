@@ -1,14 +1,14 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
 * {
   box-sizing: border-box;
-  font-family: "Lato", Arial;
+  font-family: 'Lato', Arial;
 }
 
 body {
   background-color: #1b1b32;
   margin: 0px;
   padding: 0px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   background-size: cover;
   background-position: center center;
   overflow: hidden;
@@ -34,23 +34,23 @@ footer {
   bottom: 0;
 }
 
-[data-meta="title"] {
+[data-meta='title'] {
   font-size: 18px;
 }
-[data-meta="artist"] {
+[data-meta='artist'] {
   font-size: 14px;
 }
-[data-meta="album"] {
+[data-meta='album'] {
   font-size: 10px;
 }
 
-[data-meta="picture"] {
+[data-meta='picture'] {
   height: 70px;
   width: 70px;
   position: absolute;
 }
 
-[data-meta="listeners"] {
+[data-meta='listeners'] {
   position: absolute;
   right: 15px;
   top: 2px;
@@ -58,7 +58,7 @@ footer {
   font-weight: 900;
 }
 
-[data-meta="stream-select"] {
+[data-meta='stream-select'] {
   position: absolute;
   right: 15px;
   bottom: 17px;
@@ -71,7 +71,7 @@ footer {
   border-radius: 0;
   border: none;
   background-color: white;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
   background-repeat: no-repeat, repeat;
   background-position: right 0.7em top 50%, 0 0;
   background-size: 0.65em auto, 100%;
@@ -96,7 +96,7 @@ footer {
 }
 
 #playContainer::before {
-  content: "Push Play or Space Bar to Start Music";
+  content: 'Push Play or Space Bar to Start Music';
   font-size: 21px;
   padding: 10px 100px 10px 20px;
   font-weight: bold;
@@ -198,7 +198,7 @@ footer {
 }
 
 .animation {
-  background-image: url("https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg");
+  background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
   background-position: left bottom;
   background-repeat: no-repeat;
   position: relative;
@@ -207,8 +207,8 @@ footer {
 }
 
 .animation.saron::before {
-  content: "";
-  background-image: url("https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif");
+  content: '';
+  background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif');
   left: 388px;
   bottom: 0px;
   width: 509px;
@@ -243,24 +243,24 @@ dd {
 }
 
 @media (max-width: 750px) {
-  [data-meta="title"],
-  [data-meta="artist"],
-  [data-meta="album"] {
+  [data-meta='title'],
+  [data-meta='artist'],
+  [data-meta='album'] {
     padding-left: 10px;
   }
-  [data-meta="picture"] {
+  [data-meta='picture'] {
     bottom: 212px;
     width: 200px;
     height: 200px;
     left: 50%;
     margin-left: -100px;
   }
-  [data-meta="listeners"] {
+  [data-meta='listeners'] {
     left: 10px;
     top: auto;
     bottom: 15px;
   }
-  [data-meta="stream-select"] {
+  [data-meta='stream-select'] {
     right: 10px;
   }
   #nowPlaying {
@@ -312,7 +312,7 @@ dd {
 }
 
 @media (max-height: 650px) {
-  [data-meta="picture"] {
+  [data-meta='picture'] {
     width: 100px;
     height: 100px;
     left: 50%;
@@ -321,7 +321,7 @@ dd {
 }
 
 @media (max-height: 600px) {
-  [data-meta="picture"] {
+  [data-meta='picture'] {
     display: none;
   }
 }
@@ -336,7 +336,7 @@ dd {
   overflow-y: hidden;
   height: 40px;
   font-size: 18px;
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
   height: 38px;
   background: #0a0a23;
   position: absolute;
@@ -433,7 +433,7 @@ dd {
   display: none;
   padding: 2px 14px 3px;
   border: 1px solid #fff;
-  font-family: "lato", sans-serif;
+  font-family: 'lato', sans-serif;
   font-size: 18px;
   color: #fff;
   outline: none;
