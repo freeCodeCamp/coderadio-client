@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import * as Sentry from "@sentry/react";
-import { Integrations } from "@sentry/tracing";
-import App from "./components/App";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
+import App from './components/App';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -13,4 +13,4 @@ Sentry.init({
   tracesSampleRate: 1.0
 });
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
