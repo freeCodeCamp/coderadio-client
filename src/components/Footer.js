@@ -51,7 +51,7 @@ export default class Footer extends React.Component {
       mountOptions = (
         <select
           data-meta='stream-select'
-          onv={this.handleChange.bind(this)}
+          onChange={this.handleChange.bind(this)}
           value={this.props.url}
         >
           {alternativeMounts.map((mount, index) => (
