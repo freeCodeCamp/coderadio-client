@@ -144,19 +144,23 @@ export default class App extends React.Component {
   setUrl(url = false) {
     if (!url) return;
 
-    if (this.state.playing) this.pause();
+    const onPause = () => {
+      this._player.src = url;
+      this.setState({ url });
 
-    this._player.src = url;
-    this.setState({
-      url
-    });
+      // Since the `playing` state is initially `null` when the app first loads
+      // and is set to boolean when there is an user interaction,
+      // we prevent the app from auto-playing the music
+      // by only calling `this.play()` if the `playing` state is not `null`
+      if (this.state.playing !== null) {
+        this.play();
+      }
+    }
 
-    // Since the `playing` state is initially `null` when the app first loads
-    // and is set to boolean when there is an user interaction,
-    // we prevent the app from auto-playing the music
-    // by only calling `this.play()` if the `playing` state is not `null`
-    if (this.state.playing !== null) {
-      this.play();
+    if (this.state.playing) {
+      // this.pause() calls setState to update the `playing` state.
+      // We need to pass a callback function to it in order to have the logic executed correctly
+      this.pause(onPause);
     }
   }
 
@@ -183,6 +187,7 @@ export default class App extends React.Component {
           return {
             audioConfig: { ...state.audioConfig, currentVolume: 0 },
             playing: true,
+            pausing: false,
             pullMeta: true
           };
         });
@@ -192,7 +197,7 @@ export default class App extends React.Component {
     }
   }
 
-  pause() {
+  pause(callback) {
     // completely stop the audio element
     if (this.state.playing) {
       this._player.src = '';
@@ -201,8 +206,9 @@ export default class App extends React.Component {
 
       this.setState({
         playing: false,
-        pausing: false
-      });
+        pausing: true,
+      }, callback);
+
       SUB.stop();
     }
   }
