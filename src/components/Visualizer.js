@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class Visualizer extends React.Component {
+export default class Visualizer extends React.PureComponent {
+  rafId = null;
+  timerId = null;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -14,16 +17,17 @@ export default class Visualizer extends React.Component {
     };
   }
 
-  // In order to get around some mobile browser limitations,
-  // we can only generate a lot
-  // of the audio context stuff AFTER the audio has been triggered.
-  // We can't see it until
-  // then anyway so it makes no difference to desktop.
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.playing && !this.state.eq.context) {
-      this.initiateEQ();
-      this.createVisualizer();
-    }
+  componentDidMount() {
+    this.initiateEQ();
+    this.createVisualizer();
+    this.startDrawing();
+  }
+
+  componentWillUnmount() {
+    this.stopDrawing();
+    this.state.eq.analyser.disconnect();
+    this.state.eq.src.disconnect();
+    this.state.eq.context.close();
   }
 
   initiateEQ() {
@@ -47,7 +51,6 @@ export default class Visualizer extends React.Component {
     eq.bands = new Uint8Array(eq.analyser.frequencyBinCount - 32);
 
     this.setState({ eq });
-    this.updateEQBands();
   }
 
   /** *
@@ -56,11 +59,11 @@ export default class Visualizer extends React.Component {
    * visualizer is up to date.
    */
   updateEQBands() {
+    const newEQ = this.state.eq;
     // Populate the buffer with the audio source’s current data
-    this.state.eq.analyser.getByteFrequencyData(this.state.eq.bands);
+    newEQ.analyser.getByteFrequencyData(newEQ.bands);
 
-    // Can’t stop, won’t stop
-    requestAnimationFrame(() => this.updateEQBands());
+    this.setState({ eq: { ...newEQ } });
   }
 
   /** *
@@ -77,22 +80,41 @@ export default class Visualizer extends React.Component {
       width: this._canvas.width,
       barWidth: this._canvas.width / this.state.eq.bands.length
     };
-
-    this.drawVisualizer();
   }
+
+  startDrawing = () => {
+    if (!this.rafId) {
+      this.rafId = window.requestAnimationFrame(this.drawingLoop);
+    }
+  };
+
+  stopDrawing = () => {
+    window.cancelAnimationFrame(this.rafId);
+    clearTimeout(this.timerId);
+  };
+
+  drawingLoop = () => {
+    const haveWaveform = this.state.eq.bands.reduce((a, b) => a + b, 0) !== 0;
+
+    this.updateEQBands();
+    this.drawVisualizer();
+
+    // Because timeupdate events are not triggered at browser speed,
+    // we use requestanimationframe for higher framerates
+    if (haveWaveform) {
+      this.rafId = window.requestAnimationFrame(this.drawingLoop);
+    }
+    // If there is no music or audio in the song, then reduce the FPS
+    else {
+      this.timerId = setTimeout(this.drawingLoop, 250);
+    }
+  };
 
   /** *
    * As a base visualizer, the equalizer bands are drawn using
    * canvas in the window directly above the song into.
    */
   drawVisualizer() {
-    if (this.state.eq.bands.reduce((a, b) => a + b, 0) !== 0)
-      requestAnimationFrame(() => this.drawVisualizer());
-    // Because timeupdate events are not triggered at browser speed,
-    // we use requestanimationframe for higher framerates
-    // eslint-disable-next-line no-inline-comments
-    // If there is no music or audio in the song, then reduce the FPS
-    else setTimeout(() => this.drawVisualizer(), 250);
     // Intial bar x coordinate
     let y,
       x = 0;
@@ -139,6 +161,5 @@ export default class Visualizer extends React.Component {
 }
 
 Visualizer.propTypes = {
-  player: PropTypes.object,
-  playing: PropTypes.bool
+  player: PropTypes.object
 };

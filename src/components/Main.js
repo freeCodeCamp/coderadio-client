@@ -15,7 +15,7 @@ const Main = props => {
       {isBrowser && (
         <>
           <div className='animation saron' id='container' />
-          <Visualizer player={props.player} playing={props.playing} />
+          {props.playing && <Visualizer player={props.player} />}
           <details>
             <summary>Keyboard Controls</summary>
             <dl>
