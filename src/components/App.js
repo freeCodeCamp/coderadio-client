@@ -200,14 +200,17 @@ export default class App extends React.Component {
       this._player.pause();
       this._player.load();
 
-      this.setState({
-        playing: false,
-        pausing: false
-      }, () => {
-        SUB.stop();
-        resolve();
-      });
-    })
+      this.setState(
+        {
+          playing: false,
+          pausing: false
+        },
+        () => {
+          SUB.stop();
+          resolve();
+        }
+      );
+    });
   }
 
   /** *
@@ -323,27 +326,41 @@ export default class App extends React.Component {
     }
   }
 
-  sortStreams = (streams, lowBitrate = false) => {
-    return streams.sort((a, b) => {
-      if (lowBitrate) {
-        // sort by bitrate from low to high
-        if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return -1;
-        if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return 1;
-      } else {
-        // sort by bitrate, from high to low
-        if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return 1;
-        if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return -1;
-      }
+  sortStreams = (streams, lowBitrate = false, shuffle = false) => {
+    if (shuffle) {
+      // shuffling should only happen among streams with similar bitrates
+      // since each relay displays listener numbers across relays shuffling
+      // should  be used to spread the load on initial stream selection
+      let bitrates = streams.map(stream => stream.bitrate);
+      let maxBitrate = Math.max(...bitrates);
+      return streams
+        .filter(stream => {
+          if (!lowBitrate) return stream.bitrate === maxBitrate;
+          else return stream.bitrate !== maxBitrate;
+        })
+        .sort(() => Math.random() - 0.5);
+    } else {
+      return streams.sort((a, b) => {
+        if (lowBitrate) {
+          // sort by bitrate from low to high
+          if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return -1;
+          if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return 1;
+        } else {
+          // sort by bitrate, from high to low
+          if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return 1;
+          if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return -1;
+        }
 
-      // if both items have the same bitrate, sort by listeners from low to high
-      if (a.listeners.current < b.listeners.current) return -1;
-      if (a.listeners.current > b.listeners.current) return 1;
-      return 0;
-    });
+        // if both items have the same bitrate, sort by listeners from low to high
+        if (a.listeners.current < b.listeners.current) return -1;
+        if (a.listeners.current > b.listeners.current) return 1;
+        return 0;
+      });
+    }
   };
 
   getStreamUrl = (streams, lowBitrate) => {
-    const sorted = this.sortStreams(streams, lowBitrate);
+    const sorted = this.sortStreams(streams, lowBitrate, true);
     return sorted[0].url;
   };
 
@@ -421,7 +438,7 @@ export default class App extends React.Component {
     /*
      * This error handler works as follows:
      * - When the player cannot play the url:
-     *   - If the player's src is falsy and the `playing` state is being false, 
+     *   - If the player's src is falsy and the `playing` state is being false,
      * return early. (It means the user has paused the player and the src has been reset
      * to an empty string)
      *   - If the url is already in the `erroredStreams` list: try another url
