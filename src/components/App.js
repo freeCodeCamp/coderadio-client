@@ -194,17 +194,20 @@ export default class App extends React.Component {
 
   pause() {
     // completely stop the audio element
-    if (this.state.playing) {
-      this._player.src = '';
+    if (!this.state.playing) return Promise.resolve();
+
+    return new Promise(resolve => {
       this._player.pause();
       this._player.load();
 
       this.setState({
         playing: false,
         pausing: false
+      }, () => {
+        SUB.stop();
+        resolve();
       });
-      SUB.stop();
-    }
+    })
   }
 
   /** *
@@ -414,54 +417,56 @@ export default class App extends React.Component {
       )
     );
 
-  onPlayerError = () => {
+  onPlayerError = async () => {
     /*
      * This error handler works as follows:
      * - When the player cannot play the url:
+     *   - If the player's src is falsy and the `playing` state is being false, 
+     * return early. (It means the user has paused the player and the src has been reset
+     * to an empty string)
      *   - If the url is already in the `erroredStreams` list: try another url
      *   - If the url is not in `erroredStreams`: add the url to the list and
      *     try another url
      * - If `erroredStreams` has as many items as the list of available streams:
      *   - Pause the player because this means all of our urls are having issues
      */
+    if (!this.state.playing && !this._player.src) return;
 
-    if (this.state.playing) {
-      const { mounts, remotes, erroredStreams, url } = this.state;
-      const sortedStreams = this.sortStreams([...mounts, ...remotes]);
-      const currentStream = sortedStreams.find(stream => stream.url === url);
-      const isStreamInErroredList = erroredStreams.some(
-        stream => stream.url === url
+    const { mounts, remotes, erroredStreams, url } = this.state;
+    const sortedStreams = this.sortStreams([...mounts, ...remotes]);
+    const currentStream = sortedStreams.find(stream => stream.url === url);
+    const isStreamInErroredList = erroredStreams.some(
+      stream => stream.url === url
+    );
+    const newErroredStreams = isStreamInErroredList
+      ? erroredStreams
+      : [...erroredStreams, currentStream];
+
+    // Pause if all streams are in the errored list
+    if (newErroredStreams.length === sortedStreams.length) {
+      await this.pause();
+      return;
+    }
+
+    // Available streams are those in `sortedStreams`
+    // that don't exist in the errored list
+    const availableUrls = sortedStreams
+      .filter(
+        stream =>
+          !newErroredStreams.some(
+            erroredStream => erroredStream.url === stream.url
+          )
+      )
+      .map(({ url }) => url);
+
+    // If the url is already in the errored list, use another url
+    if (isStreamInErroredList) {
+      this.setUrl(availableUrls[0]);
+    } else {
+      // Otherwise, add the url to the errored list, then use another url
+      this.setState({ erroredStreams: newErroredStreams }, () =>
+        this.setUrl(availableUrls[0])
       );
-      const newErroredStreams = isStreamInErroredList
-        ? erroredStreams
-        : [...erroredStreams, currentStream];
-
-      // Pause if all streams are in the errored list
-      if (newErroredStreams.length === sortedStreams.length) {
-        this.pause();
-        return;
-      }
-
-      // Available streams are those in `sortedStreams`
-      // that don't exist in the errored list
-      const availableUrls = sortedStreams
-        .filter(
-          stream =>
-            !newErroredStreams.some(
-              erroredStream => erroredStream.url === stream.url
-            )
-        )
-        .map(({ url }) => url);
-
-      // If the url is already in the errored list, use another url
-      if (isStreamInErroredList) {
-        this.setUrl(availableUrls[0]);
-      } else {
-        // Otherwise, add the url to the errored list, then use another url
-        this.setState({ erroredStreams: newErroredStreams }, () =>
-          this.setUrl(availableUrls[0])
-        );
-      }
     }
   };
 
