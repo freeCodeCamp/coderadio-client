@@ -450,7 +450,7 @@ export default class App extends React.Component {
     if (!this.state.playing && !this._player.src) return;
 
     const { mounts, remotes, erroredStreams, url } = this.state;
-    const sortedStreams = this.sortStreams([...mounts, ...remotes]);
+    const sortedStreams = this.sortStreams([...remotes, ...mounts]);
     const currentStream = sortedStreams.find(stream => stream.url === url);
     const isStreamInErroredList = erroredStreams.some(
       stream => stream.url === url
