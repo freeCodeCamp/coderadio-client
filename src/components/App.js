@@ -330,7 +330,7 @@ export default class App extends React.Component {
     if (shuffle) {
       // shuffling should only happen among streams with similar bitrates
       // since each relay displays listener numbers across relays shuffling
-      // should  be used to spread the load on initial stream selection
+      // should be used to spread the load on initial stream selection
       let bitrates = streams.map(stream => stream.bitrate);
       let maxBitrate = Math.max(...bitrates);
       return streams
