@@ -1,7 +1,5 @@
 import React from 'react';
-import NchanSubscriber from 'nchan';
 import { GlobalHotKeys } from 'react-hotkeys';
-import * as Sentry from '@sentry/react';
 import store from 'store';
 
 import Nav from './Nav';
@@ -10,19 +8,9 @@ import Footer from './Footer';
 
 import '../css/App.css';
 
-const SUB = new NchanSubscriber(
-  'wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio'
-);
-const CODERADIO_VOLUME = 'coderadio-volume';
+const STATIC_JSON = 'https://coderadio-admin.freecodecamp.org/api/nowplaying_static/coderadio.json';
 
-SUB.on('error', function(err, errDesc) {
-  Sentry.addBreadcrumb({
-    message: 'NchanSubscriber error: ' + errDesc
-  });
-  // I'm assuming captureException is appropriate here, I'm not sure what type
-  // the first argument has.
-  Sentry.captureException(err);
-});
+const CODERADIO_VOLUME = 'coderadio-volume';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -163,10 +151,6 @@ export default class App extends React.Component {
   play() {
     const { mounts, remotes, playing } = this.state;
     if (!playing) {
-      if (!SUB.running) {
-        SUB.start();
-      }
-
       let streamUrls = Array.from(
         [...mounts, ...remotes],
         stream => stream.url
@@ -204,11 +188,8 @@ export default class App extends React.Component {
         {
           playing: false,
           pausing: false
-        },
-        () => {
-          SUB.stop();
-          resolve();
-        }
+        }, 
+        resolve
       );
     });
   }
@@ -383,39 +364,37 @@ export default class App extends React.Component {
   }
 
   getNowPlaying() {
-    SUB.on('message', message => {
-      let np = JSON.parse(message);
+    fetch(STATIC_JSON)
+      .then(response => response.json())
+      .then(np => {
+        // We look through the available mounts to find the default mount
+        if (this.state.url === '') {
+          this.setState({
+            mounts: np.station.mounts,
+            remotes: np.station.remotes
+          });
+          this.setMountToConnection(np.station.mounts, np.station.remotes);
+        }
 
-      // We look through the available mounts to find the default mount
-      if (this.state.url === '') {
-        this.setState({
-          mounts: np.station.mounts,
-          remotes: np.station.remotes
-        });
-        this.setMountToConnection(np.station.mounts, np.station.remotes);
-      }
+        if (this.state.listeners !== np.listeners.current) {
+          this.setState({
+            listeners: np.listeners.current
+          });
+        }
 
-      if (this.state.listeners !== np.listeners.current) {
-        this.setState({
-          listeners: np.listeners.current
-        });
-      }
-
-      // We only need to update the metadata if the song has been changed
-      if (
-        np.now_playing.song.id !== this.state.currentSong.id ||
-        this.state.pullMeta
-      ) {
-        this.setState({
-          currentSong: np.now_playing.song,
-          songStartedAt: np.now_playing.played_at * 1000,
-          songDuration: np.now_playing.duration,
-          pullMeta: false
-        });
-      }
-    });
-    SUB.reconnectTimeout = this.state.config.metadataTimer;
-    SUB.start();
+        // We only need to update the metadata if the song has been changed
+        if (
+          np.now_playing.song.id !== this.state.currentSong.id ||
+          this.state.pullMeta
+        ) {
+          this.setState({
+            currentSong: np.now_playing.song,
+            songStartedAt: np.now_playing.played_at * 1000,
+            songDuration: np.now_playing.duration,
+            pullMeta: false
+          });
+        }
+      })
   }
 
   increaseVolume = () =>
