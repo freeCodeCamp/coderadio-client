@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const DELAY = 500;
+
 export default class Visualizer extends React.PureComponent {
   rafId = null;
   timerId = null;
@@ -17,17 +19,26 @@ export default class Visualizer extends React.PureComponent {
     };
   }
 
-  componentDidMount() {
-    this.initiateEQ();
-    this.createVisualizer();
-    this.startDrawing();
-  }
 
-  componentWillUnmount() {
-    this.stopDrawing();
-    this.state.eq.analyser.disconnect();
-    this.state.eq.src.disconnect();
-    this.state.eq.context.close();
+  // In order to get around some mobile browser limitations,
+  // we can only generate a lot
+  // of the audio context stuff AFTER the audio has been triggered.
+  // We can't see it until
+  // then anyway so it makes no difference to desktop.
+  componentDidUpdate(prevProps) {
+    if (prevProps.playing !== this.props.playing) {
+      if (this.props.playing) {
+        this.initiateEQ();
+        this.createVisualizer();
+        this.startDrawing();
+      } else {
+        // Workaround componentWillUnmount to delay the clean up and achieve fadeout animation
+        setTimeout(() => {
+          this.stopDrawing();
+          this.reset();
+        }, DELAY)
+      }
+    }
   }
 
   initiateEQ() {
@@ -51,6 +62,14 @@ export default class Visualizer extends React.PureComponent {
     eq.bands = new Uint8Array(eq.analyser.frequencyBinCount - 32);
 
     this.setState({ eq });
+  }
+
+  reset = () => {
+    this.rafId = null;
+    this.state.eq.analyser.disconnect();
+    this.state.eq.src.disconnect();
+    this.state.eq.context.close();
+    this.setState({ eq: {} });
   }
 
   /** *
@@ -161,5 +180,6 @@ export default class Visualizer extends React.PureComponent {
 }
 
 Visualizer.propTypes = {
-  player: PropTypes.object
+  player: PropTypes.object,
+  playing: PropTypes.bool
 };
