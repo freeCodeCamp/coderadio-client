@@ -19,7 +19,6 @@ export default class Visualizer extends React.PureComponent {
     };
   }
 
-
   // In order to get around some mobile browser limitations,
   // we can only generate a lot
   // of the audio context stuff AFTER the audio has been triggered.
@@ -34,9 +33,11 @@ export default class Visualizer extends React.PureComponent {
       } else {
         // Workaround componentWillUnmount to delay the clean up and achieve fadeout animation
         setTimeout(() => {
+          // Note: Order matters. 
+          // Stop the drawing loop first (using this.rafId), then set the ID to null
           this.stopDrawing();
           this.reset();
-        }, DELAY)
+        }, DELAY);
       }
     }
   }
@@ -66,10 +67,6 @@ export default class Visualizer extends React.PureComponent {
 
   reset = () => {
     this.rafId = null;
-    this.state.eq.analyser.disconnect();
-    this.state.eq.src.disconnect();
-    this.state.eq.context.close();
-    this.setState({ eq: {} });
   }
 
   /** *
