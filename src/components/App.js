@@ -36,7 +36,7 @@ export default class App extends React.Component {
       },
       fastConnection: navigator.connection
         ? navigator.connection.downlink > 1.5
-        : null,
+        : false,
 
       /** *
        * The equalizer data is held as a separate data set
