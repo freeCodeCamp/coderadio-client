@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PageVisibility from 'react-page-visibility';
 
 const DELAY = 500;
 
@@ -15,7 +16,8 @@ export default class Visualizer extends React.PureComponent {
         baseColour: 'rgb(10, 10, 35)',
         translucent: 'rgba(10, 10, 35, 0.6)',
         multiplier: 0.7529
-      }
+      },
+      isTabVisible: true,
     };
   }
 
@@ -24,21 +26,31 @@ export default class Visualizer extends React.PureComponent {
   // of the audio context stuff AFTER the audio has been triggered.
   // We can't see it until
   // then anyway so it makes no difference to desktop.
-  componentDidUpdate(prevProps) {
-    if (prevProps.playing !== this.props.playing) {
-      if (this.props.playing) {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.playing === this.props.playing && prevState.isTabVisible === this.state.isTabVisible) {
+      return
+    }
+
+    // If the player is playing and the tab is being active,
+    // draw the visualization
+    if (this.props.playing && this.state.isTabVisible) {
+      // Create a new audio context if there isn't one available
+      if (!this.state.eq.context) {
         this.initiateEQ();
-        this.createVisualizer();
-        this.startDrawing();
-      } else {
-        // Workaround componentWillUnmount to delay the clean up and achieve fadeout animation
-        setTimeout(() => {
-          // Note: Order matters. 
-          // Stop the drawing loop first (using this.rafId), then set the ID to null
-          this.stopDrawing();
-          this.reset();
-        }, DELAY);
       }
+      this.createVisualizer();
+      this.startDrawing();
+    }
+    // If the player is not playing or the tab is running in the background,
+    // stop the animation
+    else {
+      // Workaround for componentWillUnmount to delay the clean up and achieve fadeout animation
+      setTimeout(() => {
+        // Note: Order matters. 
+        // Stop the drawing loop first (using this.rafId), then set the ID to null
+        this.stopDrawing();
+        this.reset();
+      }, DELAY);
     }
   }
 
@@ -167,11 +179,17 @@ export default class Visualizer extends React.PureComponent {
     this.visualizer.ctx.fill();
   }
 
+  handleVisibilityChange = isTabVisible => {
+    this.setState({ isTabVisible });
+  }
+
   render() {
     return (
-      <div id='visualizer'>
-        <canvas aria-label='visualizer' ref={a => (this._canvas = a)} />
-      </div>
+      <PageVisibility onChange={this.handleVisibilityChange}>
+        <div id='visualizer'>
+          <canvas aria-label='visualizer' ref={a => (this._canvas = a)} />
+        </div>
+      </PageVisibility>
     );
   }
 }
