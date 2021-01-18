@@ -5,8 +5,8 @@ import * as Sentry from '@sentry/react';
 import store from 'store';
 
 import Nav from './Nav';
-import Main from './Main';
-import Footer from './Footer';
+// import Main from './Main';
+// import Footer from './Footer';
 
 import '../css/App.css';
 
@@ -470,11 +470,11 @@ export default class App extends React.Component {
       <GlobalHotKeys handlers={this.handlers} keyMap={this.keyMap}>
         <div className='App'>
           <Nav />
-          <Main
+          {/* <Main
             fastConnection={this.state.fastConnection}
             player={this._player}
             playing={this.state.playing}
-          />
+          /> */}
           <audio
             aria-label='audio'
             crossOrigin='anonymous'
@@ -483,7 +483,7 @@ export default class App extends React.Component {
           >
             <track kind='captions' {...this.state.captions} />
           </audio>
-          <Footer
+          {/* <Footer
             currentSong={this.state.currentSong}
             currentVolume={this.state.audioConfig.currentVolume}
             fastConnection={this.state.fastConnection}
@@ -497,7 +497,7 @@ export default class App extends React.Component {
             songStartedAt={this.state.songStartedAt}
             togglePlay={this.togglePlay}
             url={this.state.url}
-          />
+          /> */}
         </div>
       </GlobalHotKeys>
     );
