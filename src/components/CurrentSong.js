@@ -15,7 +15,7 @@ const CurrentSong = props => (
       <progress
         data-meta='duration'
         max={props.songDuration}
-        value={props.durationVal}
+        value={props.progressVal}
       />
       <div data-meta='title'>{props.currentSong.title}</div>
       <div data-meta='artist'>{props.currentSong.artist}</div>
@@ -28,7 +28,7 @@ const CurrentSong = props => (
 
 CurrentSong.propTypes = {
   currentSong: PropTypes.object,
-  durationVal: PropTypes.number,
+  progressVal: PropTypes.number,
   fastConnection: PropTypes.bool,
   listeners: PropTypes.number,
   mountOptions: PropTypes.node,
