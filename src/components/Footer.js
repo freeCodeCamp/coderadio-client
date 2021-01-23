@@ -1,41 +1,65 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import PageVisibility from 'react-page-visibility';
 import CurrentSong from './CurrentSong';
 import Slider from './Slider';
 import PlayPauseButton from './PlayPauseButton';
 
-export default class Footer extends React.Component {
+export default class Footer extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      durationVal: 0,
+      progressVal: 0,
       currentSong: {},
       progressInterval: null,
-      alternativeMounts: null
+      alternativeMounts: null,
+      isTabVisible: true
     };
     this.updateProgress = this.updateProgress.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     // if the song is new and we have all required props,
     // reset setInterval and currentSong
     if (
-      this.state.currentSong.id !== nextProps.currentSong.id &&
-      nextProps.songStartedAt
+      this.state.currentSong.id !== prevProps.currentSong.id &&
+      this.props.songStartedAt &&
+      this.props.playing
     ) {
       this.setState({
-        currentSong: nextProps.currentSong,
-        progressInterval: setInterval(this.updateProgress, 100),
-        alternativeMounts: [].concat(nextProps.remotes, nextProps.mounts)
+        currentSong: this.props.currentSong,
+        alternativeMounts: [].concat(this.props.remotes, this.props.mounts)
       });
+      this.toggleIntterval();
+    } else if (prevProps.playing !== this.props.playing) {
+      this.toggleIntterval();
     }
   }
 
-  updateProgress() {
+  startInterval() {
+    this.stopCurrenttInterval();
     this.setState({
-      durationVal: (new Date().valueOf() - this.props.songStartedAt) / 1000
+      progressInterval: setInterval(this.updateProgress, 100)
     });
+  }
+
+  stopCurrenttInterval() {
+    if (this.state.progressInterval) {
+      clearInterval(this.state.progressInterval);
+    }
+  }
+
+  toggleIntterval() {
+    if (this.props.playing && this.state.isTabVisible) this.startInterval();
+    else this.stopCurrenttInterval();
+  }
+
+  updateProgress() {
+    let progressVal = parseInt(
+      ((new Date().valueOf() - this.props.songStartedAt) / 1000).toFixed(2),
+      10
+    );
+    this.setState({ progressVal });
   }
 
   handleChange(e) {
@@ -43,10 +67,15 @@ export default class Footer extends React.Component {
     this.props.setUrl(value);
   }
 
-  render() {
-    let { alternativeMounts } = this.state;
-    let mountOptions = '';
+  handleVisibilityChange = isTabVisible => {
+    this.setState({ isTabVisible }, () => {
+      this.toggleIntterval();
+    });
+  };
 
+  getMountOptions() {
+    let mountOptions = '';
+    let { alternativeMounts } = this.state;
     if (alternativeMounts && this.props.url) {
       mountOptions = (
         <select
@@ -62,29 +91,39 @@ export default class Footer extends React.Component {
         </select>
       );
     }
+    return mountOptions;
+  }
 
-    let durationVal = parseInt(this.state.durationVal.toFixed(2), 10);
+  render() {
+    let { progressVal, currentSong, fastConnection } = this.state;
+    let {
+      playing,
+      songDuration,
+      togglePlay,
+      currentVolume,
+      setTargetVolume,
+      listeners
+    } = this.props;
 
     return (
-      <footer>
-        <CurrentSong
-          currentSong={this.state.currentSong}
-          durationVal={durationVal}
-          fastConnection={this.props.fastConnection}
-          listeners={this.props.listeners}
-          mountOptions={mountOptions}
-          playing={this.props.playing}
-          songDuration={this.props.songDuration}
-        />
-        <PlayPauseButton
-          playing={this.props.playing}
-          togglePlay={this.props.togglePlay}
-        />
-        <Slider
-          currentVolume={this.props.currentVolume}
-          setTargetVolume={this.props.setTargetVolume}
-        />
-      </footer>
+      <PageVisibility onChange={this.handleVisibilityChange}>
+        <footer>
+          <CurrentSong
+            currentSong={currentSong}
+            progressVal={progressVal}
+            fastConnection={fastConnection}
+            listeners={listeners}
+            mountOptions={this.getMountOptions()}
+            playing={playing}
+            songDuration={songDuration}
+          />
+          <PlayPauseButton playing={playing} togglePlay={togglePlay} />
+          <Slider
+            currentVolume={currentVolume}
+            setTargetVolume={setTargetVolume}
+          />
+        </footer>
+      </PageVisibility>
     );
   }
 }
