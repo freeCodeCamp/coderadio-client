@@ -19,6 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "cypress:open": "cypress open",
     "lint:fix": "eslint --fix --ext .js ."
   },
   "eslintConfig": {
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@freecodecamp/eslint-config": "^2.0.2",
+    "cypress": "^6.3.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-import": "^2.22.1",
