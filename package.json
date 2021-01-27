@@ -22,6 +22,7 @@
     "precypress": "node cypress-install.js",
     "cypress": "cypress",
     "cypress:open": "npm run cypress open",
+    "cypress:install": "cypress install && echo 'for use with ./cypress-install.js'",
     "lint:fix": "eslint --fix --ext .js ."
   },
   "eslintConfig": {
