@@ -19,7 +19,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "cypress open",
+    "precypress": "node cypress-install.js",
+    "cypress": "cypress",
+    "cypress:open": "npm run cypress open",
     "lint:fix": "eslint --fix --ext .js ."
   },
   "eslintConfig": {
@@ -48,6 +50,7 @@
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^2.0.1",
+    "execa": "^5.0.0",
     "prettier": "^1.18.2"
   }
 }
