@@ -8,7 +8,7 @@ class SongHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayList: true
+      displayList: false
     };
   }
 
