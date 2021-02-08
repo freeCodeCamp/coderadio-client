@@ -1,42 +1,47 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class SongHistory extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      displayList: false,
-    }
+      displayList: true
+    };
   }
 
   toggleDisplay = () => {
     this.setState({
       displayList: !this.state.displayList
-    })
-  }
+    });
+  };
 
-  render(){
-    const {songHistory} = this.props;
-    const songs = songHistory.map(song => song.song).reverse()
-    return(
-      <div id='recent-song-history' onClick={this.toggleDisplay}>
-        {
-          this.state.displayList &&
+  render() {
+    const { songHistory } = this.props;
+    const songs = songHistory.map(song => song.song).reverse();
+    return (
+      <button id='recent-song-history' onClick={this.toggleDisplay}>
+        {this.state.displayList && (
           <div id='recent-song-list'>
-            {songs.map(song =>
-              <div key={song.id} class='recent-song-info'>
-                <img src={song.art} alt={`Album Title: ${song.album}`}/>
-                <p>
-                  <b>Song Title: {song.title}</b><br />
-                  Artist: {song.artist}
-                </p>
+            {songs.map(song => (
+              <div className='recent-song-info' key={song.id}>
+                <img alt={`Album Title: ${song.album}`} src={song.art} />
+                <div className='recent-song-meta'>
+                  <b>{song.title}</b>
+                  <p> {song.artist}</p>
+                  <p> {song.album}</p>
+                </div>
               </div>
-            )}
+            ))}
           </div>
-        }
-         <p id='recently-played-text'>Recently Played Songs</p>
-      </div>
-    )
+        )}
+        <p id='recently-played-icon'>history</p>
+      </button>
+    );
   }
 }
+
+SongHistory.propTypes = {
+  songHistory: PropTypes.array
+};
 
 export default SongHistory;

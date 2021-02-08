@@ -144,7 +144,7 @@ Footer.propTypes = {
   setTargetVolume: PropTypes.func,
   setUrl: PropTypes.func,
   songDuration: PropTypes.number,
-  songHistory: PropTypes.any,
+  songHistory: PropTypes.array,
   songStartedAt: PropTypes.number,
   togglePlay: PropTypes.func,
   url: PropTypes.string
