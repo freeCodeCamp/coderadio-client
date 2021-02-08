@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faHistory } from '@fortawesome/free-solid-svg-icons';
 
 class SongHistory extends Component {
   constructor(props) {
@@ -34,7 +37,12 @@ class SongHistory extends Component {
             ))}
           </div>
         )}
-        <p id='recently-played-icon'>history</p>
+
+        <FontAwesomeIcon
+          icon={faHistory}
+          id='recently-played-icon'
+          style={{ color: 'white' }}
+        />
       </button>
     );
   }

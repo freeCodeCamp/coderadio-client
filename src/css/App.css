@@ -198,11 +198,25 @@ footer {
 }
 
 #recent-song-history {
+  all: unset;
   height: 100%;
   cursor: pointer;
   z-index: 10;
   height: 70px;
   width: 70px;
+  background-color: rgba(10, 10, 35, 1);
+  text-align: center;
+}
+
+#recent-song-history:hover,
+#recent-song-history:active {
+  background-color: #2a2a40;
+}
+
+#recent-song-history svg {
+  height: 60%;
+  width: 60%;
+  fill: whtie;
 }
 
 #recent-song-list {
