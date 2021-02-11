@@ -302,6 +302,9 @@ dd {
   #playContainer::before {
     display: none;
   }
+  #visualizer {
+    background-color: #002ead;
+  }
 }
 
 @media (max-width: 500px) {
