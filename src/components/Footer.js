@@ -95,14 +95,15 @@ export default class Footer extends React.PureComponent {
   }
 
   render() {
-    let { progressVal, currentSong, fastConnection } = this.state;
+    let { progressVal, currentSong } = this.state;
     let {
       playing,
       songDuration,
       togglePlay,
       currentVolume,
       setTargetVolume,
-      listeners
+      listeners,
+      fastConnection
     } = this.props;
 
     return (
