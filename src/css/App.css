@@ -314,15 +314,6 @@ dd {
   }
 }
 
-@media (max-height: 650px) {
-  [data-meta='picture'] {
-    width: 100px;
-    height: 100px;
-    left: 50%;
-    margin-left: -50px;
-  }
-}
-
 @media (max-height: 600px) {
   [data-meta='picture'] {
     display: none;
