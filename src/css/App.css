@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
-* {
+ 
+ 
+html {
   box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
   font-family: 'Lato', Arial;
 }
 
