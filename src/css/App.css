@@ -100,19 +100,15 @@ footer {
   font-size: 21px;
   padding: 10px 100px 10px 20px;
   font-weight: bold;
-  box-sizing: border-box;
   position: absolute;
   height: 100px;
   width: 250px;
   top: -110px;
   left: -170px;
-  background-color: #1b1b32;
   border-radius: 5px;
   opacity: 0;
   transition: opacity 0.5s ease-out;
-  background-image: url(https://cdn-media-1.freecodecamp.org/code-radio/cta.png);
-  background-position: 150px center;
-  background-repeat: no-repeat;
+  background:  #1b1b32 url(https://cdn-media-1.freecodecamp.org/code-radio/cta.png)  no-repeat 150px center;
   pointer-events: none;
 }
 
