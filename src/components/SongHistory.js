@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faHistory } from '@fortawesome/free-solid-svg-icons';
 
+const DEFAULT_ART =
+  'https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif';
 class SongHistory extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,7 @@ class SongHistory extends Component {
   };
 
   render() {
-    const { songHistory } = this.props;
+    const { songHistory, fastConnection } = this.props;
     const songs = songHistory.map(song => song.song).reverse();
     return (
       <button id='recent-song-history' onClick={this.toggleDisplay}>
@@ -27,7 +29,11 @@ class SongHistory extends Component {
           <div id='recent-song-list'>
             {songs.map(song => (
               <div className='recent-song-info' key={song.id}>
-                <img alt={`Album Title: ${song.album}`} src={song.art} />
+                <img
+                  alt={`Album Title: ${song.album}`}
+                  src={song.art}
+                  src={fastConnection ? song.art : DEFAULT_ART}
+                />
                 <div className='recent-song-meta'>
                   <b>{song.title}</b>
                   <p> {song.artist}</p>
@@ -49,6 +55,7 @@ class SongHistory extends Component {
 }
 
 SongHistory.propTypes = {
+  fastConnection: PropTypes.bool,
   songHistory: PropTypes.array
 };
 

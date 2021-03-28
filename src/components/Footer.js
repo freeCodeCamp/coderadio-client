@@ -98,7 +98,7 @@ export default class Footer extends React.PureComponent {
   }
 
   render() {
-    let { progressVal, currentSong } = this.state;
+    let { progressVal, currentSong, isTabVisible } = this.state;
     let {
       playing,
       songDuration,
@@ -112,7 +112,12 @@ export default class Footer extends React.PureComponent {
     return (
       <PageVisibility onChange={this.handleVisibilityChange}>
         <footer>
-          <SongHistory songHistory={this.props.songHistory} />
+          {isTabVisible && (
+            <SongHistory
+              songHistory={this.props.songHistory}
+              fastConnection={fastConnection}
+            />
+          )}
           <CurrentSong
             currentSong={currentSong}
             progressVal={progressVal}
