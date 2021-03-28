@@ -17,7 +17,7 @@ export default class Visualizer extends React.PureComponent {
         translucent: 'rgba(10, 10, 35, 0.6)',
         multiplier: 0.7529
       },
-      isTabVisible: true,
+      isTabVisible: true
     };
   }
 
@@ -27,8 +27,11 @@ export default class Visualizer extends React.PureComponent {
   // We can't see it until
   // then anyway so it makes no difference to desktop.
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.playing === this.props.playing && prevState.isTabVisible === this.state.isTabVisible) {
-      return
+    if (
+      prevProps.playing === this.props.playing &&
+      prevState.isTabVisible === this.state.isTabVisible
+    ) {
+      return;
     }
 
     // If the player is playing and the tab is being active,
@@ -46,7 +49,7 @@ export default class Visualizer extends React.PureComponent {
     else {
       // Workaround for componentWillUnmount to delay the clean up and achieve fadeout animation
       setTimeout(() => {
-        // Note: Order matters. 
+        // Note: Order matters.
         // Stop the drawing loop first (using this.rafId), then set the ID to null
         this.stopDrawing();
         this.reset();
@@ -79,7 +82,7 @@ export default class Visualizer extends React.PureComponent {
 
   reset = () => {
     this.rafId = null;
-  }
+  };
 
   /** *
    * The equalizer bands available need to be updated
@@ -181,7 +184,7 @@ export default class Visualizer extends React.PureComponent {
 
   handleVisibilityChange = isTabVisible => {
     this.setState({ isTabVisible });
-  }
+  };
 
   render() {
     return (
