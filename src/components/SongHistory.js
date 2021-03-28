@@ -30,12 +30,12 @@ class SongHistory extends Component {
             {songs.map(song => (
               <div className='recent-song-info' key={song.id}>
                 <img
-                  alt={`Album Title: ${song.album}`}
-                  src={song.art}
+                  alt=''
+                  role='presentation'
                   src={fastConnection ? song.art : DEFAULT_ART}
                 />
                 <div className='recent-song-meta'>
-                  <b>{song.title}</b>
+                  <p>{song.title}</p>
                   <p> {song.artist}</p>
                   <p> {song.album}</p>
                 </div>

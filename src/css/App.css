@@ -261,6 +261,10 @@ footer {
   white-space: nowrap;
 }
 
+.recent-song-meta p:first-child {
+  font-weight: bold;
+}
+
 #recent-song-list .song-info:nth-child(5) {
   border-bottom: none;
 }
