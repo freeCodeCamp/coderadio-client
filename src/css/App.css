@@ -197,6 +197,84 @@ footer {
   background-color: white;
 }
 
+#recent-song-history {
+  all: unset;
+  height: 100%;
+  cursor: pointer;
+  z-index: 10;
+  height: 70px;
+  width: 70px;
+  background-color: rgba(10, 10, 35, 1);
+  text-align: center;
+}
+
+#recent-song-history:hover,
+#recent-song-history:active {
+  background-color: #2a2a40;
+}
+
+#recent-song-history svg {
+  height: 60%;
+  width: 60%;
+  fill: whtie;
+}
+
+#recent-song-list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  border-radius: 0;
+  bottom: 70px;
+  width: 320px;
+  background-color: #1b1b32;
+  cursor: default;
+}
+
+#recently-played-icon {
+  font-weight: bold;
+  justify-content: center;
+}
+
+.recent-song-info {
+  padding: 10px 5px;
+  color: white;
+  border-bottom: 1px solid #3b3b4f;
+}
+
+.recent-song-list {
+  float: left;
+  margin-left: 10px;
+  margin-top: 5px;
+  font-size: 13px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.recent-song-meta {
+  padding-left: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-song-meta p:first-child {
+  font-weight: bold;
+}
+
+#recent-song-list .song-info:nth-child(5) {
+  border-bottom: none;
+}
+
+.recent-song-info img {
+  float: left;
+  height: 50px;
+  width: 50px;
+}
+
 .animation {
   background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
   background-position: left bottom;
@@ -271,7 +349,8 @@ dd {
     align-content: center;
     justify-items: center;
     background-color: rgba(10, 10, 35, 1);
-    bottom: 130px;
+    position: absolute;
+    bottom: 80px;
     margin: 0;
     width: 100vw;
     left: 0px;
@@ -305,12 +384,21 @@ dd {
   #visualizer {
     background-color: #002ead;
   }
+  #recently-played-text {
+    margin-top: 13%;
+    margin-left: 15%;
+    font-size: 15px;
+    font-weight: bold;
+  }
 }
 
 @media (max-width: 500px) {
   #visualizer {
     background-color: #002ead;
     top: 238px;
+  }
+  #recent-song-list {
+    z-index: 10;
   }
 }
 

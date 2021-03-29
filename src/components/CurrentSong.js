@@ -28,11 +28,11 @@ const CurrentSong = props => (
 
 CurrentSong.propTypes = {
   currentSong: PropTypes.object,
-  progressVal: PropTypes.number,
   fastConnection: PropTypes.bool,
   listeners: PropTypes.number,
   mountOptions: PropTypes.node,
   playing: PropTypes.bool,
+  progressVal: PropTypes.number,
   songDuration: PropTypes.number
 };
 

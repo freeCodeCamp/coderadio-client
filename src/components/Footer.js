@@ -1,9 +1,11 @@
+/* eslint-disable react/jsx-sort-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import PageVisibility from 'react-page-visibility';
 import CurrentSong from './CurrentSong';
 import Slider from './Slider';
 import PlayPauseButton from './PlayPauseButton';
+import SongHistory from './SongHistory';
 
 export default class Footer extends React.PureComponent {
   constructor(props) {
@@ -26,6 +28,7 @@ export default class Footer extends React.PureComponent {
       this.props.songStartedAt &&
       this.props.playing
     ) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         currentSong: this.props.currentSong,
         alternativeMounts: [].concat(this.props.remotes, this.props.mounts)
@@ -95,7 +98,7 @@ export default class Footer extends React.PureComponent {
   }
 
   render() {
-    let { progressVal, currentSong } = this.state;
+    let { progressVal, currentSong, isTabVisible } = this.state;
     let {
       playing,
       songDuration,
@@ -109,6 +112,12 @@ export default class Footer extends React.PureComponent {
     return (
       <PageVisibility onChange={this.handleVisibilityChange}>
         <footer>
+          {isTabVisible && (
+            <SongHistory
+              songHistory={this.props.songHistory}
+              fastConnection={fastConnection}
+            />
+          )}
           <CurrentSong
             currentSong={currentSong}
             progressVal={progressVal}
@@ -140,6 +149,7 @@ Footer.propTypes = {
   setTargetVolume: PropTypes.func,
   setUrl: PropTypes.func,
   songDuration: PropTypes.number,
+  songHistory: PropTypes.array,
   songStartedAt: PropTypes.number,
   togglePlay: PropTypes.func,
   url: PropTypes.string
