@@ -4,7 +4,12 @@ on: [push, pull_request]
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    name: Test
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        browsers: [chrome, firefox]
+        node-version: [14.x]
     steps:
       - name: Set Action Environment Variables
         run: |
@@ -14,10 +19,12 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
+
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
+          browser: ${{ matrix.browsers }}
           build: npm run build
           start: npm start
+          wait-on: http://localhost:3000
+          wait-on-timeout: 1200
