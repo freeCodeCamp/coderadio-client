@@ -32,18 +32,16 @@ class PlayPauseButton extends React.Component {
 
   render() {
     return (
-      <div
+      <button
         aria-label={this.props.playing ? 'Pause' : 'Play'}
         className={this.state.initialLoad ? 'cta' : ''}
         id='playContainer'
         onClick={this.handleOnClick}
         onKeyDown={this.handleKeyDown}
         onTouchEnd={this.handleOnTouchEnd}
-        role='button'
-        tabIndex={0}
       >
         {this.props.playing ? <Pause /> : <Play />}
-      </div>
+      </button>
     );
   }
 }
