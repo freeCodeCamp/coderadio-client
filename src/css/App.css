@@ -93,6 +93,9 @@ footer {
   padding: 15px;
   cursor: pointer;
   position: relative;
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
 }
 
 #playContainer::before {
