@@ -21,11 +21,12 @@ export default class Visualizer extends React.PureComponent {
     };
   }
 
-  // In order to get around some mobile browser limitations,
-  // we can only generate a lot
-  // of the audio context stuff AFTER the audio has been triggered.
-  // We can't see it until
-  // then anyway so it makes no difference to desktop.
+  /**
+   * In order to get around some mobile browser limitations,
+   * we can only generate a lot of the audio context stuff AFTER
+   * the audio has been triggered.
+   * We can't see it until then anyway so it makes no difference to desktop.
+   */
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.playing === this.props.playing &&
@@ -34,8 +35,10 @@ export default class Visualizer extends React.PureComponent {
       return;
     }
 
-    // If the player is playing and the tab is being active,
-    // draw the visualization
+    /**
+     * If the player is playing and the tab is being active,
+     * draw the visualization.
+     */
     if (this.props.playing && this.state.isTabVisible) {
       // Create a new audio context if there isn't one available
       if (!this.state.eq.context) {
@@ -43,11 +46,16 @@ export default class Visualizer extends React.PureComponent {
       }
       this.createVisualizer();
       this.startDrawing();
-    }
-    // If the player is not playing or the tab is running in the background,
-    // stop the animation
-    else {
-      // Workaround for componentWillUnmount to delay the clean up and achieve fadeout animation
+    } else {
+      /**
+       * If the player is not playing or the tab is running in the background,
+       * stop the animation.
+       */
+
+      /**
+       * Workaround for componentWillUnmount to delay the clean up and
+       * achieve fadeout animation.
+       */
       setTimeout(() => {
         // Note: Order matters.
         // Stop the drawing loop first (using this.rafId), then set the ID to null
@@ -59,22 +67,26 @@ export default class Visualizer extends React.PureComponent {
 
   initiateEQ() {
     let eq = this.state.eq;
-    // Safari requires a webkit prefix to support AudioContext.
+    // Safari requires a webkit prefix to support AudioContext
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     // Create a new Audio Context element to read the samples from
     eq.context = new AudioContext();
     // Apply the audio element as the source where to pull all the data from
     eq.src = eq.context.createMediaElementSource(this.props.player);
 
-    // Use some amazing trickery that allows javascript to
-    // analyse the current state
+    /**
+     * Use some amazing trickery that allows javascript to
+     * analyse the current state.
+     */
     eq.analyser = eq.context.createAnalyser();
     eq.src.connect(eq.analyser);
     eq.analyser.connect(eq.context.destination);
     eq.analyser.fftSize = 256;
 
-    // Create a buffer array for the number of frequencies available
-    // (minus the high pitch useless ones that never really do anything anyway)
+    /**
+     * Create a buffer array for the number of frequencies available
+     * (minus the high pitch useless ones that never really do anything anyway).
+     */
     eq.bands = new Uint8Array(eq.analyser.frequencyBinCount - 32);
 
     this.setState({ eq });
@@ -84,20 +96,20 @@ export default class Visualizer extends React.PureComponent {
     this.rafId = null;
   };
 
-  /** *
+  /**
    * The equalizer bands available need to be updated
    * constantly in order to ensure that the value for any
    * visualizer is up to date.
    */
   updateEQBands() {
     const newEQ = this.state.eq;
-    // Populate the buffer with the audio source’s current data
+    // Populate the buffer with the audio source's current data
     newEQ.analyser.getByteFrequencyData(newEQ.bands);
 
     this.setState({ eq: { ...newEQ } });
   }
 
-  /** *
+  /**
    * When starting the page, the visualizer dom is needed to be
    * created.
    */
@@ -130,8 +142,10 @@ export default class Visualizer extends React.PureComponent {
     this.updateEQBands();
     this.drawVisualizer();
 
-    // Because timeupdate events are not triggered at browser speed,
-    // we use requestanimationframe for higher framerates
+    /**
+     * Because timeupdate events are not triggered at browser speed,
+     * we use requestanimationframe for higher framerates
+     */
     if (haveWaveform) {
       this.rafId = window.requestAnimationFrame(this.drawingLoop);
     }
@@ -141,12 +155,12 @@ export default class Visualizer extends React.PureComponent {
     }
   };
 
-  /** *
+  /**
    * As a base visualizer, the equalizer bands are drawn using
    * canvas in the window directly above the song into.
    */
   drawVisualizer() {
-    // Intial bar x coordinate
+    // Initial bar x coordinate
     let y,
       x = 0;
 
@@ -157,21 +171,27 @@ export default class Visualizer extends React.PureComponent {
       this.visualizer.width,
       this.visualizer.height
     );
-    // Set the primary colour of the brand
-    // (probably moving to a higher object level variable soon)
-    // Start creating a canvas polygon
+    /**
+     * Set the primary colour of the brand
+     * (probably moving to a higher object level variable soon)
+     * Start creating a canvas polygon
+     */
     this.visualizer.ctx.beginPath();
     // Start at the bottom left
     this.visualizer.ctx.moveTo(x, 0);
     this.visualizer.ctx.fillStyle = this.state.config.translucent;
     this.state.eq.bands.forEach(band => {
-      // Get the overall hight associated to the current band and
-      // convert that into a Y position on the canvas
+      /**
+       * Get the overall hight associated to the current band and
+       * convert that into a Y position on the canvas
+       */
       y = this.state.config.multiplier * band;
       // Draw a line from the current position to the wherever the Y position is
       this.visualizer.ctx.lineTo(x, y);
-      // Continue that line to meet the width of the bars
-      // (canvas width ÷ bar count)
+      /**
+       * Continue that line to meet the width of the bars
+       * (canvas width ÷ bar count).
+       */
       this.visualizer.ctx.lineTo(x + this.visualizer.barWidth, y);
       // Add pixels to the x for the next bar
       x += this.visualizer.barWidth;

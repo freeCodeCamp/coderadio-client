@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 const MAX = 100;
 
 const Slider = ({ currentVolume, setTargetVolume }) => {
-  const handleChange = e => {
-    let { value } = e.target;
+  const handleChange = event => {
+    let { value } = event.target;
     setTargetVolume(value / MAX);
   };
 
