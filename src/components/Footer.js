@@ -21,8 +21,10 @@ export default class Footer extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    // if the song is new and we have all required props,
-    // reset setInterval and currentSong
+    /**
+     * If the song is new and we have all required props,
+     * reset setInterval and currentSong.
+     */
     if (
       this.state.currentSong.id !== prevProps.currentSong.id &&
       this.props.songStartedAt &&
@@ -65,8 +67,8 @@ export default class Footer extends React.PureComponent {
     this.setState({ progressVal });
   }
 
-  handleChange(e) {
-    let { value } = e.target;
+  handleChange(event) {
+    let { value } = event.target;
     this.props.setUrl(value);
   }
 
