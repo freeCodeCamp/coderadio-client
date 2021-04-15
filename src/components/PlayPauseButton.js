@@ -12,7 +12,7 @@ class PlayPauseButton extends React.Component {
 
   handleOnClick = () => isBrowser && this.props.togglePlay();
 
-  handleOnTouchEnd = () => !isBrowser && this.props.togglePlay();
+  handleOnTouchStart = () => !isBrowser && this.props.togglePlay();
 
   handleKeyDown = e => {
     // Toggle play when user presses Enter
@@ -38,7 +38,7 @@ class PlayPauseButton extends React.Component {
         id='playContainer'
         onClick={this.handleOnClick}
         onKeyDown={this.handleKeyDown}
-        onTouchEnd={this.handleOnTouchEnd}
+        onTouchStart={this.handleOnTouchStart}
       >
         {this.props.playing ? <Pause /> : <Play />}
       </button>
