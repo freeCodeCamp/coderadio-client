@@ -3,6 +3,7 @@ import NchanSubscriber from 'nchan';
 import { GlobalHotKeys } from 'react-hotkeys';
 import * as Sentry from '@sentry/react';
 import store from 'store';
+import { isIOS } from 'react-device-detect';
 
 import Nav from './Nav';
 import Main from './Main';
@@ -230,7 +231,7 @@ export default class App extends React.Component {
       }
       // If it is already playing, fade the music out (resulting in a pause)
       else {
-        this.fade();
+        this.fadeDown();
       }
     }
   }
@@ -256,7 +257,7 @@ export default class App extends React.Component {
    * Simple fade command to initiate the playing and pausing
    * in a more fluid method.
    */
-  fade(direction = 'down') {
+  fade(direction) {
     let audioConfig = { ...this.state.audioConfig };
     audioConfig.targetVolume =
       direction.toLowerCase() === 'up' ? this.state.audioConfig.maxVolume : 0;
@@ -287,8 +288,14 @@ export default class App extends React.Component {
      * we set the toFixed in order to avoid 0.999999999999 increments.
      */
     let currentVolume = parseFloat(this._player.volume.toFixed(2));
-    // If the volume is correctly set to the target, no need to change it
-    if (currentVolume === this.state.audioConfig.targetVolume) {
+    /**
+     * If the volume is correctly set to the target, no need to change it
+     *
+     * Note: On iOS devices, volume level is totally under user's control and cannot be programmatically set.
+     * We pause the music immediately in this case.
+     * (https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html)
+     */
+    if (currentVolume === this.state.audioConfig.targetVolume || isIOS) {
       // If the audio is set to 0 and it’s been met, pause the audio
       if (this.state.audioConfig.targetVolume === 0 && this.state.pausing)
         this.pause();
