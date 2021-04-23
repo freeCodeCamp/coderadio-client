@@ -5,8 +5,13 @@
     "mocha": true,
     "node": true
   },
+  "parser": "babel-eslint",
   "root": true,
-  "extends": ["./.eslintrc-base.json", "prettier", "prettier/react"],
+  "extends": [
+    "./.eslintrc-base.json",
+    "prettier",
+    "prettier/react"
+  ],
   "plugins": [
     "react",
     "import",

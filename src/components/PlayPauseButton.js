@@ -14,16 +14,18 @@ class PlayPauseButton extends React.Component {
 
   handleOnTouchEnd = () => !isBrowser && this.props.togglePlay();
 
-  handleKeyDown = e => {
-    // Toggle play when user presses Enter
-    // The Space keypress event is ignored to avoid collision with the GlobalHotKeys
-    if (e.keyCode === 13) {
+  handleKeyDown = event => {
+    /**
+     * Toggle play when user presses Enter.
+     * The Space keypress event is ignored to avoid collision with the GlobalHotKeys.
+     */
+    if (event.keyCode === 13) {
       this.handleOnClick();
     }
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    // set initial load to render the initial message accordingly
+    // Set initial load to render the initial message accordingly
     if (prevState.initialLoad && nextProps.playing) {
       return { initialLoad: false };
     }
@@ -32,18 +34,16 @@ class PlayPauseButton extends React.Component {
 
   render() {
     return (
-      <div
+      <button
         aria-label={this.props.playing ? 'Pause' : 'Play'}
         className={this.state.initialLoad ? 'cta' : ''}
         id='playContainer'
         onClick={this.handleOnClick}
         onKeyDown={this.handleKeyDown}
         onTouchEnd={this.handleOnTouchEnd}
-        role='button'
-        tabIndex={0}
       >
         {this.props.playing ? <Pause /> : <Play />}
-      </div>
+      </button>
     );
   }
 }

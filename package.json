@@ -2,7 +2,14 @@
   "name": "coderadio",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">= 14.0.0",
+    "npm": "^6.14.12"
+  },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.34",
+    "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@sentry/react": "^5.28.0",
     "@sentry/tracing": "^5.28.0",
     "nchan": "^1.0.10",
@@ -10,6 +17,7 @@
     "react-device-detect": "^1.7.5",
     "react-dom": "^16.8.6",
     "react-hotkeys": "^2.0.0",
+    "react-page-visibility": "^6.3.0",
     "react-scripts": "^4.0.1",
     "store": "^2.0.12"
   },
@@ -17,7 +25,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "precypress": "node cypress-install.js",
+    "cypress": "cypress",
+    "cypress:open": "npm run cypress open",
+    "cypress:install": "cypress install && echo 'for use with ./cypress-install.js'",
+    "lint:fix": "eslint --fix --ext .js ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^6.3.0",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-import": "^2.22.1",
@@ -43,6 +57,7 @@
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^2.0.1",
+    "execa": "^5.0.0",
     "prettier": "^1.18.2"
   }
 }
