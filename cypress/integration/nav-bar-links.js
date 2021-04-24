@@ -1,3 +1,4 @@
+/* global cy */
 describe('links on the nav-bar menu', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
