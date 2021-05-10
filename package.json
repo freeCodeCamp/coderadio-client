@@ -30,7 +30,8 @@
     "cypress": "cypress",
     "cypress:open": "npm run cypress open",
     "cypress:install": "cypress install && echo 'for use with ./cypress-install.js'",
-    "lint:fix": "eslint --fix --ext .js ."
+    "lint:fix": "eslint --fix --ext .js .",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -58,6 +59,11 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^2.0.1",
     "execa": "^5.0.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "prettier": "^1.18.2"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
   }
 }
