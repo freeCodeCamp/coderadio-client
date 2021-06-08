@@ -58,7 +58,7 @@
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react": "7.24.0",
     "eslint-plugin-react-hooks": "2.5.1",
-    "execa": "5.0.0",
+    "execa": "5.1.1",
     "husky": "6.0.0",
     "lint-staged": "11.0.0",
     "prettier": "1.19.1"
