@@ -24,7 +24,11 @@ class SongHistory extends Component {
     const { songHistory, fastConnection } = this.props;
     const songs = songHistory.map(song => song.song).reverse();
     return (
-      <button id='recent-song-history' onClick={this.toggleDisplay}>
+      <button
+        aria-label='Recent Song History'
+        id='recent-song-history'
+        onClick={this.toggleDisplay}
+      >
         {this.state.displayList && (
           <div id='recent-song-list'>
             {songs.map(song => (

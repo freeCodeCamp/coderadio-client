@@ -84,6 +84,7 @@ export default class Footer extends React.PureComponent {
     if (alternativeMounts && this.props.url) {
       mountOptions = (
         <select
+          aria-label='Select Stream'
           data-meta='stream-select'
           onChange={this.handleChange.bind(this)}
           value={this.props.url}
