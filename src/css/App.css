@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
+
 * {
   box-sizing: border-box;
   font-family: 'Lato', Arial;
@@ -37,9 +38,11 @@ footer {
 [data-meta='title'] {
   font-size: 18px;
 }
+
 [data-meta='artist'] {
   font-size: 14px;
 }
+
 [data-meta='album'] {
   font-size: 10px;
 }
@@ -329,6 +332,7 @@ dd {
   [data-meta='album'] {
     padding-left: 10px;
   }
+
   [data-meta='picture'] {
     bottom: 212px;
     height: 200px;
@@ -336,14 +340,17 @@ dd {
     margin-left: -100px;
     width: 200px;
   }
+
   [data-meta='listeners'] {
     bottom: 15px;
     left: 10px;
     top: auto;
   }
+
   [data-meta='stream-select'] {
     right: 10px;
   }
+
   #nowPlaying {
     align-content: center;
     background-color: rgba(10, 10, 35, 1);
@@ -381,12 +388,15 @@ dd {
     margin-left: -35px;
     position: absolute;
   }
+
   #playContainer::before {
     display: none;
   }
+
   #visualizer {
     background-color: #002ead;
   }
+
   #recently-played-text {
     font-size: 15px;
     font-weight: bold;
@@ -400,6 +410,7 @@ dd {
     background-color: #002ead;
     top: 238px;
   }
+
   #recent-song-list {
     z-index: 10;
   }
@@ -533,9 +544,11 @@ dd {
     padding-left: 0;
     padding-right: 0;
   }
+
   .site-nav-middle {
     margin-right: 0;
   }
+
   .nav {
     background-color: #0a0a23;
     display: none;
@@ -547,12 +560,15 @@ dd {
   .toggle-button-nav {
     display: flex;
   }
+
   .show-main-nav-items {
     display: flex;
   }
+
   .expand-nav {
     min-height: calc(40px + 38px);
   }
+
   .reverse-toggle-color {
     background-color: white;
     color: #0a0a23;
@@ -564,19 +580,23 @@ dd {
     flex: 1 0 30%;
     margin-right: 0px;
   }
+
   .site-nav-left {
     display: flex;
     flex: 1 0 30%;
     margin-left: 0px;
   }
+
   .site-nav-logo {
     margin-left: auto;
     margin-right: auto;
   }
+
   .site-nav-right {
     flex: 1 0 30%;
     margin-left: auto;
   }
+  
   .main-nav-group {
     margin-left: auto;
   }
