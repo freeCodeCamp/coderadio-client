@@ -30,7 +30,7 @@ a {
 
 h1,
 h2 {
-  color: white;
+  color: #fff;
   display: inline-block;
   font-size: 18px;
   margin: 0;
@@ -112,7 +112,7 @@ p {
 
 #slider {
   -webkit-appearance: none;
-  background: #d3d3d3;
+  background: #dfdfe2;
   height: 6px;
   outline: none;
   width: 100%;
@@ -121,14 +121,14 @@ p {
 #slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  background: white;
+  background: #fff;
   cursor: pointer;
   height: 15px;
   width: 15px;
 }
 
 #slider::-moz-range-thumb {
-  background: white;
+  background: #fff;
   cursor: pointer;
   height: 15px;
   width: 15px;
@@ -195,7 +195,7 @@ p {
 }
 
 #nowPlaying progress::-webkit-progress-value {
-  background-color: white;
+  background-color: #fff;
 }
 
 #metaDisplay {
@@ -246,7 +246,7 @@ p {
   }
 
   #nowPlaying progress {
-    background-color: green;
+    background-color: #00471b;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -307,7 +307,7 @@ p {
 }
 
 #recent-song-history svg {
-  fill: white;
+  fill: #fff;
   height: 60%;
   width: 60%;
 }
@@ -331,7 +331,7 @@ p {
 
 .recent-song-info {
   border-bottom: 1px solid #3b3b4f;
-  color: white;
+  color: #fff;
   padding: 10px 5px;
 }
 
@@ -408,7 +408,7 @@ dd {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background-color: white;
+  background-color: #fff;
   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
   background-position: right 0.7em top 50%, 0 0;
   background-repeat: no-repeat, repeat;
@@ -450,7 +450,7 @@ footer {
 #playContainer {
   background-color: transparent;
   border: none;
-  color: #ffffff;
+  color: #fff;
   cursor: pointer;
   height: 70px;
   padding: 15px;
@@ -585,7 +585,7 @@ footer {
 }
 
 .nav li:hover {
-  background: white;
+  background: #fff;
 }
 
 .nav li a:hover {
@@ -646,7 +646,7 @@ footer {
   }
 
   .reverse-toggle-color {
-    background-color: white;
+    background-color: #fff;
     color: #0a0a23;
   }
 }
