@@ -12,9 +12,9 @@ body {
   background-position: center center;
   background-size: cover;
   font-family: 'Open Sans', sans-serif;
-  margin: 0px;
+  margin: 0;
   overflow: hidden;
-  padding: 0px;
+  padding: 0;
 }
 
 html,
@@ -46,15 +46,6 @@ p {
   height: 100%;
 }
 
-@media (max-width: 750px) {
-  #recently-played-text {
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 15%;
-    margin-top: 13%;
-  }
-}
-
 /* Main */
 
 .animation {
@@ -68,7 +59,7 @@ p {
 
 .animation.saron::before {
   background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif');
-  bottom: 0px;
+  bottom: 0;
   content: '';
   height: 767px;
   left: 388px;
@@ -246,7 +237,7 @@ p {
     flex-direction: column;
     height: 120px;
     justify-items: center;
-    left: 0px;
+    left: 0;
     margin: 0;
     padding-top: 5px;
     padding: 0;
@@ -367,7 +358,7 @@ p {
   font-weight: bold;
 }
 
-#recent-song-list .song-info:nth-child(5) {
+.recent-song-info:nth-child(5) {
   border-bottom: none;
 }
 
@@ -402,7 +393,7 @@ details[open] {
 }
 
 dt {
-  margin-inline-start: 0px;
+  margin-inline-start: 0;
   margin-top: 10px;
 }
 
@@ -525,7 +516,6 @@ footer {
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: 300;
   z-index: 1000;
 }
 
@@ -664,13 +654,13 @@ footer {
 @media (min-width: 750px) {
   .site-nav-middle {
     flex: 1 0 30%;
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .site-nav-left {
     display: flex;
     flex: 1 0 30%;
-    margin-left: 0px;
+    margin-left: 0;
   }
 
   .site-nav-logo {
