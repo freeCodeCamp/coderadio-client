@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
 
+/* Globals */
+
 * {
   box-sizing: border-box;
   font-family: 'Lato', Arial;
@@ -18,117 +20,98 @@ body {
 html,
 body,
 #root,
-.App,
 main {
   height: 100%;
 }
 
-footer {
-  background-color: #0a0a23;
-  border-top: 3px solid #fff;
-  bottom: 0;
-  color: #fff;
-  display: flex;
-  height: 70px;
-  position: absolute;
-  width: 100%;
-  z-index: 10;
+a {
+  text-decoration: none;
 }
 
-[data-meta='title'] {
+h1,
+h2 {
+  color: white;
+  display: inline-block;
   font-size: 18px;
+  margin: 0;
 }
 
-[data-meta='artist'] {
-  font-size: 14px;
+p {
+  margin: 0;
 }
 
-[data-meta='album'] {
-  font-size: 10px;
+/* App */
+
+.App {
+  height: 100%;
 }
 
-[data-meta='picture'] {
-  height: 70px;
-  position: absolute;
-  width: 70px;
+@media (max-width: 750px) {
+  #recently-played-text {
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 15%;
+    margin-top: 13%;
+  }
 }
 
-[data-meta='listeners'] {
-  font-size: 20px;
-  font-weight: 900;
-  position: absolute;
-  right: 15px;
-  top: 2px;
-}
+/* Main */
 
-[data-meta='stream-select'] {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: white;
-  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-  background-position: right 0.7em top 50%, 0 0;
-  background-repeat: no-repeat, repeat;
-  background-size: 0.65em auto, 100%;
-  border-radius: 0;
-  border: none;
-  bottom: 17px;
-  font-size: 12px;
-  padding-right: 20px;
-  padding: 2px;
-  position: absolute;
-  right: 15px;
-}
-
-#metaDisplay {
-  opacity: 0;
-  transition: opacity 0.5s ease-out;
-  width: calc(100% - 210px);
-}
-
-#metaDisplay.shown {
-  opacity: 1;
-}
-
-#playContainer {
-  background-color: transparent;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  height: 70px;
-  padding: 15px;
-  position: relative;
-  width: 70px;
-}
-
-#playContainer::before {
-  background-color: #1b1b32;
-  background-image: url(https://cdn-media-1.freecodecamp.org/code-radio/cta.png);
-  background-position: 150px center;
+.animation {
+  background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
+  background-position: left bottom;
   background-repeat: no-repeat;
-  border-radius: 5px;
-  box-sizing: border-box;
-  content: 'Push Play or Space Bar to Start Music';
-  font-size: 21px;
-  font-weight: bold;
-  height: 100px;
-  left: -170px;
-  opacity: 0;
-  padding: 10px 100px 10px 20px;
-  pointer-events: none;
+  height: calc(100% - 158px);
+  position: relative;
+  width: 100%;
+}
+
+.animation.saron::before {
+  background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif');
+  bottom: 0px;
+  content: '';
+  height: 767px;
+  left: 388px;
   position: absolute;
-  top: -110px;
-  transition: opacity 0.5s ease-out;
-  width: 250px;
+  width: 509px;
 }
 
-#playContainer.cta::before {
-  opacity: 1;
+@media (max-width: 500px) {
+  .site-title {
+    font-size: 30px;
+  }
 }
 
-#playContainer:hover {
-  background: #2a2a40;
+.under-header-content {
+  align-items: center;
+  background-color: #0a0a23;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+  top: 38px;
+  width: 100%;
+  z-index: 1;
 }
+
+#container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: calc(50px + 38px);
+  text-align: justify;
+}
+
+@media (max-width: 500px) {
+  .under-header-content {
+    flex-direction: column;
+    height: 200px;
+  }
+}
+
+/* Slider */
 
 .slider-container {
   height: 70px;
@@ -160,26 +143,47 @@ footer {
   width: 15px;
 }
 
+@media (max-width: 750px) {
+  .slider-container {
+    position: absolute;
+    right: 0;
+  }
+}
+
+/* Current Song */
+
+[data-meta='title'] {
+  font-size: 18px;
+}
+
+[data-meta='artist'] {
+  font-size: 14px;
+}
+
+[data-meta='album'] {
+  font-size: 10px;
+}
+
+[data-meta='picture'] {
+  height: 70px;
+  position: absolute;
+  width: 70px;
+}
+
+[data-meta='listeners'] {
+  font-size: 20px;
+  font-weight: 900;
+  position: absolute;
+  right: 15px;
+  top: 2px;
+}
+
 #nowPlaying {
   height: 100%;
   left: 70px;
   padding-left: 4px;
   position: relative;
   width: calc(100% - 70px);
-}
-
-#visualizer {
-  height: 100%;
-  pointer-events: none;
-  position: absolute;
-  top: 88px;
-  width: 100%;
-  z-index: 10;
-}
-
-#visualizer canvas {
-  height: 100%;
-  width: 100%;
 }
 
 #nowPlaying progress {
@@ -202,6 +206,98 @@ footer {
 #nowPlaying progress::-webkit-progress-value {
   background-color: white;
 }
+
+#metaDisplay {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  width: calc(100% - 210px);
+}
+
+#metaDisplay.shown {
+  opacity: 1;
+}
+
+@media (max-width: 750px) {
+  [data-meta='title'],
+  [data-meta='artist'],
+  [data-meta='album'] {
+    padding-left: 10px;
+  }
+
+  [data-meta='picture'] {
+    bottom: 212px;
+    height: 200px;
+    left: 50%;
+    margin-left: -100px;
+    width: 200px;
+  }
+
+  [data-meta='listeners'] {
+    bottom: 15px;
+    left: 10px;
+    top: auto;
+  }
+
+  #nowPlaying {
+    align-content: center;
+    background-color: rgba(10, 10, 35, 1);
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    justify-items: center;
+    left: 0px;
+    margin: 0;
+    padding-top: 5px;
+    padding: 0;
+    position: absolute;
+    width: 100vw;
+  }
+
+  #nowPlaying progress {
+    background-color: green;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-height: 600px) {
+  [data-meta='picture'] {
+    display: none;
+  }
+}
+
+/* Visualizer */
+
+#visualizer {
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  top: 88px;
+  width: 100%;
+  z-index: 10;
+}
+
+#visualizer canvas {
+  height: 100%;
+  width: 100%;
+}
+
+@media (max-width: 750px) {
+  #visualizer {
+    background-color: #002ead;
+  }
+}
+
+@media (max-width: 500px) {
+  #visualizer {
+    background-color: #002ead;
+    top: 238px;
+  }
+}
+
+/* Song History */
 
 #recent-song-history {
   all: unset;
@@ -281,24 +377,13 @@ footer {
   width: 50px;
 }
 
-.animation {
-  background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
-  background-position: left bottom;
-  background-repeat: no-repeat;
-  height: calc(100% - 158px);
-  position: relative;
-  width: 100%;
+@media (max-width: 500px) {
+  #recent-song-list {
+    z-index: 10;
+  }
 }
 
-.animation.saron::before {
-  background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif');
-  bottom: 0px;
-  content: '';
-  height: 767px;
-  left: 388px;
-  position: absolute;
-  width: 509px;
-}
+/* Details */
 
 details {
   background-color: rgba(10, 10, 35, 0.6);
@@ -326,63 +411,92 @@ dd {
   margin-inline-start: 10px;
 }
 
+/* Footer */
+
+[data-meta='stream-select'] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: white;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-position: right 0.7em top 50%, 0 0;
+  background-repeat: no-repeat, repeat;
+  background-size: 0.65em auto, 100%;
+  border-radius: 0;
+  border: none;
+  bottom: 17px;
+  font-size: 12px;
+  padding-right: 20px;
+  padding: 2px;
+  position: absolute;
+  right: 15px;
+}
+
+footer {
+  background-color: #0a0a23;
+  border-top: 3px solid #fff;
+  bottom: 0;
+  color: #fff;
+  display: flex;
+  height: 70px;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+}
+
 @media (max-width: 750px) {
-  [data-meta='title'],
-  [data-meta='artist'],
-  [data-meta='album'] {
-    padding-left: 10px;
-  }
-
-  [data-meta='picture'] {
-    bottom: 212px;
-    height: 200px;
-    left: 50%;
-    margin-left: -100px;
-    width: 200px;
-  }
-
-  [data-meta='listeners'] {
-    bottom: 15px;
-    left: 10px;
-    top: auto;
-  }
-
   [data-meta='stream-select'] {
     right: 10px;
-  }
-
-  #nowPlaying {
-    align-content: center;
-    background-color: rgba(10, 10, 35, 1);
-    bottom: 80px;
-    display: flex;
-    flex-direction: column;
-    height: 120px;
-    justify-items: center;
-    left: 0px;
-    margin: 0;
-    padding-top: 5px;
-    padding: 0;
-    position: absolute;
-    width: 100vw;
-  }
-
-  #nowPlaying progress {
-    background-color: green;
-    bottom: 0;
-    left: 0;
-    width: 100%;
   }
 
   footer {
     border: none;
   }
+}
 
-  .slider-container {
-    position: absolute;
-    right: 0;
-  }
+/* Play Pause Button */
 
+#playContainer {
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  height: 70px;
+  padding: 15px;
+  position: relative;
+  width: 70px;
+}
+
+#playContainer::before {
+  background-color: #1b1b32;
+  background-image: url(https://cdn-media-1.freecodecamp.org/code-radio/cta.png);
+  background-position: 150px center;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  box-sizing: border-box;
+  content: 'Push Play or Space Bar to Start Music';
+  font-size: 21px;
+  font-weight: bold;
+  height: 100px;
+  left: -170px;
+  opacity: 0;
+  padding: 10px 100px 10px 20px;
+  pointer-events: none;
+  position: absolute;
+  top: -110px;
+  transition: opacity 0.5s ease-out;
+  width: 250px;
+}
+
+#playContainer.cta::before {
+  opacity: 1;
+}
+
+#playContainer:hover {
+  background: #2a2a40;
+}
+
+@media (max-width: 750px) {
   #playContainer {
     left: 50%;
     margin-left: -35px;
@@ -392,37 +506,9 @@ dd {
   #playContainer::before {
     display: none;
   }
-
-  #visualizer {
-    background-color: #002ead;
-  }
-
-  #recently-played-text {
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 15%;
-    margin-top: 13%;
-  }
 }
 
-@media (max-width: 500px) {
-  #visualizer {
-    background-color: #002ead;
-    top: 238px;
-  }
-
-  #recent-song-list {
-    z-index: 10;
-  }
-}
-
-@media (max-height: 600px) {
-  [data-meta='picture'] {
-    display: none;
-  }
-}
-
-/* -----------------------site navigation ------------*/
+/* Nav */
 
 .site-nav {
   align-items: flex-start;
@@ -599,61 +685,5 @@ dd {
   
   .main-nav-group {
     margin-left: auto;
-  }
-}
-
-@media (max-width: 500px) {
-  .site-title {
-    font-size: 30px;
-  }
-}
-
-/*     container and grid     */
-a {
-  text-decoration: none;
-}
-
-h1,
-h2 {
-  color: white;
-  display: inline-block;
-  font-size: 18px;
-  margin: 0;
-}
-
-p {
-  margin: 0;
-}
-
-.under-header-content {
-  align-items: center;
-  background-color: #0a0a23;
-  display: flex;
-  flex-direction: row;
-  height: 50px;
-  justify-content: center;
-  position: absolute;
-  text-align: center;
-  top: 38px;
-  width: 100%;
-  z-index: 1;
-}
-
-#container {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-top: calc(50px + 38px);
-  text-align: justify;
-}
-
-@media (max-width: 500px) {
-  .under-header-content {
-    flex-direction: column;
-    height: 200px;
-  }
-
-  footer.footer {
-    display: none;
   }
 }
