@@ -6,12 +6,12 @@
 
 body {
   background-color: #1b1b32;
-  margin: 0px;
-  padding: 0px;
-  font-family: 'Open Sans', sans-serif;
-  background-size: cover;
   background-position: center center;
+  background-size: cover;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0px;
   overflow: hidden;
+  padding: 0px;
 }
 
 html,
@@ -24,14 +24,14 @@ main {
 
 footer {
   background-color: #0a0a23;
-  height: 70px;
-  width: 100%;
-  display: flex;
-  color: #fff;
   border-top: 3px solid #fff;
-  z-index: 10;
-  position: absolute;
   bottom: 0;
+  color: #fff;
+  display: flex;
+  height: 70px;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
 }
 
 [data-meta='title'] {
@@ -46,41 +46,41 @@ footer {
 
 [data-meta='picture'] {
   height: 70px;
-  width: 70px;
   position: absolute;
+  width: 70px;
 }
 
 [data-meta='listeners'] {
+  font-size: 20px;
+  font-weight: 900;
   position: absolute;
   right: 15px;
   top: 2px;
-  font-size: 20px;
-  font-weight: 900;
 }
 
 [data-meta='stream-select'] {
-  position: absolute;
-  right: 15px;
-  bottom: 17px;
-  font-size: 12px;
-  -webkit-appearance: none;
   -moz-appearance: none;
+  -webkit-appearance: none;
   appearance: none;
-  padding: 2px;
-  padding-right: 20px;
-  border-radius: 0;
-  border: none;
   background-color: white;
   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-  background-repeat: no-repeat, repeat;
   background-position: right 0.7em top 50%, 0 0;
+  background-repeat: no-repeat, repeat;
   background-size: 0.65em auto, 100%;
+  border-radius: 0;
+  border: none;
+  bottom: 17px;
+  font-size: 12px;
+  padding-right: 20px;
+  padding: 2px;
+  position: absolute;
+  right: 15px;
 }
 
 #metaDisplay {
-  width: calc(100% - 210px);
   opacity: 0;
   transition: opacity 0.5s ease-out;
+  width: calc(100% - 210px);
 }
 
 #metaDisplay.shown {
@@ -88,35 +88,35 @@ footer {
 }
 
 #playContainer {
-  height: 70px;
-  width: 70px;
-  padding: 15px;
-  cursor: pointer;
-  position: relative;
   background-color: transparent;
-  color: #ffffff;
   border: none;
+  color: #ffffff;
+  cursor: pointer;
+  height: 70px;
+  padding: 15px;
+  position: relative;
+  width: 70px;
 }
 
 #playContainer::before {
-  content: 'Push Play or Space Bar to Start Music';
-  font-size: 21px;
-  padding: 10px 100px 10px 20px;
-  font-weight: bold;
-  box-sizing: border-box;
-  position: absolute;
-  height: 100px;
-  width: 250px;
-  top: -110px;
-  left: -170px;
   background-color: #1b1b32;
-  border-radius: 5px;
-  opacity: 0;
-  transition: opacity 0.5s ease-out;
   background-image: url(https://cdn-media-1.freecodecamp.org/code-radio/cta.png);
   background-position: 150px center;
   background-repeat: no-repeat;
+  border-radius: 5px;
+  box-sizing: border-box;
+  content: 'Push Play or Space Bar to Start Music';
+  font-size: 21px;
+  font-weight: bold;
+  height: 100px;
+  left: -170px;
+  opacity: 0;
+  padding: 10px 100px 10px 20px;
   pointer-events: none;
+  position: absolute;
+  top: -110px;
+  transition: opacity 0.5s ease-out;
+  width: 250px;
 }
 
 #playContainer.cta::before {
@@ -129,49 +129,49 @@ footer {
 
 .slider-container {
   height: 70px;
-  width: 140px;
   padding: 22px 20px 22px 15px;
+  width: 140px;
 }
 
 #slider {
   -webkit-appearance: none;
-  width: 100%;
-  height: 6px;
   background: #d3d3d3;
+  height: 6px;
   outline: none;
+  width: 100%;
 }
 
 #slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 15px;
-  height: 15px;
   background: white;
   cursor: pointer;
+  height: 15px;
+  width: 15px;
 }
 
 #slider::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
   background: white;
   cursor: pointer;
+  height: 15px;
+  width: 15px;
 }
 
 #nowPlaying {
   height: 100%;
   left: 70px;
-  width: calc(100% - 70px);
-  position: relative;
   padding-left: 4px;
+  position: relative;
+  width: calc(100% - 70px);
 }
 
 #visualizer {
   height: 100%;
-  width: 100%;
+  pointer-events: none;
   position: absolute;
   top: 88px;
+  width: 100%;
   z-index: 10;
-  pointer-events: none;
 }
 
 #visualizer canvas {
@@ -180,16 +180,16 @@ footer {
 }
 
 #nowPlaying progress {
-  position: absolute;
-  bottom: 4px;
-  left: 4px;
-  height: 4px;
-  width: calc(100% - 8px);
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
   background-color: silver;
   border-radius: 50%;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  bottom: 4px;
+  height: 4px;
+  left: 4px;
+  position: absolute;
+  width: calc(100% - 8px);
 }
 
 #nowPlaying progress::-webkit-progress-bar {
@@ -202,13 +202,13 @@ footer {
 
 #recent-song-history {
   all: unset;
-  height: 100%;
-  cursor: pointer;
-  z-index: 10;
-  height: 70px;
-  width: 70px;
   background-color: rgba(10, 10, 35, 1);
+  cursor: pointer;
+  height: 100%;
+  height: 70px;
   text-align: center;
+  width: 70px;
+  z-index: 10;
 }
 
 #recent-song-history:hover,
@@ -217,21 +217,21 @@ footer {
 }
 
 #recent-song-history svg {
+  fill: white;
   height: 60%;
   width: 60%;
-  fill: whtie;
 }
 
 #recent-song-list {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  left: 0;
+  background-color: #1b1b32;
   border-radius: 0;
   bottom: 70px;
-  width: 320px;
-  background-color: #1b1b32;
   cursor: default;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  position: absolute;
+  width: 320px;
 }
 
 #recently-played-icon {
@@ -240,26 +240,26 @@ footer {
 }
 
 .recent-song-info {
-  padding: 10px 5px;
-  color: white;
   border-bottom: 1px solid #3b3b4f;
+  color: white;
+  padding: 10px 5px;
 }
 
 .recent-song-list {
   float: left;
+  font-size: 13px;
   margin-left: 10px;
   margin-top: 5px;
-  font-size: 13px;
-  text-align: left;
   overflow: hidden;
+  text-align: left;
 }
 
 .recent-song-meta {
-  padding-left: 4px;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   overflow: hidden;
+  padding-left: 4px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -282,29 +282,29 @@ footer {
   background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
   background-position: left bottom;
   background-repeat: no-repeat;
+  height: calc(100% - 158px);
   position: relative;
   width: 100%;
-  height: calc(100% - 158px);
 }
 
 .animation.saron::before {
-  content: '';
   background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif');
-  left: 388px;
   bottom: 0px;
-  width: 509px;
+  content: '';
   height: 767px;
+  left: 388px;
   position: absolute;
+  width: 509px;
 }
 
 details {
-  position: absolute;
-  bottom: 100px;
-  right: 50px;
   background-color: rgba(10, 10, 35, 0.6);
+  bottom: 100px;
   color: #fff;
-  padding: 15px;
   opacity: 0.1;
+  padding: 15px;
+  position: absolute;
+  right: 50px;
   transition: opacity 0.25s ease-out;
 }
 
@@ -314,13 +314,13 @@ details[open] {
 }
 
 dt {
-  margin-top: 10px;
   margin-inline-start: 0px;
+  margin-top: 10px;
 }
 
 dd {
-  margin-inline-start: 10px;
   font-style: italic;
+  margin-inline-start: 10px;
 }
 
 @media (max-width: 750px) {
@@ -331,39 +331,39 @@ dd {
   }
   [data-meta='picture'] {
     bottom: 212px;
-    width: 200px;
     height: 200px;
     left: 50%;
     margin-left: -100px;
+    width: 200px;
   }
   [data-meta='listeners'] {
+    bottom: 15px;
     left: 10px;
     top: auto;
-    bottom: 15px;
   }
   [data-meta='stream-select'] {
     right: 10px;
   }
   #nowPlaying {
-    padding: 0;
-    padding-top: 5px;
+    align-content: center;
+    background-color: rgba(10, 10, 35, 1);
+    bottom: 80px;
     display: flex;
     flex-direction: column;
-    align-content: center;
-    justify-items: center;
-    background-color: rgba(10, 10, 35, 1);
-    position: absolute;
-    bottom: 80px;
-    margin: 0;
-    width: 100vw;
-    left: 0px;
     height: 120px;
+    justify-items: center;
+    left: 0px;
+    margin: 0;
+    padding-top: 5px;
+    padding: 0;
+    position: absolute;
+    width: 100vw;
   }
 
   #nowPlaying progress {
     background-color: green;
-    left: 0;
     bottom: 0;
+    left: 0;
     width: 100%;
   }
 
@@ -377,9 +377,9 @@ dd {
   }
 
   #playContainer {
-    position: absolute;
-    margin-left: -35px;
     left: 50%;
+    margin-left: -35px;
+    position: absolute;
   }
   #playContainer::before {
     display: none;
@@ -388,10 +388,10 @@ dd {
     background-color: #002ead;
   }
   #recently-played-text {
-    margin-top: 13%;
-    margin-left: 15%;
     font-size: 15px;
     font-weight: bold;
+    margin-left: 15%;
+    margin-top: 13%;
   }
 }
 
@@ -414,36 +414,35 @@ dd {
 /* -----------------------site navigation ------------*/
 
 .site-nav {
-  z-index: 300;
-  display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  overflow-y: hidden;
-  height: 40px;
-  font-size: 18px;
-  font-family: 'Lato', sans-serif;
-  height: 38px;
   background: #0a0a23;
-  position: absolute;
-  z-index: 1000;
   color: #fff;
-  width: 100%;
+  display: flex;
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  height: 38px;
+  height: 40px;
+  justify-content: space-between;
+  overflow-y: hidden;
   padding: 0 15px;
+  position: absolute;
   top: 0;
+  width: 100%;
+  z-index: 300;
+  z-index: 1000;
 }
 
 .site-nav-middle {
-  display: flex;
+  -ms-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
   align-items: center;
+  display: flex;
+  letter-spacing: 0.4px;
+  margin-right: 10px;
   overflow-x: auto;
   overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  margin-right: 10px;
   padding-bottom: 80px;
-  letter-spacing: 0.4px;
   white-space: nowrap;
-
-  -ms-overflow-scrolling: touch;
 }
 
 .site-nav-left {
@@ -451,14 +450,14 @@ dd {
 }
 
 .site-nav-logo {
-  flex-shrink: 0;
-  display: block;
-  margin: 0 5px;
   color: #fff;
+  display: block;
+  flex-shrink: 0;
   font-size: 1.7rem;
-  line-height: 1em;
   font-weight: bold;
   letter-spacing: -0.5px;
+  line-height: 1em;
+  margin: 0 5px;
 }
 
 .site-nav-logo:hover {
@@ -467,16 +466,16 @@ dd {
 
 .site-nav-logo img {
   display: block;
-  width: auto;
   height: 25px;
   margin-top: 7px;
+  width: auto;
 }
 
 .nav {
   display: flex;
+  list-style: none;
   margin: 0 0 0 -12px;
   padding: 0;
-  list-style: none;
 }
 
 .nav {
@@ -490,11 +489,11 @@ dd {
 }
 
 .nav li a {
+  color: #fff;
   display: block;
   margin: 0;
-  padding: 8px 15px;
-  color: #fff;
   opacity: 1;
+  padding: 8px 15px;
   white-space: nowrap;
 }
 
@@ -508,41 +507,41 @@ dd {
 }
 
 .site-nav-right {
-  flex-shrink: 0;
-  display: flex;
   align-items: center;
+  display: flex;
+  flex-shrink: 0;
   height: 38px;
 }
 
 .toggle-button-nav {
-  display: none;
-  padding: 2px 14px 3px;
+  background-color: #0a0a23;
   border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+  display: none;
   font-family: 'lato', sans-serif;
   font-size: 18px;
-  color: #fff;
-  outline: none;
-  background-color: #0a0a23;
-  cursor: pointer;
+  height: auto;
   margin-right: 5px;
   margin-top: 4px;
-  height: auto;
+  outline: none;
+  padding: 2px 14px 3px;
 }
 
 @media (max-width: 500px) {
   .site-header {
-    padding-right: 0;
     padding-left: 0;
+    padding-right: 0;
   }
   .site-nav-middle {
     margin-right: 0;
   }
   .nav {
-    display: none;
-    position: absolute;
     background-color: #0a0a23;
-    top: 38px;
+    display: none;
     left: 15px;
+    position: absolute;
+    top: 38px;
   }
 
   .toggle-button-nav {
@@ -596,10 +595,10 @@ a {
 
 h1,
 h2 {
-  font-size: 18px;
-  margin: 0;
   color: white;
   display: inline-block;
+  font-size: 18px;
+  margin: 0;
 }
 
 p {
@@ -607,25 +606,25 @@ p {
 }
 
 .under-header-content {
+  align-items: center;
   background-color: #0a0a23;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  position: absolute;
-  width: 100%;
   height: 50px;
-  top: 38px;
+  justify-content: center;
+  position: absolute;
   text-align: center;
+  top: 38px;
+  width: 100%;
+  z-index: 1;
 }
 
 #container {
-  text-align: justify;
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
   margin-top: calc(50px + 38px);
+  text-align: justify;
 }
 
 @media (max-width: 500px) {
