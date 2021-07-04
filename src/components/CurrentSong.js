@@ -17,10 +17,12 @@ const CurrentSong = props => (
         max={props.songDuration}
         value={props.progressVal}
       />
-      <div data-meta='title'>{props.currentSong.title}</div>
-      <div data-meta='artist'>{props.currentSong.artist}</div>
-      <div data-meta='album'>{props.currentSong.album}</div>
-      <div data-meta='listeners'>Listeners: {props.listeners}</div>
+      <div className='song-meta-data'>
+        <div data-meta='title'>{props.currentSong.title}</div>
+        <div data-meta='artist'>{props.currentSong.artist}</div>
+        <div data-meta='album'>{props.currentSong.album}</div>
+        <div data-meta='listeners'>Listeners: {props.listeners}</div>
+      </div>
       {props.mountOptions}
     </div>
   </div>
