@@ -50,7 +50,7 @@ p {
   display: none;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .animation {
     background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
     background-position: left bottom;
@@ -77,7 +77,7 @@ p {
   font-size: 30px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .site-title {
     font-size: 18px;
   }
@@ -88,7 +88,7 @@ p {
   margin-top: 18px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .site-description {
     margin-left: 10px;
     margin-top: 0;
@@ -153,7 +153,7 @@ p {
   padding: 5px 10px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .song-meta-data {
     padding: 0;
   }
@@ -179,7 +179,7 @@ p {
   position: absolute;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   [data-meta='listeners'] {
     bottom: auto;
     left: auto;
@@ -197,7 +197,7 @@ p {
   width: 200px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   [data-meta='picture'] {
     bottom: auto;
     height: 70px;
@@ -225,7 +225,7 @@ p {
   width: 100vw;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .now-playing {
     bottom: auto;
     height: 100%;
@@ -249,7 +249,7 @@ p {
   width: 100%;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .now-playing progress {
     bottom: 4px;
     left: 0;
@@ -287,7 +287,7 @@ p {
   z-index: 5;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .visualizer {
     background-color: transparent;
     top: 88px;
@@ -383,7 +383,7 @@ details {
   display: none;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   details {
     background-color: rgba(10, 10, 35, 0.6);
     bottom: 100px;
@@ -435,7 +435,7 @@ dd {
   right: 10px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   [data-meta='stream-select'] {
     right: 15px;
   }
@@ -451,7 +451,7 @@ footer {
   z-index: 10;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   footer {
     border-top: 3px solid #fff;
     box-sizing: content-box;
@@ -473,7 +473,7 @@ footer {
   width: 70px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .play-container {
     left: auto;
     margin-left: 0;
@@ -489,6 +489,7 @@ footer {
   border-radius: 5px;
   box-sizing: border-box;
   content: 'Push Play or Space Bar to Start Music';
+  display: none;
   font-size: 21px;
   font-weight: bold;
   height: 100px;
@@ -502,7 +503,7 @@ footer {
   width: 250px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .play-container::before {
     display: block;
   }
@@ -546,7 +547,7 @@ footer {
   white-space: nowrap;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .site-nav-middle {
     flex: 1 0 30%;
     margin-right: 0;
@@ -557,7 +558,7 @@ footer {
   display: none;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .site-nav-left {
     display: flex;
     flex: 1 0 30%;
@@ -576,7 +577,7 @@ footer {
   margin: 0 5px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .site-nav-logo {
     margin-left: auto;
     margin-right: auto;
@@ -601,14 +602,14 @@ footer {
   height: 38px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .site-nav-right {
     flex: 1 0 30%;
     margin-left: auto;
   }
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .main-nav-group {
     margin-left: auto;
   }
@@ -625,7 +626,7 @@ footer {
   top: 38px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .nav {
     display: flex;
     left: auto;
@@ -677,7 +678,7 @@ footer {
   padding: 2px 14px 3px;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .toggle-button-nav {
     display: none;
   }
@@ -687,7 +688,7 @@ footer {
   display: flex;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .show-main-nav-items {
     display: none;
   }
