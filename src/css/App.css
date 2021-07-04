@@ -335,6 +335,12 @@ p {
   width: 320px;
 }
 
+@media only screen and (min-width: 768px) {
+  .recent-song-list {
+    bottom: 73px;
+  }
+}
+
 .recently-played-icon {
   font-weight: bold;
   justify-content: center;
@@ -344,15 +350,6 @@ p {
   border-bottom: 1px solid #3b3b4f;
   overflow: hidden;
   padding: 10px 5px;
-}
-
-.recent-song-list {
-  float: left;
-  font-size: 13px;
-  margin-left: 10px;
-  margin-top: 5px;
-  overflow: hidden;
-  text-align: left;
 }
 
 .recent-song-meta {
