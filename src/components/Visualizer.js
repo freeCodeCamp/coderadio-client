@@ -209,7 +209,7 @@ export default class Visualizer extends React.PureComponent {
   render() {
     return (
       <PageVisibility onChange={this.handleVisibilityChange}>
-        <div id='visualizer'>
+        <div className='visualizer'>
           <canvas aria-label='visualizer' ref={a => (this._canvas = a)} />
         </div>
       </PageVisibility>
