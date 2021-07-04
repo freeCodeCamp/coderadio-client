@@ -124,14 +124,14 @@ p {
   width: 140px;
 }
 
-#slider {
+.slider {
   -webkit-appearance: none;
   background: #dfdfe2;
   height: 6px;
   width: 100%;
 }
 
-#slider::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   background: #fff;
@@ -140,7 +140,7 @@ p {
   width: 15px;
 }
 
-#slider::-moz-range-thumb {
+.slider::-moz-range-thumb {
   background: #fff;
   cursor: pointer;
   height: 15px;
@@ -213,21 +213,20 @@ p {
   }
 }
 
-#nowPlaying {
+.now-playing {
   align-content: center;
-  background-color: rgba(10, 10, 35, 1);
+  background-color: #0a0a23;
   bottom: 80px;
   display: flex;
   flex-direction: column;
   height: 120px;
-  justify-items: center;
   left: 0;
   position: absolute;
   width: 100vw;
 }
 
 @media only screen and (min-width: 750px) {
-  #nowPlaying {
+  .now-playing {
     bottom: auto;
     height: 100%;
     left: 70px;
@@ -238,12 +237,11 @@ p {
   }
 }
 
-#nowPlaying progress {
+.now-playing progress {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background-color: #00471b;
-  background-color: silver;
+  background-color: #d0d0d5;
   bottom: 0;
   height: 4px;
   left: 0;
@@ -252,80 +250,81 @@ p {
 }
 
 @media only screen and (min-width: 750px) {
-  #nowPlaying progress {
-    background-color: silver;
+  .now-playing progress {
     bottom: 4px;
     left: 0;
     width: 100%;
   }
 }
 
-#nowPlaying progress::-webkit-progress-bar {
+.now-playing progress::-webkit-progress-bar {
   background-color: rgb(10, 10, 35);
 }
 
-#nowPlaying progress::-webkit-progress-value {
+.now-playing progress::-webkit-progress-value {
   background-color: #fff;
 }
 
-#metaDisplay {
+.meta-display {
   opacity: 0;
   transition: opacity 0.5s ease-out;
   width: calc(100% - 210px);
 }
 
-#metaDisplay.shown {
+.meta-display-visible {
   opacity: 1;
 }
 
 /* Visualizer */
 
-#visualizer {
+.visualizer {
   background-color: #002ead;
   height: 100%;
   pointer-events: none;
   position: absolute;
+  top: 238px;
   width: 100%;
   z-index: 5;
-  top: 238px;
 }
 
 @media only screen and (min-width: 750px) {
-  #visualizer {
+  .visualizer {
     background-color: transparent;
     top: 88px;
   }
 }
 
-#visualizer canvas {
+.visualizer canvas {
   height: 100%;
   width: 100%;
 }
 
 /* Song History */
 
-#recent-song-history {
-  all: unset;
+.recent-song-history {
   background-color: transparent;
+  border: 0;
+  color: #fff;
   cursor: pointer;
   height: 100%;
+  padding: 0;
   text-align: center;
   width: 70px;
   z-index: 10;
 }
 
-#recent-song-history:hover,
-#recent-song-history:active {
+.recent-song-history:hover,
+.recent-song-history:active {
   background-color: #2a2a40;
 }
 
-#recent-song-history svg {
+.recent-song-history .recently-played-icon {
   fill: #fff;
   height: 60%;
   width: 60%;
 }
 
-#recent-song-list {
+.recent-song-list {
   background-color: #1b1b32;
   bottom: 70px;
   cursor: default;
@@ -336,7 +335,7 @@ p {
   width: 320px;
 }
 
-#recently-played-icon {
+.recently-played-icon {
   font-weight: bold;
   justify-content: center;
 }
@@ -357,6 +356,7 @@ p {
 }
 
 .recent-song-meta {
+  font-size: 16px;
   padding-left: 54px;
   text-align: left;
   text-overflow: ellipsis;
@@ -402,14 +402,17 @@ details[open] {
   opacity: 1;
 }
 
+dl {
+  margin-bottom: 0;
+}
+
 dt {
-  margin-inline-start: 0;
   margin-top: 10px;
 }
 
 dd {
   font-style: italic;
-  margin-inline-start: 10px;
+  margin-left: 10px;
 }
 
 /* Footer */
@@ -421,7 +424,7 @@ dd {
   background-color: #fff;
   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
   background-position: right 0.7em top 50%, 0 0;
-  background-repeat: no-repeat, repeat;
+  background-repeat: no-repeat;
   background-size: 0.65em auto, 100%;
   border-radius: 0;
   border: none;
@@ -457,28 +460,28 @@ footer {
 
 /* Play Pause Button */
 
-#playContainer {
+.play-container {
   background-color: transparent;
-  border: none;
+  border: 0;
   color: #fff;
   cursor: pointer;
   height: 100%;
+  left: 50%;
+  margin-left: -35px;
   padding: 15px;
   position: absolute;
   width: 70px;
-  left: 50%;
-  margin-left: -35px;
 }
 
 @media only screen and (min-width: 750px) {
-  #playContainer {
+  .play-container {
     left: auto;
     margin-left: 0;
     position: relative;
   }
 }
 
-#playContainer::before {
+.play-container::before {
   background-color: #1b1b32;
   background-image: url(https://cdn-media-1.freecodecamp.org/code-radio/cta.png);
   background-position: 150px center;
@@ -500,16 +503,16 @@ footer {
 }
 
 @media only screen and (min-width: 750px) {
-  #playContainer::before {
+  .play-container::before {
     display: block;
   }
 }
 
-#playContainer.cta::before {
+.play-container-cta::before {
   opacity: 1;
 }
 
-#playContainer:hover {
+.play-container-cta:hover {
   background: #2a2a40;
 }
 
@@ -670,7 +673,7 @@ footer {
   height: auto;
   margin-right: 5px;
   margin-top: 4px;
-  outline: none;
+  outline: 0;
   padding: 2px 14px 3px;
 }
 

@@ -5,13 +5,19 @@ const DEFAULT_ART =
   'https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif';
 
 const CurrentSong = props => (
-  <div className={props.playing ? 'thumb shown' : 'thumb'} id='metaDisplay'>
+  <div
+    className={
+      props.playing
+        ? 'meta-display thumb meta-display-visible'
+        : 'meta-display thumb'
+    }
+  >
     <img
       alt='album art'
       data-meta='picture'
       src={props.fastConnection ? props.currentSong.art : DEFAULT_ART}
     />
-    <div id='nowPlaying'>
+    <div className='now-playing'>
       <progress
         data-meta='duration'
         max={props.songDuration}
