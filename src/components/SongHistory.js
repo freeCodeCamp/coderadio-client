@@ -48,11 +48,7 @@ class SongHistory extends Component {
           </div>
         )}
 
-        <FontAwesomeIcon
-          className='recently-played-icon'
-          icon={faHistory}
-          style={{ color: 'white' }}
-        />
+        <FontAwesomeIcon className='recently-played-icon' icon={faHistory} />
       </button>
     );
   }

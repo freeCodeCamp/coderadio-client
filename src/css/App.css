@@ -101,6 +101,7 @@ p {
   flex-direction: column;
   height: 200px;
   justify-content: center;
+  padding: 0 20px;
   position: absolute;
   text-align: center;
   top: 38px;
@@ -149,16 +150,6 @@ p {
 
 /* Current Song */
 
-.song-meta-data {
-  padding: 5px 10px;
-}
-
-@media only screen and (min-width: 768px) {
-  .song-meta-data {
-    padding: 0;
-  }
-}
-
 [data-meta='title'] {
   font-size: 18px;
 }
@@ -168,11 +159,11 @@ p {
 }
 
 [data-meta='album'] {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 [data-meta='listeners'] {
-  bottom: 15px;
+  bottom: 20px;
   font-size: 20px;
   font-weight: 900;
   left: 10px;
@@ -184,7 +175,7 @@ p {
     bottom: auto;
     left: auto;
     top: 2px;
-    right: 15px;
+    right: 10px;
   }
 }
 
@@ -215,25 +206,43 @@ p {
 
 .now-playing {
   align-content: center;
-  background-color: #0a0a23;
-  bottom: 80px;
+  background-color: #1b1b32;
+  bottom: 70px;
   display: flex;
   flex-direction: column;
   height: 120px;
   left: 0;
+  padding: 10px;
   position: absolute;
   width: 100vw;
 }
 
 @media only screen and (min-width: 768px) {
   .now-playing {
+    background-color: #0a0a23;
     bottom: auto;
     height: 100%;
     left: 70px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-bottom: 2px;
+    padding-top: 2px;
     position: relative;
     width: calc(100% - 70px);
+  }
+}
+
+.progress-container {
+  border-radius: 4px;
+  bottom: 10px;
+  height: 4px;
+  left: 10px;
+  overflow: hidden;
+  position: absolute;
+  right: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+  .progress-container {
+    bottom: 5px;
   }
 }
 
@@ -242,23 +251,15 @@ p {
   -webkit-appearance: none;
   appearance: none;
   background-color: #d0d0d5;
-  bottom: 0;
   height: 4px;
   left: 0;
   position: absolute;
+  top: 0;
   width: 100%;
 }
 
-@media only screen and (min-width: 768px) {
-  .now-playing progress {
-    bottom: 4px;
-    left: 0;
-    width: 100%;
-  }
-}
-
 .now-playing progress::-webkit-progress-bar {
-  background-color: rgb(10, 10, 35);
+  background-color: #d0d0d5;
 }
 
 .now-playing progress::-webkit-progress-value {
@@ -304,7 +305,6 @@ p {
 .recent-song-history {
   background-color: transparent;
   border: 0;
-  color: #fff;
   cursor: pointer;
   height: 100%;
   padding: 0;
@@ -315,11 +315,11 @@ p {
 
 .recent-song-history:hover,
 .recent-song-history:active {
-  background-color: #2a2a40;
+  background-color: #1b1b32;
 }
 
 .recent-song-history .recently-played-icon {
-  fill: #fff;
+  color: #fff;
   height: 60%;
   width: 60%;
 }
@@ -327,17 +327,17 @@ p {
 .recent-song-list {
   background-color: #1b1b32;
   bottom: 70px;
+  color: #fff;
   cursor: default;
-  display: flex;
-  flex-direction: column;
   left: 0;
   position: absolute;
-  width: 320px;
+  width: 100%;
 }
 
 @media only screen and (min-width: 768px) {
   .recent-song-list {
     bottom: 73px;
+    width: 350px;
   }
 }
 
@@ -348,14 +348,20 @@ p {
 
 .recent-song-info {
   border-bottom: 1px solid #3b3b4f;
-  overflow: hidden;
-  padding: 10px 5px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
 }
 
 .recent-song-meta {
   font-size: 16px;
-  padding-left: 54px;
+  margin-left: 10px;
+  overflow: hidden;
   text-align: left;
+}
+
+.recent-song-meta p {
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -382,7 +388,7 @@ details {
 
 @media only screen and (min-width: 768px) {
   details {
-    background-color: rgba(10, 10, 35, 0.6);
+    background-color: rgba(10, 10, 35, 0.6); /* #0a0a23 */
     bottom: 100px;
     color: #fff;
     display: block;
@@ -425,7 +431,7 @@ dd {
   background-size: 0.65em auto, 100%;
   border-radius: 0;
   border: none;
-  bottom: 17px;
+  bottom: 25px;
   font-size: 12px;
   padding: 2px 20px 2px 2px;
   position: absolute;
@@ -434,7 +440,7 @@ dd {
 
 @media only screen and (min-width: 768px) {
   [data-meta='stream-select'] {
-    right: 15px;
+    bottom: 16px;
   }
 }
 
@@ -468,6 +474,11 @@ footer {
   padding: 15px;
   position: absolute;
   width: 70px;
+}
+
+.play-container:hover,
+.play-container:active {
+  background-color: #1b1b32;
 }
 
 @media only screen and (min-width: 768px) {

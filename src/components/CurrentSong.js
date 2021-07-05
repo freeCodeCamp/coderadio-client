@@ -18,17 +18,17 @@ const CurrentSong = props => (
       src={props.fastConnection ? props.currentSong.art : DEFAULT_ART}
     />
     <div className='now-playing'>
-      <progress
-        data-meta='duration'
-        max={props.songDuration}
-        value={props.progressVal}
-      />
-      <div className='song-meta-data'>
-        <div data-meta='title'>{props.currentSong.title}</div>
-        <div data-meta='artist'>{props.currentSong.artist}</div>
-        <div data-meta='album'>{props.currentSong.album}</div>
-        <div data-meta='listeners'>Listeners: {props.listeners}</div>
+      <div className='progress-container'>
+        <progress
+          data-meta='duration'
+          max={props.songDuration}
+          value={props.progressVal}
+        />
       </div>
+      <div data-meta='title'>{props.currentSong.title}</div>
+      <div data-meta='artist'>{props.currentSong.artist}</div>
+      <div data-meta='album'>{props.currentSong.album}</div>
+      <div data-meta='listeners'>Listeners: {props.listeners}</div>
       {props.mountOptions}
     </div>
   </div>
