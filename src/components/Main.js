@@ -9,12 +9,11 @@ const Main = props => {
     <main>
       <div className='under-header-content'>
         <h1 className='site-title'>Welcome to Code Radio.</h1>
-        &nbsp; &nbsp;
         <h2 className='site-description'>24/7 music designed for coding.</h2>
       </div>
       {isBrowser && (
         <>
-          <div className='animation saron' id='container' />
+          <div className='animation' />
           <Visualizer player={props.player} playing={props.playing} />
           <details>
             <summary>Keyboard Controls</summary>

@@ -26,11 +26,11 @@ class SongHistory extends Component {
     return (
       <button
         aria-label='Recent Song History'
-        id='recent-song-history'
+        className='recent-song-history'
         onClick={this.toggleDisplay}
       >
         {this.state.displayList && (
-          <div id='recent-song-list'>
+          <div className='recent-song-list'>
             {songs.map(song => (
               <div className='recent-song-info' key={song.id}>
                 <img
@@ -48,11 +48,7 @@ class SongHistory extends Component {
           </div>
         )}
 
-        <FontAwesomeIcon
-          icon={faHistory}
-          id='recently-played-icon'
-          style={{ color: 'white' }}
-        />
+        <FontAwesomeIcon className='recently-played-icon' icon={faHistory} />
       </button>
     );
   }

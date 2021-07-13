@@ -15,7 +15,7 @@ const Slider = ({ currentVolume, setTargetVolume }) => {
     <div className='slider-container'>
       <input
         aria-label='slider'
-        id='slider'
+        className='slider'
         max={MAX}
         min='0'
         onChange={handleChange}
