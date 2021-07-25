@@ -250,16 +250,17 @@ p {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background-color: #d0d0d5;
+  background-color: #3b3b4f;
   height: 4px;
   left: 0;
   position: absolute;
   top: 0;
   width: 100%;
+  border: none;
 }
 
 .now-playing progress::-webkit-progress-bar {
-  background-color: #d0d0d5;
+  background-color: #3b3b4f;
 }
 
 .now-playing progress::-webkit-progress-value {
