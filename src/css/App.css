@@ -34,10 +34,6 @@ h2 {
   margin: 0;
 }
 
-h1 {
-  display: none;
-}
-
 p {
   margin: 0;
 }
@@ -100,21 +96,16 @@ p {
 }
 
 .under-header-content {
-  background-color: #f5dfa4;
-  color: #7c621b;
+  background-color: #0a0a23;
   display: flex;
   flex-direction: column;
-  height: 100px;
+  height: 200px;
   justify-content: center;
   padding: 0 20px;
   position: absolute;
   text-align: center;
   top: 38px;
   width: 100%;
-}
-
-.under-header-content p {
-  padding: 0 5px;
 }
 
 @media only screen and (min-width: 768px) {
