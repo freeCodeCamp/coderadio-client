@@ -48,13 +48,13 @@ export default class Footer extends React.PureComponent {
     });
   }
 
-  stopCurrenttInterval() {
+  stopCurrentInterval() {
     if (this.state.progressInterval) {
       clearInterval(this.state.progressInterval);
     }
   }
 
-  toggleIntterval() {
+  toggleInterval() {
     if (this.props.playing && this.state.isTabVisible) this.startInterval();
     else this.stopCurrenttInterval();
   }
