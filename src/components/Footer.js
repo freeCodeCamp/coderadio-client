@@ -35,9 +35,9 @@ export default class Footer extends React.PureComponent {
         currentSong: this.props.currentSong,
         alternativeMounts: [].concat(this.props.remotes, this.props.mounts)
       });
-      this.toggleIntterval();
+      this.toggleInterval();
     } else if (prevProps.playing !== this.props.playing) {
-      this.toggleIntterval();
+      this.toggleInterval();
     }
   }
 
