@@ -74,7 +74,7 @@ export default class Footer extends React.PureComponent {
 
   handleVisibilityChange = isTabVisible => {
     this.setState({ isTabVisible }, () => {
-      this.toggleIntterval();
+      this.toggleInterval();
     });
   };
 
