@@ -42,7 +42,7 @@ export default class Footer extends React.PureComponent {
   }
 
   startInterval() {
-    this.stopCurrenttInterval();
+    this.stopCurrentInterval();
     this.setState({
       progressInterval: setInterval(this.updateProgress, 100)
     });
@@ -56,7 +56,7 @@ export default class Footer extends React.PureComponent {
 
   toggleInterval() {
     if (this.props.playing && this.state.isTabVisible) this.startInterval();
-    else this.stopCurrenttInterval();
+    else this.stopCurrentInterval();
   }
 
   updateProgress() {
