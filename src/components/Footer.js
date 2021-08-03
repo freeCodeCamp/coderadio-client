@@ -35,28 +35,28 @@ export default class Footer extends React.PureComponent {
         currentSong: this.props.currentSong,
         alternativeMounts: [].concat(this.props.remotes, this.props.mounts)
       });
-      this.toggleIntterval();
+      this.toggleInterval();
     } else if (prevProps.playing !== this.props.playing) {
-      this.toggleIntterval();
+      this.toggleInterval();
     }
   }
 
   startInterval() {
-    this.stopCurrenttInterval();
+    this.stopCurrentInterval();
     this.setState({
       progressInterval: setInterval(this.updateProgress, 100)
     });
   }
 
-  stopCurrenttInterval() {
+  stopCurrentInterval() {
     if (this.state.progressInterval) {
       clearInterval(this.state.progressInterval);
     }
   }
 
-  toggleIntterval() {
+  toggleInterval() {
     if (this.props.playing && this.state.isTabVisible) this.startInterval();
-    else this.stopCurrenttInterval();
+    else this.stopCurrentInterval();
   }
 
   updateProgress() {
@@ -74,7 +74,7 @@ export default class Footer extends React.PureComponent {
 
   handleVisibilityChange = isTabVisible => {
     this.setState({ isTabVisible }, () => {
-      this.toggleIntterval();
+      this.toggleInterval();
     });
   };
 
