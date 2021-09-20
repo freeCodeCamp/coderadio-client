@@ -5,8 +5,8 @@ on: [push, pull_request]
 jobs:
   cypress-run:
     name: Test
-    # matching current Netlify build environment
-    runs-on: ubuntu-16.04
+    # Netlify deploys onto Ubuntu 20.04, so we should test on that os:
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         browsers: [chrome, firefox]
