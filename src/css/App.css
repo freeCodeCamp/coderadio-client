@@ -69,6 +69,7 @@ p {
   height:320px;
   width: 212px;
 }
+
 @media only screen and (min-width: 768px) {
   .animation {
     background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
@@ -84,6 +85,7 @@ p {
 
   .animation::before {
     background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif');
+    background-size: auto;
     bottom: 0;
     content: '';
     height: 767px;
@@ -303,7 +305,7 @@ p {
 /* Visualizer */
 
 .visualizer {
-  border:2px solid #002ead;
+  
   height: 100%;
   pointer-events: none;
   position: absolute;
