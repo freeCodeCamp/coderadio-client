@@ -8,7 +8,7 @@
 }
 
 body {
-  background-color: #1b1b32;
+  background-color: #0a0a23;
   background-position: center center;
   background-size: cover;
   color: #fff;
@@ -53,25 +53,28 @@ p {
   background-size: 800px;
   display: block;
   height:500px;
-  margin-top: 150px;
+  margin-top: 100px;
   position: relative;
   width: 100%;
+  z-index: -1;
 }
 
 .animation::before {
   background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif');
-  bottom: 0;
+  background-size: 212px;
   content: '';
-  height: 767px;
-  left: 388px;
+  left: 163px;
+  bottom: 0px;
   position: absolute;
-  width: 509px;
+  height:320px;
+  width: 212px;
 }
 @media only screen and (min-width: 768px) {
   .animation {
     background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
     background-position: left bottom;
     background-repeat: no-repeat;
+    background-size: auto;
     display: block;
     height: calc(100% - 158px);
     margin-top: 88px;
@@ -125,6 +128,7 @@ p {
   text-align: center;
   top: 38px;
   width: 100%;
+  
 }
 
 @media only screen and (min-width: 768px) {
