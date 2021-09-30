@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
 
-/* Globals Steven Ribeiro*/
-
 * {
   box-sizing: border-box;
   font-family: 'Lato', Arial;
@@ -52,7 +50,7 @@ p {
   background-repeat: no-repeat;
   background-size: 800px;
   display: block;
-  height:500px;
+  height: 500px;
   margin-top: 100px;
   position: relative;
   width: 100%;
@@ -66,7 +64,7 @@ p {
   left: 163px;
   bottom: 0px;
   position: absolute;
-  height:320px;
+  height: 320px;
   width: 212px;
 }
 
@@ -94,8 +92,6 @@ p {
     width: 509px;
   }
 }
-
-
 
 .site-title {
   font-size: 30px;
@@ -130,7 +126,6 @@ p {
   text-align: center;
   top: 38px;
   width: 100%;
-  
 }
 
 @media only screen and (min-width: 768px) {
@@ -305,7 +300,6 @@ p {
 /* Visualizer */
 
 .visualizer {
-  
   height: 100%;
   pointer-events: none;
   position: absolute;
