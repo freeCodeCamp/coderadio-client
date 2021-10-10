@@ -1,9 +1,8 @@
 import React from 'react';
 import NchanSubscriber from 'nchan';
-import { GlobalHotKeys } from 'react-hotkeys';
 import * as Sentry from '@sentry/react';
 import store from 'store';
-import { isIOS } from 'react-device-detect';
+import { isIOS, isDesktop } from 'react-device-detect';
 
 import Nav from './Nav';
 import Main from './Main';
@@ -90,25 +89,62 @@ export default class App extends React.Component {
       songHistory: []
     };
 
-    // Keyboard shortcuts
-    this.keyMap = {
-      TOGGLE_PLAY: ['space', 'k'],
-      INCREASE_VOLUME: 'up',
-      DECREASE_VOLUME: 'down'
-    };
-
-    // Keyboard shortcut handlers
-    this.handlers = {
-      TOGGLE_PLAY: () => this.togglePlay(),
-      INCREASE_VOLUME: () => this.increaseVolume(),
-      DECREASE_VOLUME: () => this.decreaseVolume()
-    };
-
     this.togglePlay = this.togglePlay.bind(this);
     this.setUrl = this.setUrl.bind(this);
     this.setTargetVolume = this.setTargetVolume.bind(this);
     this.getNowPlaying = this.getNowPlaying.bind(this);
     this.updateVolume = this.updateVolume.bind(this);
+    this.increaseVolume = this.increaseVolume.bind(this);
+    this.decreaseVolume = this.decreaseVolume.bind(this);
+
+    // Keyboard handlers
+    this.addKeyboardHotKeysListener = this.addKeyboardHotKeysListener.bind(
+      this
+    );
+    this.removeKeyboardHotKeysListener = this.removeKeyboardHotKeysListener.bind(
+      this
+    );
+    this.handleKeyboardHotKeys = this.handleKeyboardHotKeys.bind(this);
+  }
+
+  isToggleHotKey(event) {
+    return [' '].includes(event.key);
+  }
+
+  canTogglePlayPause(event) {
+    // List of elements to do not allow toogle play/pause when pressing space or "k"
+    const disallowedIds = [
+      'recent-song-history',
+      'toggle-play-pause',
+      'stream-select',
+      'keyboard-controls'
+    ];
+    const [focusedElement] = event.path;
+    return !disallowedIds.includes(focusedElement.id);
+  }
+
+  handleKeyboardHotKeys(event) {
+    const keyMap = new Map();
+    keyMap.set(' ', this.togglePlay);
+    keyMap.set('k', this.togglePlay);
+    keyMap.set('ArrowUp', this.increaseVolume);
+    keyMap.set('ArrowDown', this.decreaseVolume);
+
+    if (this.isToggleHotKey(event) && !this.canTogglePlayPause(event)) return;
+
+    const callback = keyMap.get(event.key);
+    if (!callback || typeof callback !== 'function') {
+      return;
+    }
+    callback();
+  }
+
+  addKeyboardHotKeysListener() {
+    window.addEventListener('keydown', this.handleKeyboardHotKeys);
+  }
+
+  removeKeyboardHotKeysListener() {
+    window.removeEventListener('keydown', this.handleKeyboardHotKeys);
   }
 
   // Set the players initial vol and crossOrigin
@@ -136,6 +172,15 @@ export default class App extends React.Component {
   componentDidMount() {
     this.setPlayerInitial();
     this.getNowPlaying();
+    if (isDesktop) {
+      this.addKeyboardHotKeysListener();
+    }
+  }
+
+  componentWillUnmount() {
+    if (isDesktop) {
+      this.removeKeyboardHotKeysListener();
+    }
   }
 
   /**
@@ -505,40 +550,38 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <GlobalHotKeys handlers={this.handlers} keyMap={this.keyMap}>
-        <div className='App'>
-          <Nav />
-          <Main
-            fastConnection={this.state.fastConnection}
-            player={this._player}
-            playing={this.state.playing}
-          />
-          <audio
-            aria-label='audio'
-            crossOrigin='anonymous'
-            onError={this.onPlayerError}
-            ref={a => (this._player = a)}
-          >
-            <track kind='captions' {...this.state.captions} />
-          </audio>
-          <Footer
-            currentSong={this.state.currentSong}
-            currentVolume={this.state.audioConfig.currentVolume}
-            fastConnection={this.state.fastConnection}
-            listeners={this.state.listeners}
-            mounts={this.state.mounts}
-            playing={this.state.playing}
-            remotes={this.state.remotes}
-            setTargetVolume={this.setTargetVolume}
-            setUrl={this.setUrl}
-            songDuration={this.state.songDuration}
-            songHistory={this.state.songHistory}
-            songStartedAt={this.state.songStartedAt}
-            togglePlay={this.togglePlay}
-            url={this.state.url}
-          />
-        </div>
-      </GlobalHotKeys>
+      <div className='App'>
+        <Nav />
+        <Main
+          fastConnection={this.state.fastConnection}
+          player={this._player}
+          playing={this.state.playing}
+        />
+        <audio
+          aria-label='audio'
+          crossOrigin='anonymous'
+          onError={this.onPlayerError}
+          ref={a => (this._player = a)}
+        >
+          <track kind='captions' {...this.state.captions} />
+        </audio>
+        <Footer
+          currentSong={this.state.currentSong}
+          currentVolume={this.state.audioConfig.currentVolume}
+          fastConnection={this.state.fastConnection}
+          listeners={this.state.listeners}
+          mounts={this.state.mounts}
+          playing={this.state.playing}
+          remotes={this.state.remotes}
+          setTargetVolume={this.setTargetVolume}
+          setUrl={this.setUrl}
+          songDuration={this.state.songDuration}
+          songHistory={this.state.songHistory}
+          songStartedAt={this.state.songStartedAt}
+          togglePlay={this.togglePlay}
+          url={this.state.url}
+        />
+      </div>
     );
   }
 }

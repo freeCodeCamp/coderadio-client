@@ -16,7 +16,7 @@ const Main = props => {
           <div className='animation' />
           <Visualizer player={props.player} playing={props.playing} />
           <details>
-            <summary>Keyboard Controls</summary>
+            <summary id='keyboard-controls'>Keyboard Controls</summary>
             <dl>
               <dt>Play/Pause:</dt>
               <dd>Spacebar or "k"</dd>
