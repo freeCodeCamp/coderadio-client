@@ -41,7 +41,7 @@ class PlayPauseButton extends React.Component {
             ? 'play-container-cta play-container'
             : 'play-container'
         }
-        id='playContainer'
+        id='toggle-play-pause'
         onClick={this.handleOnClick}
         onKeyDown={this.handleKeyDown}
         onTouchEnd={this.handleOnTouchEnd}

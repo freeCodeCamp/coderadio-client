@@ -27,6 +27,7 @@ class SongHistory extends Component {
       <button
         aria-label='Recent Song History'
         className='recent-song-history'
+        id='recent-song-history'
         onClick={this.toggleDisplay}
       >
         {this.state.displayList && (

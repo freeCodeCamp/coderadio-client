@@ -10,7 +10,7 @@ describe('Stop and play the music', () => {
       .invoke('attr', 'src')
       .should('contain', 'freecodecamp.org/radio')
       .then(() => {
-        cy.get('#playContainer')
+        cy.get('#toggle-play-pause')
           .should('be.visible')
           .click();
         cy.get('audio').should(audioElements => {

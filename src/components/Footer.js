@@ -86,6 +86,7 @@ export default class Footer extends React.PureComponent {
         <select
           aria-label='Select Stream'
           data-meta='stream-select'
+          id='stream-select'
           onChange={this.handleChange.bind(this)}
           value={this.props.url}
         >
