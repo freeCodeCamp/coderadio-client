@@ -20,7 +20,9 @@ export default function Nav() {
         <a className='site-nav-logo' href='https://coderadio.freecodecamp.org/'>
           <img
             alt='Code Radio'
+            height='25'
             src='https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg'
+            width='218.75'
           />
         </a>
       </div>
