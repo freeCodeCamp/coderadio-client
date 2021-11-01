@@ -14,7 +14,7 @@
     "@sentry/tracing": "5.30.0",
     "nchan": "1.0.10",
     "react": "16.14.0",
-    "react-device-detect": "1.17.0",
+    "react-device-detect": "2.1.2",
     "react-dom": "16.14.0",
     "react-page-visibility": "6.4.0",
     "react-scripts": "4.0.3",
