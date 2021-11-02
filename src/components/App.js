@@ -107,12 +107,12 @@ export default class App extends React.Component {
     this.handleKeyboardHotKeys = this.handleKeyboardHotKeys.bind(this);
   }
 
-  isToggleHotKey(event) {
-    return [' '].includes(event.key);
+  isSpacePressed(event) {
+    return event.key === ' ';
   }
 
   canTogglePlayPause(event) {
-    // List of elements to do not allow toogle play/pause when pressing space or "k"
+    // Prevent play/pause toggle when elements with ids in the following list are pressed.
     const disallowedIds = [
       'recent-song-history',
       'toggle-play-pause',
@@ -130,7 +130,7 @@ export default class App extends React.Component {
     keyMap.set('ArrowUp', this.increaseVolume);
     keyMap.set('ArrowDown', this.decreaseVolume);
 
-    if (this.isToggleHotKey(event) && !this.canTogglePlayPause(event)) return;
+    if (this.isSpacePressed(event) && !this.canTogglePlayPause(event)) return;
 
     const callback = keyMap.get(event.key);
     if (!callback || typeof callback !== 'function') {
