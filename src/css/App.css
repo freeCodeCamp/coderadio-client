@@ -330,9 +330,18 @@ p {
   bottom: 70px;
   color: #fff;
   cursor: default;
+  display: none;
   left: 0;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
   position: absolute;
   width: 100%;
+}
+
+.recent-song-list[aria-hidden="false"] {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 @media only screen and (min-width: 768px) {
@@ -355,6 +364,8 @@ p {
 }
 
 .recent-song-meta {
+  /*display: flex;
+  flex-direction: column;*/
   font-size: 16px;
   margin-left: 10px;
   overflow: hidden;
@@ -367,8 +378,12 @@ p {
   white-space: nowrap;
 }
 
-.recent-song-meta p:first-child {
+.recent-song-meta span:first-of-type {
   font-weight: bold;
+}
+
+.recent-song-meta span {
+  display: block;
 }
 
 .recent-song-info:nth-child(5) {
