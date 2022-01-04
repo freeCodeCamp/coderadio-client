@@ -20,6 +20,7 @@ const CurrentSong = props => (
     <div className='now-playing'>
       <div className='progress-container'>
         <progress
+          aria-hidden='true'
           data-meta='duration'
           max={props.songDuration}
           value={props.progressVal}
