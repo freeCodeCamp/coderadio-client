@@ -13,8 +13,10 @@ const Main = props => {
       </div>
       {isBrowser && (
         <>
-          <div className='animation' />
-          <Visualizer player={props.player} playing={props.playing} />
+          <div className='animation-visualizer'>
+            <div className='animation' />
+            <Visualizer player={props.player} playing={props.playing} />
+          </div>
           <details>
             <summary id='keyboard-controls'>Keyboard Controls</summary>
             <dl>

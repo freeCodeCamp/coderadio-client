@@ -552,35 +552,37 @@ export default class App extends React.Component {
     return (
       <div className='App'>
         <Nav />
-        <Main
-          fastConnection={this.state.fastConnection}
-          player={this._player}
-          playing={this.state.playing}
-        />
-        <audio
-          aria-label='audio'
-          crossOrigin='anonymous'
-          onError={this.onPlayerError}
-          ref={a => (this._player = a)}
-        >
-          <track kind='captions' {...this.state.captions} />
-        </audio>
-        <Footer
-          currentSong={this.state.currentSong}
-          currentVolume={this.state.audioConfig.currentVolume}
-          fastConnection={this.state.fastConnection}
-          listeners={this.state.listeners}
-          mounts={this.state.mounts}
-          playing={this.state.playing}
-          remotes={this.state.remotes}
-          setTargetVolume={this.setTargetVolume}
-          setUrl={this.setUrl}
-          songDuration={this.state.songDuration}
-          songHistory={this.state.songHistory}
-          songStartedAt={this.state.songStartedAt}
-          togglePlay={this.togglePlay}
-          url={this.state.url}
-        />
+        <div className='contentWrap'>
+          <Main
+            fastConnection={this.state.fastConnection}
+            player={this._player}
+            playing={this.state.playing}
+          />
+          <audio
+            aria-label='audio'
+            crossOrigin='anonymous'
+            onError={this.onPlayerError}
+            ref={a => (this._player = a)}
+          >
+            <track kind='captions' {...this.state.captions} />
+          </audio>
+          <Footer
+            currentSong={this.state.currentSong}
+            currentVolume={this.state.audioConfig.currentVolume}
+            fastConnection={this.state.fastConnection}
+            listeners={this.state.listeners}
+            mounts={this.state.mounts}
+            playing={this.state.playing}
+            remotes={this.state.remotes}
+            setTargetVolume={this.setTargetVolume}
+            setUrl={this.setUrl}
+            songDuration={this.state.songDuration}
+            songHistory={this.state.songHistory}
+            songStartedAt={this.state.songStartedAt}
+            togglePlay={this.togglePlay}
+            url={this.state.url}
+          />
+        </div>
       </div>
     );
   }

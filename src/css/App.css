@@ -46,49 +46,110 @@ p {
 
 /* Main */
 
-.animation {
-  display: none;
+.contentWrap {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
 }
 
-@media only screen and (min-width: 768px) {
+.animation-visualizer {
+  height: 100%;
+}
+
+@media only screen and (min-width: 768px) and (min-height: 420px) {
+  .animation-visualizer {
+    margin: 0 auto;
+    position: relative;
+    width: clamp(450px, 100vh, 100%);
+  }
+}
+
+@media only screen and (min-width: 1011px) and (min-height: 890px) {
+  .animation-visualizer {
+    margin: 0 auto;
+    position: relative;
+    width: unset;
+  }
+}
+
+.animation {
+  background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
+  background-repeat: no-repeat;
+  display: none;
+  position: relative;
+}
+
+/* Show a cropped version of the animation if we meet the following specs. */
+@media only screen and (min-width: 350px) and (min-height: 720px), (min-width: 768px) and (min-height: 420px) {
   .animation {
-    background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
-    background-position: left bottom;
-    background-repeat: no-repeat;
+    background-position: bottom 0 left 6%;
+    background-size: cover;
+    display: block;
+    height: clamp(450px, 100vw, 100%);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -124px;
+    max-height: 1011px;
+    max-width: 1011px;
+    width: clamp(450px, 100vh, 100%);
+  }
+}
+
+/* Show the full version of the animation if we meet the following spec. */
+@media only screen and (min-width: 1011px) and (min-height: 890px) {
+  .animation {
+    background-position: 0 100%;
+    background-size: unset;
     display: block;
     height: calc(100% - 158px);
-    margin-top: 88px;
-    position: relative;
+    margin-left: unset;
+    margin-right: unset;
+    margin-top: 34px;
+    max-height: unset;
+    max-width: unset;
     width: 100%;
   }
 }
 
 .animation::before {
   background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif');
+  background-position-x: 56.6%;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  background-size: 49.6%;
   bottom: 0;
   content: '';
-  height: 767px;
-  left: 388px;
+  height: 100%;
+  left: 4.8%;
   position: absolute;
-  width: 509px;
+  width: 100%;
+}
+
+@media only screen and (min-width: 1011px) and (min-height: 890px) {
+  .animation::before {
+    background-position-x: unset;
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    background-size: unset;
+    bottom: 0;
+    content: "";
+    height: 767px;
+    left: 388px;
+    position: absolute;
+    width: 509px;
+  }
 }
 
 .site-title {
-  font-size: 30px;
-}
-
-@media only screen and (min-width: 768px) {
-  .site-title {
-    font-size: 18px;
-  }
+  font-size: 18px;
 }
 
 .site-description {
   font-size: 18px;
-  margin-top: 18px;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 568px) {
   .site-description {
     margin-left: 10px;
     margin-top: 0;
@@ -99,21 +160,23 @@ p {
   background-color: #0a0a23;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  gap: 5px;
   justify-content: center;
-  padding: 0 20px;
-  position: absolute;
+  padding: 10px 20px;
+  position: relative;
   text-align: center;
   top: 38px;
   width: 100%;
+  z-index: 1;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 568px) {
   .under-header-content {
     align-items: center;
     flex-direction: row;
     height: 50px;
     z-index: 1;
+    top:38px
   }
 }
 
@@ -284,15 +347,36 @@ p {
   height: 100%;
   pointer-events: none;
   position: absolute;
-  top: 238px;
+  top: calc(63px + 2.7rem);
   width: 100%;
   z-index: 5;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 350px) and (min-height: 720px) {
   .visualizer {
     background-color: transparent;
+    top: calc(63px + 2.7rem);
+    width: clamp(450px, 100vh, 100%); /* same as animation */
+  }
+}
+
+@media only screen and (min-width: 568px) {
+  .visualizer {
     top: 88px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (min-height: 420px) {
+  .visualizer {
+    background-color: transparent;
+    top: 162px;
+    width: clamp(450px, 100vh, 100%); /* same as animation */
+  }
+}
+
+@media only screen and (min-width: 1011px) and (min-height: 890px) {
+  .visualizer {
+    top: 0;
   }
 }
 
