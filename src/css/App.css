@@ -384,7 +384,7 @@ p {
   display: block;
 }
 
-.recent-song-info:nth-child(5) {
+.recent-song-info:nth-child(1) {
   border-bottom: none;
 }
 
