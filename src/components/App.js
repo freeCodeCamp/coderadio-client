@@ -60,7 +60,8 @@ export default class App extends React.Component {
       audioConfig: {
         targetVolume: 0,
         maxVolume: 0.5,
-        volumeSteps: 0.01,
+        volumeSteps: 0.05,
+        fadeSteps: 0.01,
         currentVolume: 0.5,
         volumeTransitionSpeed: 10
       },
@@ -111,16 +112,20 @@ export default class App extends React.Component {
     return event.key === ' ';
   }
 
-  canTogglePlayPause(event) {
+  canTogglePlayPause() {
     // Prevent play/pause toggle when elements with ids in the following list are pressed.
     const disallowedIds = [
       'recent-song-history',
       'toggle-play-pause',
       'stream-select',
-      'keyboard-controls'
+      'keyboard-controls',
+      'toggle-button-nav'
     ];
-    const [focusedElement] = event.path;
-    return !disallowedIds.includes(focusedElement.id);
+    return !disallowedIds.includes(document.activeElement.id);
+  }
+
+  isUpDownArrowPressed(event) {
+    return event.key === 'ArrowUp' || event.key === 'ArrowDown';
   }
 
   handleKeyboardHotKeys(event) {
@@ -130,7 +135,15 @@ export default class App extends React.Component {
     keyMap.set('ArrowUp', this.increaseVolume);
     keyMap.set('ArrowDown', this.decreaseVolume);
 
-    if (this.isSpacePressed(event) && !this.canTogglePlayPause(event)) return;
+    if (this.isSpacePressed(event) && !this.canTogglePlayPause()) return;
+
+    // Don't allow arrow hot keys to adjust volume if the volume input
+    // has focus as the volume input is already adjusting the volume.
+    if (
+      this.isUpDownArrowPressed(event) &&
+      document.activeElement.id === 'volume-input'
+    )
+      return;
 
     const callback = keyMap.get(event.key);
     if (!callback || typeof callback !== 'function') {
@@ -353,7 +366,7 @@ export default class App extends React.Component {
        * if it's smaller than the increment.
        */
       let volumeNextIncrement = Math.min(
-        this.state.audioConfig.volumeSteps,
+        this.state.audioConfig.fadeSteps,
         Math.abs(this.state.audioConfig.targetVolume - this._player.volume)
       );
 
