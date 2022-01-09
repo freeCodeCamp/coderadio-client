@@ -128,6 +128,12 @@ export default class App extends React.Component {
     return event.key === 'ArrowUp' || event.key === 'ArrowDown';
   }
 
+  canAdjustVolume() {
+    // Ignore arrow hot keys if focus is on volume slider or stream selector.
+    const disallowedIds = ['volume-input', 'stream-select'];
+    return !disallowedIds.includes(document.activeElement.id);
+  }
+
   handleKeyboardHotKeys(event) {
     const keyMap = new Map();
     keyMap.set(' ', this.togglePlay);
@@ -135,21 +141,17 @@ export default class App extends React.Component {
     keyMap.set('ArrowUp', this.increaseVolume);
     keyMap.set('ArrowDown', this.decreaseVolume);
 
+    if (!keyMap.has(event.key)) return;
+
     if (this.isSpacePressed(event) && !this.canTogglePlayPause()) return;
 
-    // Don't allow arrow hot keys to adjust volume if the volume input
-    // has focus as the volume input is already adjusting the volume.
-    if (
-      this.isUpDownArrowPressed(event) &&
-      document.activeElement.id === 'volume-input'
-    )
-      return;
+    if (this.isUpDownArrowPressed(event) && !this.canAdjustVolume()) return;
 
-    const callback = keyMap.get(event.key);
-    if (!callback || typeof callback !== 'function') {
-      return;
+    try {
+      keyMap.get(event.key)();
+    } catch (err) {
+      console.log(`Bad callback for hotkey '${event.key}': ${err.message}`);
     }
-    callback();
   }
 
   addKeyboardHotKeysListener() {
