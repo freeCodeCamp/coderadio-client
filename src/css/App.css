@@ -558,15 +558,7 @@ footer {
 }
 
 .site-nav-middle {
-  -ms-overflow-scrolling: touch;
-  -webkit-overflow-scrolling: touch;
-  align-items: center;
-  display: flex;
-  letter-spacing: 0.4px;
-  margin-right: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
+  padding-top: 8px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -590,7 +582,7 @@ footer {
 
 .site-nav-logo {
   color: #fff;
-  display: block;
+  display: inline-block;
   flex-shrink: 0;
   font-size: 1.7rem;
   font-weight: bold;
@@ -606,6 +598,15 @@ footer {
   }
 }
 
+.site-nav-logo:focus {
+  outline: 2px solid #0041F5;
+  outline-offset: 2px;
+}
+
+.site-nav-logo:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .site-nav-logo:hover {
   text-decoration: none;
 }
@@ -613,7 +614,6 @@ footer {
 .site-nav-logo img {
   display: block;
   height: 25px;
-  margin-top: 7px;
   width: auto;
 }
 
@@ -650,6 +650,7 @@ footer {
 
 @media only screen and (min-width: 768px) {
   .nav {
+    align-items: center;
     display: flex;
     left: auto;
     position: relative;
@@ -665,15 +666,27 @@ footer {
   display: block;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 .nav li a {
+  align-items: center;
   color: #fff;
-  display: block;
+  display: flex;
+  height: 100%;
   margin: 0;
   opacity: 1;
-  padding: 8px 15px;
+  padding: 0 15px;
   white-space: nowrap;
+}
+
+.nav li a:focus {
+  outline: 2px solid #0041F5;
+  outline-offset: -3px;
+}
+
+.nav li a:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .nav li:hover {
@@ -695,9 +708,17 @@ footer {
   font-size: 18px;
   height: auto;
   margin-right: 5px;
-  margin-top: 4px;
   outline: 0;
   padding: 2px 14px 3px;
+}
+
+.toggle-button-nav:focus {
+	outline-offset: -4px;
+  outline: 3px solid #0041F5;
+}
+
+.toggle-button-nav:focus:not(:focus-visible) {
+  outline: none;
 }
 
 @media only screen and (min-width: 768px) {
@@ -708,12 +729,6 @@ footer {
 
 .show-main-nav-items {
   display: flex;
-}
-
-@media only screen and (min-width: 768px) {
-  .show-main-nav-items {
-    display: none;
-  }
 }
 
 .expand-nav {
