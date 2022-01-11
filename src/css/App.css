@@ -2,6 +2,10 @@
 
 /* Globals */
 
+:root {
+  --focus-outline: #0044FF;
+}
+
 * {
   box-sizing: border-box;
   font-family: 'Lato', Arial;
@@ -565,6 +569,7 @@ footer {
   .site-nav-middle {
     flex: 1 0 30%;
     margin-right: 0;
+    text-align: center;
   }
 }
 
@@ -599,7 +604,7 @@ footer {
 }
 
 .site-nav-logo:focus {
-  outline: 2px solid #0041F5;
+  outline: 2px solid var(--focus-outline);
   outline-offset: 2px;
 }
 
@@ -653,6 +658,7 @@ footer {
     align-items: center;
     display: flex;
     left: auto;
+    margin-top: 1px;
     position: relative;
     top: 0;
   }
@@ -676,12 +682,26 @@ footer {
   height: 100%;
   margin: 0;
   opacity: 1;
-  padding: 0 15px;
+  padding: 0 10px;
   white-space: nowrap;
 }
 
+.nav li a span {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-top: -1px;
+}
+
+.nav li a svg {
+  fill: #fff;
+  height: 1rem;
+  width: 1rem;
+  margin-left: 0.15rem;
+}
+
 .nav li a:focus {
-  outline: 2px solid #0041F5;
+  outline: 2px solid var(--focus-outline);
   outline-offset: -3px;
 }
 
@@ -696,6 +716,10 @@ footer {
 .nav li a:hover {
   color: #0a0a23;
   text-decoration: none;
+}
+
+.nav li a:hover svg {
+  fill: #0a0a23;
 }
 
 .toggle-button-nav {
@@ -713,8 +737,8 @@ footer {
 }
 
 .toggle-button-nav:focus {
-	outline-offset: -4px;
-  outline: 3px solid #0041F5;
+	outline-offset: 2px;
+  outline: 3px solid var(--focus-outline);
 }
 
 .toggle-button-nav:focus:not(:focus-visible) {
@@ -733,6 +757,12 @@ footer {
 
 .expand-nav {
   min-height: calc(40px + 38px);
+}
+
+@media only screen and (min-width: 768px) {
+  .expand-nav {
+    min-height: 38px;
+  }
 }
 
 .reverse-toggle-color {
