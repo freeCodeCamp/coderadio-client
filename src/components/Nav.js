@@ -20,10 +20,9 @@ export default function Nav() {
       <div className='site-nav-middle'>
         <a className='site-nav-logo' href='https://www.freecodecamp.org/'>
           <img
-            alt=''
+            alt='freeCodeCamp.org'
             src='https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg'
           />
-          <span className='sr-only'>freeCodeCamp.org home</span>
         </a>
       </div>
       <div className='site-nav-right main-nav'>
