@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ReactComponent as ExternalLink } from '../assets/external-link.svg';
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +48,6 @@ export default function Nav() {
                   <span>
                     {link.text}{' '}
                     <span className='sr-only'>opens in new window</span>
-                    <ExternalLink />
                   </span>
                 </a>
               </li>
