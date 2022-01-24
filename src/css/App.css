@@ -554,15 +554,21 @@ footer {
   height: 38px;
   justify-content: space-between;
   overflow-y: hidden;
-  padding: 0 15px;
+  padding: 0 0;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
 }
 
+@media only screen and (min-width: 350px) {
+  .site-nav {
+    padding: 0 15px;
+  }
+}
+
 .site-nav-middle {
-  padding-top: 8px;
+  padding-top: 7px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -586,14 +592,29 @@ footer {
 }
 
 .site-nav-logo {
+  background-image: url(https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg);
+  background-position: -179px 0;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: #fff;
   display: inline-block;
   flex-shrink: 0;
   font-size: 1.7rem;
   font-weight: bold;
+  height: 25px;
   letter-spacing: -0.5px;
   line-height: 1em;
-  margin: 0 5px;
+  margin: -1px 5px 0;
+  width: 43px;
+}
+
+@media only screen and (min-width: 350px) {
+  .site-nav-logo {
+    background-image: none;
+    height: unset;
+    padding-top: 1px;
+    width: unset;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -605,7 +626,7 @@ footer {
 
 .site-nav-logo:focus {
   outline: 2px solid var(--focus-outline);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 .site-nav-logo:focus:not(:focus-visible) {
@@ -617,9 +638,15 @@ footer {
 }
 
 .site-nav-logo img {
-  display: block;
+  display: none;
   height: 25px;
   width: auto;
+}
+
+@media only screen and (min-width: 350px) {
+  .site-nav-logo img {
+    display: block;
+  }
 }
 
 .site-nav-right {
@@ -653,7 +680,7 @@ footer {
   top: 38px;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 518px) {
   .nav {
     align-items: center;
     display: flex;
@@ -737,15 +764,15 @@ footer {
 }
 
 .toggle-button-nav:focus {
-	outline-offset: 2px;
-  outline: 3px solid var(--focus-outline);
+  outline: 2px solid var(--focus-outline);
+  outline-offset: 2px;
 }
 
 .toggle-button-nav:focus:not(:focus-visible) {
   outline: none;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 518px) {
   .toggle-button-nav {
     display: none;
   }
