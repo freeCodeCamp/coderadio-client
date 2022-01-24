@@ -17,9 +17,14 @@ export default function Nav() {
     <nav className={'site-nav' + (isOpen ? ' expand-nav' : '')} id='site-nav'>
       <div className='site-nav-left' />
       <div className='site-nav-middle'>
-        <a className='site-nav-logo' href='https://www.freecodecamp.org/'>
+        <a
+          aria-label='freeCodeCamp.org'
+          className='site-nav-logo'
+          href='https://www.freecodecamp.org/'
+        >
           <img
             alt='freeCodeCamp.org'
+            aria-hidden='true'
             src='https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg'
           />
         </a>
