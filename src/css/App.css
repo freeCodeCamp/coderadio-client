@@ -2,6 +2,10 @@
 
 /* Globals */
 
+:root {
+  --focus-outline: #0044FF;
+}
+
 * {
   box-sizing: border-box;
   font-family: 'Lato', Arial;
@@ -550,29 +554,28 @@ footer {
   height: 38px;
   justify-content: space-between;
   overflow-y: hidden;
-  padding: 0 15px;
+  padding: 0 0;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
 }
 
+@media only screen and (min-width: 350px) {
+  .site-nav {
+    padding: 0 15px;
+  }
+}
+
 .site-nav-middle {
-  -ms-overflow-scrolling: touch;
-  -webkit-overflow-scrolling: touch;
-  align-items: center;
-  display: flex;
-  letter-spacing: 0.4px;
-  margin-right: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
+  padding-top: 7px;
 }
 
 @media only screen and (min-width: 768px) {
   .site-nav-middle {
     flex: 1 0 30%;
     margin-right: 0;
+    text-align: center;
   }
 }
 
@@ -589,14 +592,29 @@ footer {
 }
 
 .site-nav-logo {
+  background-image: url(https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg);
+  background-position: -179px 0;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: #fff;
-  display: block;
+  display: inline-block;
   flex-shrink: 0;
   font-size: 1.7rem;
   font-weight: bold;
+  height: 25px;
   letter-spacing: -0.5px;
   line-height: 1em;
-  margin: 0 5px;
+  margin: -1px 5px 0;
+  width: 43px;
+}
+
+@media only screen and (min-width: 350px) {
+  .site-nav-logo {
+    background-image: none;
+    height: unset;
+    padding-top: 1px;
+    width: unset;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -606,15 +624,29 @@ footer {
   }
 }
 
+.site-nav-logo:focus {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: 3px;
+}
+
+.site-nav-logo:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .site-nav-logo:hover {
   text-decoration: none;
 }
 
 .site-nav-logo img {
-  display: block;
+  display: none;
   height: 25px;
-  margin-top: 7px;
   width: auto;
+}
+
+@media only screen and (min-width: 350px) {
+  .site-nav-logo img {
+    display: block;
+  }
 }
 
 .site-nav-right {
@@ -648,10 +680,12 @@ footer {
   top: 38px;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 518px) {
   .nav {
+    align-items: center;
     display: flex;
     left: auto;
+    margin-top: 1px;
     position: relative;
     top: 0;
   }
@@ -665,15 +699,41 @@ footer {
   display: block;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 .nav li a {
+  align-items: center;
   color: #fff;
-  display: block;
+  display: flex;
+  height: 100%;
   margin: 0;
   opacity: 1;
-  padding: 8px 15px;
+  padding: 0 10px;
   white-space: nowrap;
+}
+
+.nav li a span {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-top: -1px;
+}
+
+.nav li a svg {
+  fill: #fff;
+  height: 1rem;
+  width: 1rem;
+  margin-left: 0.15rem;
+}
+
+.nav li a:focus {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: -3px;
+}
+
+.nav li a:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .nav li:hover {
@@ -683,6 +743,10 @@ footer {
 .nav li a:hover {
   color: #0a0a23;
   text-decoration: none;
+}
+
+.nav li a:hover svg {
+  fill: #0a0a23;
 }
 
 .toggle-button-nav {
@@ -695,12 +759,20 @@ footer {
   font-size: 18px;
   height: auto;
   margin-right: 5px;
-  margin-top: 4px;
   outline: 0;
   padding: 2px 14px 3px;
 }
 
-@media only screen and (min-width: 768px) {
+.toggle-button-nav:focus {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+.toggle-button-nav:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media only screen and (min-width: 518px) {
   .toggle-button-nav {
     display: none;
   }
@@ -710,14 +782,14 @@ footer {
   display: flex;
 }
 
-@media only screen and (min-width: 768px) {
-  .show-main-nav-items {
-    display: none;
-  }
-}
-
 .expand-nav {
   min-height: calc(40px + 38px);
+}
+
+@media only screen and (min-width: 768px) {
+  .expand-nav {
+    min-height: 38px;
+  }
 }
 
 .reverse-toggle-color {
