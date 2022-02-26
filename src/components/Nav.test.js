@@ -10,8 +10,6 @@ describe('<Nav />', () => {
     render(<Nav />);
 
     // Find a link with the text 'News' in the component - I'll explain more
-    // const newsLink = screen.getByRole('link', { name: 'News' })
-
     const newsLink = screen.getByRole('link', {
       name: /news opens in new window/i
     });
@@ -47,7 +45,7 @@ describe('<Nav />', () => {
     // Render the Nav component
     render(<Nav />);
 
-    // Find a link with the text 'Forum' in the component
+    // Find a link with the text 'Learn' in the component
     const learnLink = screen.getByRole('link', {
       name: /learn opens in new window/i
     });
