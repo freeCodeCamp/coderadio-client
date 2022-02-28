@@ -66,17 +66,5 @@
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
-  },
-  "description": "![freeCodeCamp.org Social Banner](https://s3.amazonaws.com/freecodecamp/wide-social-banner.png)",
-  "main": "cypress-install.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jagrutiti/coderadio-client.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Jagrutiti/coderadio-client/issues"
-  },
-  "homepage": "https://github.com/Jagrutiti/coderadio-client#readme"
+  }
 }
