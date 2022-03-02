@@ -22,7 +22,7 @@ jobs:
         run: npx eslint . --ext .js,.jsx,.ts,.tsx
 
   cypress-run:
-    name: Test
+    name: Cypress Test
     # Netlify deploys onto Ubuntu 20.04, so we should test on that os:
     runs-on: ubuntu-20.04
     strategy:
@@ -47,3 +47,21 @@ jobs:
           start: npm start
           wait-on: http://localhost:3000
           wait-on-timeout: 1200
+
+  unit-test:
+    name: Unit Test
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checkout Source Files
+        uses: actions/checkout@v2
+
+      - name: Install modules
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
