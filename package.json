@@ -17,7 +17,7 @@
     "react-device-detect": "2.1.2",
     "react-dom": "16.14.0",
     "react-page-visibility": "6.4.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "5.0.0",
     "store": "2.0.12"
   },
   "scripts": {
