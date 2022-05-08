@@ -17,7 +17,7 @@
     "react-device-detect": "2.2.2",
     "react-dom": "16.14.0",
     "react-page-visibility": "6.4.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "5.0.1",
     "store": "2.0.12"
   },
   "scripts": {
@@ -30,11 +30,9 @@
     "cypress": "cypress",
     "cypress:open": "npm run cypress open",
     "cypress:install": "cypress install && echo 'for use with ./cypress-install.js'",
-    "lint:fix": "eslint --fix --ext .js .",
+    "lint": "prettier --check \"src/**/*.{md,js}\"",
+    "lint:fix": "prettier --write \"src/**/*.{md,js}\"",
     "prepare": "husky install"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -52,20 +50,14 @@
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "12.1.5",
     "cypress": "6.9.1",
-    "eslint": "7.32.0",
-    "eslint-config-prettier": "6.15.0",
-    "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-jsx-a11y": "6.5.1",
-    "eslint-plugin-prefer-object-spread": "1.2.1",
-    "eslint-plugin-prettier": "3.4.1",
-    "eslint-plugin-react": "7.29.4",
-    "eslint-plugin-react-hooks": "2.5.1",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.0.0",
     "execa": "5.1.1",
     "husky": "6.0.0",
     "lint-staged": "11.2.6",
-    "prettier": "1.19.1"
+    "prettier": "2.6.2"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.js": "npm run lint:fix"
   }
 }
