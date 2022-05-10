@@ -15,7 +15,13 @@ const Main = props => {
       {isBrowser && (
         <>
           <div className='animation'>
-            <video autoPlay={true} loop={true} muted={true} playsInline={true} aria-hidden={true}>
+            <video
+              aria-hidden={true}
+              autoPlay={true}
+              loop={true}
+              muted={true}
+              playsInline={true}
+            >
               <source src={Video} type='video/webm' />
             </video>
           </div>
