@@ -1,25 +1,8 @@
 {
-  "env": {
-    "es6": true,
-    "browser": true,
-    "mocha": true,
-    "node": true,
-    "jest": true
-  },
-  "parser": "babel-eslint",
-  "root": true,
   "extends": [
+    "react-app",
     "./.eslintrc-base.json",
-    "prettier",
-    "prettier/react"
-  ],
-  "plugins": [
-    "react",
-    "import",
-    "prefer-object-spread",
-    "prettier",
-    "react-hooks",
-    "jsx-a11y"
+    "plugin:prettier/recommended"
   ],
   "globals": {
     "Promise": true,
@@ -30,10 +13,7 @@
     "router": true
   },
   "settings": {
-    "react": {
-      "version": "16.4.2",
-      "import/ignore": ["node_modules", "\\.json$"],
-      "import/extensions": [".js", ".jsx"]
-    }
+    "import/ignore": ["node_modules", "\\.json$"],
+    "import/extensions": [".js", ".jsx"]
   }
 }

@@ -19,7 +19,7 @@ jobs:
         run: npm ci
 
       - name: Run ESLint
-        run: npx eslint . --ext .js,.jsx,.ts,.tsx
+        run: npm run lint
 
   cypress-run:
     name: Cypress Test

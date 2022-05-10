@@ -15,7 +15,7 @@ const SUB = new NchanSubscriber(
 );
 const CODERADIO_VOLUME = 'coderadio-volume';
 
-SUB.on('error', function(err, errDesc) {
+SUB.on('error', function (err, errDesc) {
   Sentry.addBreadcrumb({
     message: 'NchanSubscriber error: ' + errDesc
   });
@@ -99,12 +99,10 @@ export default class App extends React.Component {
     this.decreaseVolume = this.decreaseVolume.bind(this);
 
     // Keyboard handlers
-    this.addKeyboardHotKeysListener = this.addKeyboardHotKeysListener.bind(
-      this
-    );
-    this.removeKeyboardHotKeysListener = this.removeKeyboardHotKeysListener.bind(
-      this
-    );
+    this.addKeyboardHotKeysListener =
+      this.addKeyboardHotKeysListener.bind(this);
+    this.removeKeyboardHotKeysListener =
+      this.removeKeyboardHotKeysListener.bind(this);
     this.handleKeyboardHotKeys = this.handleKeyboardHotKeys.bind(this);
   }
 
