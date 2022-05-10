@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { isBrowser } from 'react-device-detect';
 
 import Visualizer from './Visualizer';
+import Video from '../assets/Saron3.webm';
 
 const Main = props => {
   return (
@@ -13,7 +14,17 @@ const Main = props => {
       </div>
       {isBrowser && (
         <>
-          <div className='animation' />
+          <div className='animation'>
+            <video
+              aria-hidden={true}
+              autoPlay={true}
+              loop={true}
+              muted={true}
+              playsInline={true}
+            >
+              <source src={Video} type='video/webm' />
+            </video>
+          </div>
           <Visualizer player={props.player} playing={props.playing} />
           <details>
             <summary id='keyboard-controls'>Keyboard Controls</summary>

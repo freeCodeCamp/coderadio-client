@@ -56,9 +56,6 @@ p {
 
 @media only screen and (min-width: 768px) {
   .animation {
-    background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/bg.jpg');
-    background-position: left bottom;
-    background-repeat: no-repeat;
     display: block;
     height: calc(100% - 158px);
     margin-top: 88px;
@@ -67,14 +64,11 @@ p {
   }
 }
 
-.animation::before {
-  background-image: url('https://cdn-media-1.freecodecamp.org/code-radio/Saron3.gif');
-  bottom: 0;
-  content: '';
-  height: 767px;
-  left: 388px;
-  position: absolute;
-  width: 509px;
+.animation video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left;
 }
 
 .site-title {
