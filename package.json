@@ -47,7 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "12.1.5",
     "cypress": "6.9.1",
     "eslint-config-prettier": "8.5.0",
