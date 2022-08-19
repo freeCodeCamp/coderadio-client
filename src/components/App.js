@@ -14,6 +14,7 @@ const SUB = new NchanSubscriber(
   'wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio'
 );
 const CODERADIO_VOLUME = 'coderadio-volume';
+const CODERADIO_URL = 'coderadio-url';
 
 SUB.on('error', function (err, errDesc) {
   Sentry.addBreadcrumb({
@@ -168,16 +169,25 @@ export default class App extends React.Component {
      */
     const maxVolume =
       store.get(CODERADIO_VOLUME) || this.state.audioConfig.maxVolume;
+
+    /**
+     * Get user stream url from local storage
+     * if not available set default empty stream url
+     */
+    const streamUrl = store.get(CODERADIO_URL) || this.state.url;
+
     this.setState(
       {
         audioConfig: {
           ...this.state.audioConfig,
           maxVolume,
           currentVolume: maxVolume
-        }
+        },
+        url: streamUrl
       },
       () => {
         this._player.volume = maxVolume;
+        this._player.src = streamUrl;
       }
     );
   }
@@ -207,9 +217,15 @@ export default class App extends React.Component {
     if (this.state.playing) await this.pause();
 
     this._player.src = url;
-    this.setState({
-      url
-    });
+    this.setState(
+      {
+        url
+      },
+      () => {
+        // Save selected url to local storage
+        store.set(CODERADIO_URL, url);
+      }
+    );
 
     /**
      * Since the `playing` state is initially `null` when the app first loads
@@ -457,14 +473,18 @@ export default class App extends React.Component {
     SUB.on('message', message => {
       let np = JSON.parse(message);
 
-      // We look through the available mounts to find the default mount
-      if (this.state.url === '') {
-        this.setState({
-          mounts: np.station.mounts,
-          remotes: np.station.remotes
-        });
+      // First we look to see if we have a local url, if we do, we do not search for stations by connection.
+      const localStreamUrl = store.get(CODERADIO_URL);
+
+      if (this.state.url === '' && !localStreamUrl) {
+        // We look through the available mounts to find the default mount
         this.setMountToConnection(np.station.mounts, np.station.remotes);
       }
+
+      this.setState({
+        mounts: np.station.mounts,
+        remotes: np.station.remotes
+      });
 
       if (this.state.listeners !== np.listeners.current) {
         this.setState({
