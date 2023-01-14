@@ -55,7 +55,7 @@
     "execa": "5.1.1",
     "husky": "6.0.0",
     "lint-staged": "11.2.6",
-    "prettier": "2.8.2"
+    "prettier": "2.8.3"
   },
   "lint-staged": {
     "*.js": "npm run lint:fix"
