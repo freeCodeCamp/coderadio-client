@@ -44,7 +44,7 @@ class PlayPauseButton extends React.Component {
         aria-hidden='true'
         className='loader-circle-notch'
         icon={faCircleNotch}
-        spin='true'
+        spin={true}
       />
     );
   }

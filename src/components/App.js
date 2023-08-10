@@ -11,6 +11,7 @@ import '../css/App.css';
 
 const sseUri =
   'https://coderadio-admin-v2.freecodecamp.org/api/live/nowplaying/sse?cf_connect=%7B%22subs%22%3A%7B%22station%3Acoderadio%22%3A%7B%7D%2C%22global%3Atime%22%3A%7B%7D%7D%7D';
+const jsonUri = `https://coderadio-admin-v2.freecodecamp.org/api/nowplaying_static/coderadio.json`;
 
 let sse = new EventSource(sseUri);
 
@@ -443,9 +444,32 @@ export default class App extends React.Component {
     });
   }
 
-  getNowPlaying() {
-    // Reconnect Timeout needs to be added
+  fetchJSON() {
+    fetch(jsonUri)
+      .then(response => {
+        return response.json();
+      })
+      .then(np => {
+        this.setState({
+          mounts: np.station.mounts,
+          remotes: np.station.remotes,
+          listeners: np.listeners.current,
+          currentSong: np.now_playing.song,
+          songStartedAt: np.now_playing.played_at * 1000,
+          songDuration: np.now_playing.duration,
+          pullMeta: false,
+          songHistory: np.song_history
+        });
+        this.setMountToConnection(np.station.mounts, np.station.remotes);
+      })
+      .catch(() => {});
+  }
 
+  getNowPlaying() {
+    // Since json recives data faster than sse, set the data initially
+    this.fetchJSON();
+
+    // Reconnect Timeout needs to be added
     sse.onmessage = event => {
       const data = JSON.parse(event.data);
       const np = data?.pub?.data?.np || null;
