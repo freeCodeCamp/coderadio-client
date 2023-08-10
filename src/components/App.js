@@ -1,5 +1,4 @@
 import React from 'react';
-import NchanSubscriber from 'nchan';
 import * as Sentry from '@sentry/react';
 import store from 'store';
 import { isIOS, isDesktop } from 'react-device-detect';
@@ -10,21 +9,19 @@ import Footer from './Footer';
 
 import '../css/App.css';
 
-const SUB = new NchanSubscriber(
-  'wss://coderadio-admin.freecodecamp.org/api/live/nowplaying/coderadio'
-);
+const sseUri =
+  'https://coderadio-admin-v2.freecodecamp.org/api/live/nowplaying/sse?cf_connect=%7B%22subs%22%3A%7B%22station%3Acoderadio%22%3A%7B%7D%2C%22global%3Atime%22%3A%7B%7D%7D%7D';
+
+let sse = new EventSource(sseUri);
+
 const CODERADIO_VOLUME = 'coderadio-volume';
 
-SUB.on('error', function (err, errDesc) {
+sse.onerror = ({ message, error }) => {
   Sentry.addBreadcrumb({
-    message: 'NchanSubscriber error: ' + errDesc
+    message: 'WebSocket error: ' + message
   });
-  /**
-   * I'm assuming captureException is appropriate here, I'm not sure what type
-   * the first argument has.
-   */
-  Sentry.captureException(err);
-});
+  Sentry.captureException(error);
+};
 
 export default class App extends React.Component {
   constructor(props) {
@@ -223,35 +220,28 @@ export default class App extends React.Component {
   }
 
   play() {
-    const { mounts, remotes, playing } = this.state;
-    if (!playing) {
-      if (!SUB.running) {
-        SUB.start();
-      }
+    const { mounts, remotes } = this.state;
 
-      let streamUrls = Array.from(
-        [...mounts, ...remotes],
-        stream => stream.url
-      );
+    let streamUrls = Array.from([...mounts, ...remotes], stream => stream.url);
 
-      // Check if the url has been reset by pause
-      if (!streamUrls.includes(this._player.src)) {
-        this._player.src = this.state.url;
-        this._player.load();
-      }
-      this._player.volume = 0;
-      this._player.play().then(() => {
-        this.setState(state => {
-          return {
-            audioConfig: { ...state.audioConfig, currentVolume: 0 },
-            playing: true,
-            pullMeta: true
-          };
-        });
-
-        this.fadeUp();
-      });
+    // Check if the url has been reset by pause
+    if (!streamUrls.includes(this._player.src)) {
+      this._player.src = this.state.url;
+      this._player.load();
     }
+
+    this._player.volume = 0;
+    this._player.play().then(() => {
+      this.setState(state => {
+        return {
+          audioConfig: { ...state.audioConfig, currentVolume: 0 },
+          playing: true,
+          pullMeta: true
+        };
+      });
+
+      this.fadeUp();
+    });
   }
 
   pause() {
@@ -268,7 +258,7 @@ export default class App extends React.Component {
           pausing: false
         },
         () => {
-          SUB.stop();
+          // socket.close();
           resolve();
         }
       );
@@ -454,40 +444,41 @@ export default class App extends React.Component {
   }
 
   getNowPlaying() {
-    SUB.on('message', message => {
-      let np = JSON.parse(message);
+    // Reconnect Timeout needs to be added
 
-      // We look through the available mounts to find the default mount
-      if (this.state.url === '') {
-        this.setState({
-          mounts: np.station.mounts,
-          remotes: np.station.remotes
-        });
-        this.setMountToConnection(np.station.mounts, np.station.remotes);
+    sse.onmessage = event => {
+      const data = JSON.parse(event.data);
+      const np = data?.pub?.data?.np || null;
+      if (np) {
+        // Process Now Playing data in `np` var.
+        // We look through the available mounts to find the default mount
+        if (this.state.url === '') {
+          this.setState({
+            mounts: np.station.mounts,
+            remotes: np.station.remotes
+          });
+          this.setMountToConnection(np.station.mounts, np.station.remotes);
+        }
+        if (this.state.listeners !== np.listeners.current) {
+          this.setState({
+            listeners: np.listeners.current
+          });
+        }
+        // We only need to update the metadata if the song has been changed
+        if (
+          np.now_playing.song.id !== this.state.currentSong.id ||
+          this.state.pullMeta
+        ) {
+          this.setState({
+            currentSong: np.now_playing.song,
+            songStartedAt: np.now_playing.played_at * 1000,
+            songDuration: np.now_playing.duration,
+            pullMeta: false,
+            songHistory: np.song_history
+          });
+        }
       }
-
-      if (this.state.listeners !== np.listeners.current) {
-        this.setState({
-          listeners: np.listeners.current
-        });
-      }
-
-      // We only need to update the metadata if the song has been changed
-      if (
-        np.now_playing.song.id !== this.state.currentSong.id ||
-        this.state.pullMeta
-      ) {
-        this.setState({
-          currentSong: np.now_playing.song,
-          songStartedAt: np.now_playing.played_at * 1000,
-          songDuration: np.now_playing.duration,
-          pullMeta: false,
-          songHistory: np.song_history
-        });
-      }
-    });
-    SUB.reconnectTimeout = this.state.config.metadataTimer;
-    SUB.start();
+    };
   }
 
   increaseVolume = () =>

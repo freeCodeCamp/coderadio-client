@@ -124,6 +124,7 @@ p {
 }
 
 .slider {
+  appearance: none;
   -webkit-appearance: none;
   background: #dfdfe2;
   height: 6px;
@@ -321,6 +322,12 @@ p {
   color: #fff;
   height: 60%;
   width: 60%;
+}
+
+.loader-circle-notch{
+  height: 60%;
+  width: auto;
+  align-self: center;
 }
 
 .recent-song-list {

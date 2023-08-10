@@ -110,7 +110,8 @@ export default class Footer extends React.PureComponent {
       currentVolume,
       setTargetVolume,
       listeners,
-      fastConnection
+      fastConnection,
+      url
     } = this.props;
 
     return (
@@ -131,7 +132,11 @@ export default class Footer extends React.PureComponent {
             playing={playing}
             songDuration={songDuration}
           />
-          <PlayPauseButton playing={playing} togglePlay={togglePlay} />
+          <PlayPauseButton
+            playing={playing}
+            togglePlay={togglePlay}
+            url={url}
+          />
           <Slider
             currentVolume={currentVolume}
             setTargetVolume={setTargetVolume}
