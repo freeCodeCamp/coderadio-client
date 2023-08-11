@@ -12,9 +12,9 @@
     "@fortawesome/react-fontawesome": "0.2.0",
     "@sentry/react": "5.30.0",
     "@sentry/tracing": "5.30.0",
-    "react": "16.14.0",
+    "react": "18.2.0",
     "react-device-detect": "2.2.3",
-    "react-dom": "16.14.0",
+    "react-dom": "18.2.0",
     "react-page-visibility": "6.4.0",
     "react-scripts": "5.0.1",
     "store": "2.0.12"
