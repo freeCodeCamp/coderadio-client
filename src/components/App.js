@@ -6,6 +6,7 @@ import { isIOS, isDesktop } from 'react-device-detect';
 import Nav from './Nav';
 import Main from './Main';
 import Footer from './Footer';
+import { buildEventSource } from '../utils/buildEventSource';
 
 import '../css/App.css';
 
@@ -13,7 +14,7 @@ const sseUri =
   'https://coderadio-admin-v2.freecodecamp.org/api/live/nowplaying/sse?cf_connect=%7B%22subs%22%3A%7B%22station%3Acoderadio%22%3A%7B%7D%2C%22global%3Atime%22%3A%7B%7D%7D%7D';
 const jsonUri = `https://coderadio-admin-v2.freecodecamp.org/api/nowplaying_static/coderadio.json`;
 
-let sse = new EventSource(sseUri);
+let sse = buildEventSource(sseUri);
 
 const CODERADIO_VOLUME = 'coderadio-volume';
 
