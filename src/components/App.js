@@ -578,6 +578,7 @@ export default class App extends React.Component {
   };
 
   render() {
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     return (
       <div className='App'>
         <Nav />
@@ -588,7 +589,7 @@ export default class App extends React.Component {
         />
         <audio
           aria-label='audio'
-          crossOrigin='anonymous'
+          {...(!isSafari && { crossOrigin: 'anonymous' })}
           onError={this.onPlayerError}
           ref={a => (this._player = a)}
         >
