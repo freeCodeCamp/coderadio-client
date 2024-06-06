@@ -45,7 +45,7 @@ jobs:
           browser: ${{ matrix.browsers }}
           build: npm run build
           start: npm start
-          wait-on: http://localhost:3000
+          wait-on: http://localhost:3001
           wait-on-timeout: 1200
 
   unit-test:
