@@ -193,6 +193,7 @@ export default class App extends React.Component {
     if (isDesktop) {
       this.removeKeyboardHotKeysListener();
     }
+    sse.close();
   }
 
   /**
