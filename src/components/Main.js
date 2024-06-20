@@ -10,7 +10,10 @@ const Main = props => {
     <main>
       <div className='under-header-content'>
         <h1 className='site-title'>Welcome to Code Radio.</h1>
-        <h2 className='site-description'>24/7 music designed for coding.</h2>
+        <h2 className='site-description'>
+          The radio is currently undergoing maintenance. Audio interruptions are
+          expected.
+        </h2>
       </div>
       {isBrowser && (
         <>
