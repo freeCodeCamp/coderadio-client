@@ -3,7 +3,7 @@
 /* Globals */
 
 :root {
-  --focus-outline: #0044FF;
+  --focus-outline: #0044ff;
 }
 
 * {
@@ -94,7 +94,7 @@ p {
 }
 
 .under-header-content {
-  background-color: #0a0a23;
+  background-color: #4d3800;
   display: flex;
   flex-direction: column;
   height: 200px;
@@ -324,7 +324,7 @@ p {
   width: 60%;
 }
 
-.loader-circle-notch{
+.loader-circle-notch {
   height: 60%;
   width: auto;
   align-self: center;
@@ -344,7 +344,7 @@ p {
   width: 100%;
 }
 
-.recent-song-list[aria-hidden="false"] {
+.recent-song-list[aria-hidden='false'] {
   display: flex;
   flex-direction: column-reverse;
 }
