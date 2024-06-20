@@ -1,6 +1,6 @@
 describe('Stop and play the music', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:3001');
   });
 
   it('Click play button', () => {
