@@ -19,6 +19,7 @@ export default class Visualizer extends React.PureComponent {
       },
       isTabVisible: true
     };
+    this.timeoutId = null;
   }
 
   /**
@@ -56,12 +57,18 @@ export default class Visualizer extends React.PureComponent {
        * Workaround for componentWillUnmount to delay the clean up and
        * achieve fadeout animation.
        */
-      setTimeout(() => {
+      this.timeoutId = setTimeout(() => {
         // Note: Order matters.
         // Stop the drawing loop first (using this.rafId), then set the ID to null
         this.stopDrawing();
         this.reset();
       }, DELAY);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
     }
   }
 
