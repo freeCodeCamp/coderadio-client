@@ -41,6 +41,10 @@ export default class Footer extends React.PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    this.stopCurrentInterval();
+  }
+
   startInterval() {
     this.stopCurrentInterval();
     this.setState({
