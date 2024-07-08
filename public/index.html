@@ -101,4 +101,19 @@
   <body>
     <div id="root"></div>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
+     new Crate({
+        server: '692816967895220344', // freeCodeCamp.org Official ᕕ(⌐■_■)ᕗ ♪♬
+        channel: '1254842489362317322' // #code-radio
+    })
+    const button = document.querySelector('crate > div').shadowRoot.querySelector("button");
+    button.style.bottom = "90px";
+    const embed = document.querySelector('crate > div').shadowRoot.querySelector(".embed");
+    embed.style.bottom = "90px";
+    // we only need to adjust the height at the iframe's mobile breakpoint.
+    // This does break during resizing, but I think that's enough of an edge case.
+    if (window.innerWidth <= 500) {
+      embed.style.maxHeight = "calc(100% - 80px)"
+    }
+  </script>
 </html>
