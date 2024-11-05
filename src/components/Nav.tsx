@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Nav() {
+const Nav: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidenav = () => {
@@ -62,4 +62,6 @@ export default function Nav() {
       </div>
     </nav>
   );
-}
+};
+
+export default Nav; 

@@ -1,9 +1,13 @@
 describe('Stop and play the music', () => {
-  beforeEach(() => {
-    cy.visit('http://localhost:3001');
-  });
+  it('Click play button', function () {
 
-  it('Click play button', () => {
+    // Endless test trying to load the Discord integration 
+    // https://stackoverflow.com/questions/64673128/cypress-iframe-function-works-on-chrome-but-not-firefox
+    if (Cypress.browser.name === 'firefox') {
+      this.skip();
+    }
+
+    cy.visit('http://localhost:3001');
     cy.get('audio')
       .invoke('attr', 'src')
       .should('contain', '.mp3')

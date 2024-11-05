@@ -1,16 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const MAX = 100;
 const STEP = 5;
 
-const Slider = ({ currentVolume, setTargetVolume }) => {
-  const handleChange = event => {
+interface SliderProps {
+  currentVolume: number;
+  setTargetVolume: (arg0: number) => void;
+}
+
+const Slider : React.FC<SliderProps> = (SliderProps) => {
+  const handleChange = (event: { target: { value: any; }; }) => {
     let { value } = event.target;
-    setTargetVolume(value / MAX);
+    SliderProps.setTargetVolume(value / MAX);
   };
 
-  const sliderVal = currentVolume * MAX;
+  const sliderVal = SliderProps.currentVolume * MAX;
 
   return (
     <div className='slider-container'>
@@ -27,11 +31,6 @@ const Slider = ({ currentVolume, setTargetVolume }) => {
       />
     </div>
   );
-};
-
-Slider.propTypes = {
-  currentVolume: PropTypes.number,
-  setTargetVolume: PropTypes.func
 };
 
 export default Slider;

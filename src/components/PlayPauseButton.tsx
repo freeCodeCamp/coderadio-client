@@ -1,13 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { isBrowser } from 'react-device-detect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
-import { ReactComponent as Pause } from '../assets/pause.svg';
-import { ReactComponent as Play } from '../assets/play.svg';
+import Pause from '../assets/icons/pause';
+import Play from '../assets/icons/play';
 
-class PlayPauseButton extends React.Component {
+interface PlayButtonProps {
+  playing: boolean;
+  togglePlay: () => any;
+  url: string;
+}
+
+interface PlayButtonState
+{
+  initialLoad: boolean; 
+}
+
+
+class PlayPauseButton extends React.Component<
+  PlayButtonProps,
+  PlayButtonState
+> {
   state = {
     initialLoad: true
   };
@@ -16,7 +30,10 @@ class PlayPauseButton extends React.Component {
 
   handleOnTouchEnd = () => !isBrowser && this.props.togglePlay();
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(
+    nextProps: PlayButtonProps,
+    prevState: { initialLoad: any }
+  ) {
     // Set initial load to render the initial message accordingly
     if (prevState.initialLoad && nextProps.playing) {
       return { initialLoad: false };
@@ -49,11 +66,5 @@ class PlayPauseButton extends React.Component {
     );
   }
 }
-
-PlayPauseButton.propTypes = {
-  playing: PropTypes.bool,
-  togglePlay: PropTypes.func,
-  url: PropTypes.string
-};
 
 export default PlayPauseButton;

@@ -1,16 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
 import App from './components/App';
+import { createRoot } from 'react-dom/client';
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN,
-  integrations: [new Integrations.BrowserTracing()],
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  integrations: [Sentry.browserTracingIntegration()],
 
   // We recommend adjusting this value in production, or using tracesSampler
   // for finer control
   tracesSampleRate: 1.0
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const container = document.getElementById('app');
+const root = createRoot(container!);
+root.render(<App/>)

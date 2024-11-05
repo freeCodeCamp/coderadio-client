@@ -34,13 +34,13 @@ jobs:
         run: |
           echo "CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }}" >> $GITHUB_ENV
           echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
-          echo "CYPRESS_INSTALL_BINARY=6.0.0" >> $GITHUB_ENV
+          echo "CYPRESS_INSTALL_BINARY=13.14.2" >> $GITHUB_ENV
 
       - name: Checkout
         uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
 
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           browser: ${{ matrix.browsers }}
           build: npm run build

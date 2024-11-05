@@ -1,11 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { isBrowser } from 'react-device-detect';
 
 import Visualizer from './Visualizer';
 import Video from '../assets/Saron3.webm';
 
-const Main = props => {
+interface MainProps
+{
+  fastConnection: boolean,
+  player: HTMLAudioElement,
+  playing: boolean
+}
+
+const Main: React.FC<MainProps> = (MainProps) => {
   return (
     <main>
       <div className='under-header-content'>
@@ -25,7 +31,7 @@ const Main = props => {
               <source src={Video} type='video/webm' />
             </video>
           </div>
-          <Visualizer player={props.player} playing={props.playing} />
+          <Visualizer player={MainProps.player} playing={MainProps.playing} />
           <details>
             <summary id='keyboard-controls'>Keyboard Controls</summary>
             <dl>
@@ -39,12 +45,6 @@ const Main = props => {
       )}
     </main>
   );
-};
-
-Main.propTypes = {
-  fastConnection: PropTypes.bool,
-  player: PropTypes.object,
-  playing: PropTypes.bool
 };
 
 export default Main;

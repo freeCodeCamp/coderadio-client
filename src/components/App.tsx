@@ -1,12 +1,11 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
-import store from 'store';
 import { isIOS, isDesktop } from 'react-device-detect';
 
 import Nav from './Nav';
 import Main from './Main';
 import Footer from './Footer';
-import { buildEventSource } from '../utils/buildEventSource';
+
 
 import '../css/App.css';
 
@@ -14,19 +13,71 @@ const sseUri =
   'https://coderadio-admin-v2.freecodecamp.org/api/live/nowplaying/sse?cf_connect=%7B%22subs%22%3A%7B%22station%3Acoderadio%22%3A%7B%22recover%22%3Atrue%7D%7D%7D';
 const jsonUri = `https://coderadio-admin-v2.freecodecamp.org/api/nowplaying_static/coderadio.json`;
 
-let sse = buildEventSource(sseUri);
+
+let sse = new EventSource(sseUri);
 
 const CODERADIO_VOLUME = 'coderadio-volume';
 
-sse.onerror = ({ message, error }) => {
+sse.onerror = (error) => {
   Sentry.addBreadcrumb({
-    message: 'WebSocket error: ' + message
+    message: 'WebSocket error: ' + error
   });
   Sentry.captureException(error);
 };
 
-export default class App extends React.Component {
-  constructor(props) {
+interface AppProps
+{
+  
+}
+
+interface AudioConfig {
+  maxVolume: number;
+  targetVolume: number;
+  fadeSteps: number;
+  volumeTransitionSpeed: number | undefined;
+  volumeSteps: number;
+  currentVolume: number;
+}
+
+interface AppConfig
+{
+  metadataTimer: number;
+}
+
+interface Remote 
+{
+  url: string; 
+}
+
+interface AppState {
+  fastConnection: boolean;
+  config: AppConfig;
+  playing: boolean;
+  audioConfig: AudioConfig;
+  eq: Equalizer;
+  visualizer: any;
+  url: string;
+  mounts: Remote[];
+  remotes: Remote[];
+
+  captions: null;
+  pausing: any;
+  pullMeta: any;
+  erroredStreams: any;
+
+  // Note: the crossOrigin is needed to fix a CORS JavaScript requirement
+
+  // There are a few *private* variables used
+  currentSong: SongDetails;
+  songStartedAt: number;
+  songDuration: number;
+  listeners: number;
+  songHistory: any;
+}
+
+export default class App extends React.Component<AppProps, AppState> {
+  _player: HTMLAudioElement;
+  constructor(props: AppProps) {
     super(props);
     this.state = {
       // General configuration options
@@ -73,7 +124,7 @@ export default class App extends React.Component {
       url: '',
       mounts: [],
       remotes: [],
-      playing: null,
+      playing: false,
       captions: null,
       pausing: null,
       pullMeta: false,
@@ -82,7 +133,13 @@ export default class App extends React.Component {
       // Note: the crossOrigin is needed to fix a CORS JavaScript requirement
 
       // There are a few *private* variables used
-      currentSong: {},
+      currentSong: {
+        id: '',
+        art: undefined,
+        title: '',
+        artist: '',
+        album: ''
+      },
       songStartedAt: 0,
       songDuration: 0,
       listeners: 0,
@@ -105,7 +162,7 @@ export default class App extends React.Component {
     this.handleKeyboardHotKeys = this.handleKeyboardHotKeys.bind(this);
   }
 
-  isSpacePressed(event) {
+  isSpacePressed(event: { key: string }) {
     return event.key === ' ';
   }
 
@@ -118,20 +175,26 @@ export default class App extends React.Component {
       'keyboard-controls',
       'toggle-button-nav'
     ];
+    if (document.activeElement == null) {
+      return false;
+    }
     return !disallowedIds.includes(document.activeElement.id);
   }
 
-  isUpDownArrowPressed(event) {
+  isUpDownArrowPressed(event: { key: string }) {
     return event.key === 'ArrowUp' || event.key === 'ArrowDown';
   }
 
   canAdjustVolume() {
     // Ignore arrow hot keys if focus is on volume slider or stream selector.
     const disallowedIds = ['volume-input', 'stream-select'];
+    if (document.activeElement == null) {
+      return false;
+    }
     return !disallowedIds.includes(document.activeElement.id);
   }
 
-  handleKeyboardHotKeys(event) {
+  handleKeyboardHotKeys(event: { key: any }) {
     const keyMap = new Map();
     keyMap.set(' ', this.togglePlay);
     keyMap.set('k', this.togglePlay);
@@ -166,7 +229,8 @@ export default class App extends React.Component {
      * if not available set to default 0.5.
      */
     const maxVolume =
-      store.get(CODERADIO_VOLUME) || this.state.audioConfig.maxVolume;
+      parseInt(localStorage.getItem(CODERADIO_VOLUME) ?? '') ||
+      this.state.audioConfig.maxVolume;
     this.setState(
       {
         audioConfig: {
@@ -201,8 +265,10 @@ export default class App extends React.Component {
    * and begin playing it again. This can happen if the server
    * resets the URL.
    */
-  async setUrl(url = false) {
-    if (!url) return;
+  async setUrl(url = '') {
+    if (url.trim().length == 0) {
+      return;
+    }
 
     if (this.state.playing) await this.pause();
 
@@ -251,7 +317,7 @@ export default class App extends React.Component {
     // Completely stop the audio element
     if (!this.state.playing) return Promise.resolve();
 
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
       this._player.pause();
       this._player.load();
 
@@ -287,9 +353,9 @@ export default class App extends React.Component {
     }
   }
 
-  setTargetVolume(volume) {
+  setTargetVolume(volume: number) {
     let audioConfig = { ...this.state.audioConfig };
-    let maxVolume = parseFloat(Math.max(0, Math.min(1, volume).toFixed(2)));
+    let maxVolume = parseFloat(Math.max(0, Math.min(1, volume)).toFixed(2));
     audioConfig.maxVolume = maxVolume;
     audioConfig.currentVolume = maxVolume;
     this._player.volume = audioConfig.maxVolume;
@@ -299,7 +365,7 @@ export default class App extends React.Component {
       },
       () => {
         // Save user volume to local storage
-        store.set(CODERADIO_VOLUME, maxVolume);
+        localStorage.setItem(CODERADIO_VOLUME, maxVolume.toString());
       }
     );
   }
@@ -308,7 +374,7 @@ export default class App extends React.Component {
    * Simple fade command to initiate the playing and pausing
    * in a more fluid method.
    */
-  fade(direction) {
+  fade(direction: string) {
     let audioConfig = { ...this.state.audioConfig };
     audioConfig.targetVolume =
       direction.toLowerCase() === 'up' ? this.state.audioConfig.maxVolume : 0;
@@ -388,49 +454,54 @@ export default class App extends React.Component {
     }
   }
 
-  sortStreams = (streams, lowBitrate = false, shuffle = false) => {
+  sortStreams = (streams: any[], lowBitrate = false, shuffle = false) => {
     if (shuffle) {
       /**
        * Shuffling should only happen among streams with similar bitrates
        * since each relay displays listener numbers across relays. Shuffling
        * should be used to spread the load on initial stream selection.
        */
-      let bitrates = streams.map(stream => stream.bitrate);
+      let bitrates = streams.map((stream: { bitrate: any }) => stream.bitrate);
       let maxBitrate = Math.max(...bitrates);
       return streams
-        .filter(stream => {
+        .filter((stream: { bitrate: number }) => {
           if (!lowBitrate) return stream.bitrate === maxBitrate;
           else return stream.bitrate !== maxBitrate;
         })
         .sort(() => Math.random() - 0.5);
     } else {
-      return streams.sort((a, b) => {
-        if (lowBitrate) {
-          // Sort by bitrate from low to high
-          if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return -1;
-          if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return 1;
-        } else {
-          // Sort by bitrate, from high to low
-          if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return 1;
-          if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return -1;
-        }
+      return streams.sort(
+        (
+          a: { bitrate: string; listeners: { current: number } },
+          b: { bitrate: string; listeners: { current: number } }
+        ) => {
+          if (lowBitrate) {
+            // Sort by bitrate from low to high
+            if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return -1;
+            if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return 1;
+          } else {
+            // Sort by bitrate, from high to low
+            if (parseFloat(a.bitrate) < parseFloat(b.bitrate)) return 1;
+            if (parseFloat(a.bitrate) > parseFloat(b.bitrate)) return -1;
+          }
 
-        // If both items have the same bitrate, sort by listeners from low to high
-        if (a.listeners.current < b.listeners.current) return -1;
-        if (a.listeners.current > b.listeners.current) return 1;
-        return 0;
-      });
+          // If both items have the same bitrate, sort by listeners from low to high
+          if (a.listeners.current < b.listeners.current) return -1;
+          if (a.listeners.current > b.listeners.current) return 1;
+          return 0;
+        }
+      );
     }
   };
 
-  getStreamUrl = (streams, lowBitrate) => {
+  getStreamUrl = (streams: never[], lowBitrate: boolean = false) => {
     const sorted = this.sortStreams(streams, lowBitrate, true);
     return sorted[0].url;
   };
 
   // Choose the stream based on the connection and availability of relay(remotes)
   setMountToConnection(mounts = [], remotes = []) {
-    let url = null;
+    let url = "";
     if (this.state.fastConnection === false && remotes.length > 0) {
       url = this.getStreamUrl(remotes, true);
     } else if (this.state.fastConnection && remotes.length > 0) {
@@ -540,9 +611,11 @@ export default class App extends React.Component {
 
     const { mounts, remotes, erroredStreams, url } = this.state;
     const sortedStreams = this.sortStreams([...remotes, ...mounts]);
-    const currentStream = sortedStreams.find(stream => stream.url === url);
+    const currentStream = sortedStreams.find(
+      (stream: { url: any }) => stream.url === url
+    );
     const isStreamInErroredList = erroredStreams.some(
-      stream => stream.url === url
+      (stream: { url: any }) => stream.url === url
     );
     const newErroredStreams = isStreamInErroredList
       ? erroredStreams
@@ -560,9 +633,9 @@ export default class App extends React.Component {
      */
     const availableUrls = sortedStreams
       .filter(
-        stream =>
+        (stream: { url: any }) =>
           !newErroredStreams.some(
-            erroredStream => erroredStream.url === stream.url
+            (erroredStream: { url: any }) => erroredStream.url === stream.url
           )
       )
       .map(({ url }) => url);
@@ -591,9 +664,9 @@ export default class App extends React.Component {
           aria-label='audio'
           crossOrigin='anonymous'
           onError={this.onPlayerError}
-          ref={a => (this._player = a)}
+          ref={a => (this._player = a as HTMLAudioElement )}
         >
-          <track kind='captions' {...this.state.captions} />
+          <track kind='captions' />
         </audio>
         <Footer
           currentSong={this.state.currentSong}
@@ -609,7 +682,7 @@ export default class App extends React.Component {
           songHistory={this.state.songHistory}
           songStartedAt={this.state.songStartedAt}
           togglePlay={this.togglePlay}
-          url={this.state.url}
+          url={this.state.url ?? ''}
         />
       </div>
     );
