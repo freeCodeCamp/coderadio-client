@@ -1,18 +1,53 @@
-/* eslint-disable react/jsx-sort-props */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 import PageVisibility from 'react-page-visibility';
 import CurrentSong from './CurrentSong';
 import Slider from './Slider';
 import PlayPauseButton from './PlayPauseButton';
 import SongHistory from './SongHistory';
 
-export default class Footer extends React.PureComponent {
-  constructor(props) {
+
+interface Remote {
+  url: string;
+}
+
+
+interface FooterProps {
+  currentSong: SongDetails;
+  currentVolume: number;
+  fastConnection: boolean;
+  listeners: number;
+  mounts: Remote[];
+  playing: boolean;
+  remotes: Remote[];
+  setTargetVolume: any;
+  setUrl: (arg0: any) => void;
+  songDuration: number;
+  songHistory: SongEntry[];
+  songStartedAt: number;
+  togglePlay: any;
+  url: string;
+}
+
+interface FooterState {
+  progressVal: number;
+  currentSong: SongDetails;
+  progressInterval: any;
+  alternativeMounts: any;
+  isTabVisible: boolean;
+}
+
+export default class Footer extends React.PureComponent<FooterProps, FooterState> {
+  constructor(props: FooterProps) {
     super(props);
     this.state = {
       progressVal: 0,
-      currentSong: {},
+      currentSong: {
+        art: undefined,
+        title: '',
+        artist: '',
+        album: '',
+        id: ""
+      },
       progressInterval: null,
       alternativeMounts: null,
       isTabVisible: true
@@ -20,7 +55,8 @@ export default class Footer extends React.PureComponent {
     this.updateProgress = this.updateProgress.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: FooterProps)
+  {
     /**
      * If the song is new and we have all required props,
      * reset setInterval and currentSong.
@@ -33,7 +69,7 @@ export default class Footer extends React.PureComponent {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         currentSong: this.props.currentSong,
-        alternativeMounts: [].concat(this.props.remotes, this.props.mounts)
+        alternativeMounts: Array<Remote>().concat(this.props.remotes, this.props.mounts)
       });
       this.toggleInterval();
     } else if (prevProps.playing !== this.props.playing) {
@@ -71,19 +107,19 @@ export default class Footer extends React.PureComponent {
     this.setState({ progressVal });
   }
 
-  handleChange(event) {
+  handleChange(event: { target: { value: any } }) {
     let { value } = event.target;
     this.props.setUrl(value);
   }
 
-  handleVisibilityChange = isTabVisible => {
+  handleVisibilityChange = (isTabVisible: any) => {
     this.setState({ isTabVisible }, () => {
       this.toggleInterval();
     });
   };
 
   getMountOptions() {
-    let mountOptions = '';
+    let mountOptions: ReactNode;
     let { alternativeMounts } = this.state;
     if (alternativeMounts && this.props.url) {
       mountOptions = (
@@ -94,11 +130,30 @@ export default class Footer extends React.PureComponent {
           onChange={this.handleChange.bind(this)}
           value={this.props.url}
         >
-          {alternativeMounts.map((mount, index) => (
-            <option key={index} value={mount.url}>
-              {mount.name}
-            </option>
-          ))}
+          {alternativeMounts.map(
+            (
+              mount: {
+                url: string | number | readonly string[] | undefined;
+                name:
+                  | string
+                  | number
+                  | boolean
+                  | React.ReactElement<
+                      any,
+                      string | React.JSXElementConstructor<any>
+                    >
+                  | Iterable<React.ReactNode>
+                  | React.ReactPortal
+                  | null
+                  | undefined;
+              },
+              index: React.Key | null | undefined
+            ) => (
+              <option key={index} value={mount.url}>
+                {mount.name}
+              </option>
+            )
+          )}
         </select>
       );
     }
@@ -150,20 +205,3 @@ export default class Footer extends React.PureComponent {
     );
   }
 }
-
-Footer.propTypes = {
-  currentSong: PropTypes.object,
-  currentVolume: PropTypes.number,
-  fastConnection: PropTypes.bool,
-  listeners: PropTypes.number,
-  mounts: PropTypes.array,
-  playing: PropTypes.bool,
-  remotes: PropTypes.array,
-  setTargetVolume: PropTypes.func,
-  setUrl: PropTypes.func,
-  songDuration: PropTypes.number,
-  songHistory: PropTypes.array,
-  songStartedAt: PropTypes.number,
-  togglePlay: PropTypes.func,
-  url: PropTypes.string
-};

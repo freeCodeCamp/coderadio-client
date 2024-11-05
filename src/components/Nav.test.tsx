@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { test, expect, describe } from 'vitest';
 
 import Nav from './Nav';
 

@@ -6,8 +6,22 @@ import { faHistory } from '@fortawesome/free-solid-svg-icons';
 
 const DEFAULT_ART =
   'https://cdn-media-1.freecodecamp.org/code-radio/cover_placeholder.gif';
-class SongHistory extends Component {
-  constructor(props) {
+
+
+
+interface SongHistoryProps {
+  fastConnection: boolean;
+  songHistory: SongEntry[];
+}
+
+interface SongHistoryState {
+  displayList: boolean; 
+}
+
+
+
+class SongHistory extends Component<SongHistoryProps,SongHistoryState> {
+  constructor(props: SongHistoryProps) {
     super(props);
     this.state = {
       displayList: false
@@ -23,7 +37,7 @@ class SongHistory extends Component {
   render() {
     const { songHistory, fastConnection } = this.props;
     // Don't reverse song list, we want most recent song first.
-    const songs = songHistory.map(song => song.song);
+    const songs = songHistory.map((song: SongEntry) => song.song);
     return (
       <>
         <button
@@ -45,7 +59,7 @@ class SongHistory extends Component {
           className='recent-song-list'
           id='song-history'
         >
-          {songs.map((song, index) => (
+          {songs.map((song: SongDetails,index: number) => (
             <li className='recent-song-info' key={song.id}>
               <img
                 alt=''
@@ -71,10 +85,5 @@ class SongHistory extends Component {
     );
   }
 }
-
-SongHistory.propTypes = {
-  fastConnection: PropTypes.bool,
-  songHistory: PropTypes.array
-};
 
 export default SongHistory;

@@ -1,12 +1,15 @@
-const util = require('cypress/lib/util');
-const execa = require('execa');
+import { spawn } from 'child_process';
 
-const pkg = util.pkgVersion();
+const child = spawn('npm', ['run', 'cypress:install'], {
+  stdio: 'inherit'
+});
 
-(async () => {
-  console.log('Installing Cypress ' + pkg);
-  await execa('npm', ['run', 'cypress:install'], {
-    env: { CYPRESS_INSTALL_BINARY: pkg }
-  });
-  console.log('Cypress installed');
-})();
+child.on('close', code => {
+  if (code) {
+    console.error('Cypress installation failed with code:', code);
+  }
+});
+
+child.on('error', error => {
+  console.error('Cypress installation error:', error);
+});

@@ -4,14 +4,44 @@ import PageVisibility from 'react-page-visibility';
 
 const DELAY = 500;
 
-export default class Visualizer extends React.PureComponent {
-  rafId = null;
-  timerId = null;
 
-  constructor(props) {
+interface VisualizerConfig {
+  baseColour: string;
+  translucent: string;
+  multiplier: number;
+}
+
+interface VisualizerProps {
+  player: HTMLMediaElement;
+  playing: boolean;
+}
+
+interface VisualizerState {
+  config: VisualizerConfig;
+  isTabVisible: boolean;
+  eq: Equalizer;
+}
+
+export default class Visualizer extends React.PureComponent<VisualizerProps, VisualizerState> {
+  rafId: number = -1;
+  timerId:NodeJS.Timeout;
+  timeoutId: NodeJS.Timeout | null;
+  _canvas: HTMLCanvasElement | null;
+  visualizer: { ctx: any; height: any; width: any; barWidth: number };
+  static propTypes: {
+    player: PropTypes.Requireable<object>;
+    playing: PropTypes.Requireable<boolean>;
+  };
+
+  constructor(props: VisualizerProps) {
     super(props);
     this.state = {
-      eq: {},
+      eq: {
+        src: undefined,
+        analyser: undefined,
+        eq: undefined,
+        bands: undefined
+      },
       config: {
         baseColour: 'rgb(10, 10, 35)',
         translucent: 'rgba(10, 10, 35, 0.6)',
@@ -19,7 +49,6 @@ export default class Visualizer extends React.PureComponent {
       },
       isTabVisible: true
     };
-    this.timeoutId = null;
   }
 
   /**
@@ -28,7 +57,10 @@ export default class Visualizer extends React.PureComponent {
    * the audio has been triggered.
    * We can't see it until then anyway so it makes no difference to desktop.
    */
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(
+    prevProps: { playing: boolean },
+    prevState: { isTabVisible: any }
+  ) {
     if (
       prevProps.playing === this.props.playing &&
       prevState.isTabVisible === this.state.isTabVisible
@@ -100,7 +132,7 @@ export default class Visualizer extends React.PureComponent {
   }
 
   reset = () => {
-    this.rafId = null;
+    this.rafId = -1;
   };
 
   /**
@@ -111,9 +143,11 @@ export default class Visualizer extends React.PureComponent {
   updateEQBands() {
     const newEQ = this.state.eq;
     // Populate the buffer with the audio source's current data
-    newEQ.analyser.getByteFrequencyData(newEQ.bands);
-
-    this.setState({ eq: { ...newEQ } });
+    if (newEQ.bands != null)
+    {
+       newEQ.analyser?.getByteFrequencyData(newEQ.bands);
+      this.setState({ eq: { ...newEQ } });
+    }
   }
 
   /**
@@ -121,13 +155,16 @@ export default class Visualizer extends React.PureComponent {
    * created.
    */
   createVisualizer() {
-    this._canvas.width = this._canvas.parentNode.offsetWidth;
-    this._canvas.height = this._canvas.parentNode.offsetHeight;
+    if (this._canvas == null || this.state.eq.bands == null) {
+      return;
+    }
+    this._canvas.width = this._canvas.parentElement?.offsetWidth ?? 0;
+    this._canvas.height = this._canvas.parentElement?.offsetHeight ?? 0;
 
     this.visualizer = {
-      ctx: this._canvas.getContext('2d'),
-      height: this._canvas.height,
-      width: this._canvas.width,
+      ctx: this._canvas?.getContext('2d'),
+      height: this._canvas?.height,
+      width: this._canvas?.width,
       barWidth: this._canvas.width / this.state.eq.bands.length
     };
   }
@@ -144,7 +181,8 @@ export default class Visualizer extends React.PureComponent {
   };
 
   drawingLoop = () => {
-    const haveWaveform = this.state.eq.bands.reduce((a, b) => a + b, 0) !== 0;
+    const haveWaveform =
+      this.state.eq.bands?.reduce((a: any, b: any) => a + b, 0) !== 0;
 
     this.updateEQBands();
     this.drawVisualizer();
@@ -168,7 +206,7 @@ export default class Visualizer extends React.PureComponent {
    */
   drawVisualizer() {
     // Initial bar x coordinate
-    let y,
+    let y: number,
       x = 0;
 
     // Clear the complete canvas
@@ -187,7 +225,7 @@ export default class Visualizer extends React.PureComponent {
     // Start at the bottom left
     this.visualizer.ctx.moveTo(x, 0);
     this.visualizer.ctx.fillStyle = this.state.config.translucent;
-    this.state.eq.bands.forEach(band => {
+    this.state.eq.bands?.forEach((band: number) => {
       /**
        * Get the overall hight associated to the current band and
        * convert that into a Y position on the canvas
@@ -209,7 +247,7 @@ export default class Visualizer extends React.PureComponent {
     this.visualizer.ctx.fill();
   }
 
-  handleVisibilityChange = isTabVisible => {
+  handleVisibilityChange = (isTabVisible: any) => {
     this.setState({ isTabVisible });
   };
 
