@@ -46,7 +46,7 @@
     "@testing-library/react": "16.2.0",
     "cypress": "13.17.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-prettier": "5.2.3",
+    "eslint-plugin-prettier": "5.2.4",
     "execa": "9.5.2",
     "husky": "9.1.7",
     "lint-staged": "15.5.0",
