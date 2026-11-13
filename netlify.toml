@@ -1,5 +1,3 @@
-
 [build]
-  base    = ""
-  publish = "/build"
+  publish = "dist"
   command = "npm run build"
