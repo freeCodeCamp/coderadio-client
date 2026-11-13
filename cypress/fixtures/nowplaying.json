@@ -1,0 +1,33 @@
+{
+  "station": {
+    "mounts": [
+      {
+        "name": "128kbps MP3",
+        "url": "https://coderadio-admin-v2.freecodecamp.org/listen/coderadio/radio.mp3",
+        "bitrate": 128,
+        "listeners": { "current": 1 }
+      },
+      {
+        "name": "64kbps MP3",
+        "url": "https://coderadio-admin-v2.freecodecamp.org/listen/coderadio/low.mp3",
+        "bitrate": 64,
+        "listeners": { "current": 0 }
+      }
+    ],
+    "remotes": []
+  },
+  "listeners": { "current": 1, "unique": 1 },
+  "now_playing": {
+    "played_at": 1700000000,
+    "elapsed": 0,
+    "duration": 180,
+    "song": {
+      "id": "1",
+      "title": "Test Song",
+      "artist": "Test Artist",
+      "album": "Test Album",
+      "art": ""
+    }
+  },
+  "song_history": []
+}
