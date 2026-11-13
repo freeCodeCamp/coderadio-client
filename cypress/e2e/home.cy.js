@@ -1,7 +1,6 @@
-/* global cy */
 describe('Landing page', () => {
-  it('Should render', () => {
-    cy.visit('http://localhost:3001');
+  it('renders', () => {
+    cy.visit('/');
     cy.title().should('eq', 'freeCodeCamp.org Code Radio');
   });
 });
