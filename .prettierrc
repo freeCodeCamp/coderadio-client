@@ -1,5 +1,5 @@
 {
-  "endOfLine":"auto",  
+  "endOfLine": "auto",
   "semi": true,
   "singleQuote": true,
   "jsxSingleQuote": true,
@@ -7,4 +7,3 @@
   "trailingComma": "none",
   "arrowParens": "avoid"
 }
-  
