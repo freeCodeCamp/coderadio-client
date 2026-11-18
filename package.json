@@ -39,7 +39,7 @@
     "lint-staged": "17.6.0",
     "prettier": "3.9.10",
     "start-server-and-test": "3.0.13",
-    "vite": "8.3.5",
+    "vite": "8.3.8",
     "vite-plugin-svgr": "5.2.0",
     "vitest": "5.0.5"
   },
